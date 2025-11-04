@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app/src/main/java/com/javafx/miControlador.java">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Clientes">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Tatuadores">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Citas">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="EXIT">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" text="Añadir" />
+            <Button layoutX="85.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" text="Editar" />
+            <Button layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" text="Borrar" />
+            <Button layoutX="512.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" text="Buscar" />
+            <StackPane layoutX="34.0" layoutY="71.0" prefHeight="276.0" prefWidth="529.0" style="-fx-background-color: lightblue;">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: lightgrey;">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TATTOOAGE" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione una opcion del menu para continuar" />
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#btnClientes" text="Clientes" />
+                              <Button mnemonicParsing="false" onMouseClicked="#btnTatuadores" text="Tatuadores" />
+                              <Button mnemonicParsing="false" onMouseClicked="#btnCitas" text="Citas" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

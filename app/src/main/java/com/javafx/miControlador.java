@@ -3,33 +3,48 @@ package com.javafx;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class miControlador implements Initializable {
-
-     @FXML
-    private TextField txtDescuento;
+public class miControlador implements Initializable{
 
     @FXML
-    private TextField txtPrecio;
+    void btnAnadir(MouseEvent event) {
 
+    }
 
     @FXML
-    void btnCalcular(MouseEvent event) {
-        
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setHeaderText("Descuento aplicado. Precio inicial "+txtPrecio.getText());
-        alert.showAndWait();
+    void btnBorrar(MouseEvent event) {
+
+    }
+
+    @FXML
+    void btnBuscar(MouseEvent event) {
+
+    }
+
+    @FXML
+    void btnCitas(MouseEvent event) {
+
+    }
+
+    @FXML
+    void btnClientes(MouseEvent event) {
+
+    }
+
+    @FXML
+    void btnEditar(MouseEvent event) {
+
+    }
+
+    @FXML
+    void btnTatuadores(MouseEvent event) {
+
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-       
+    public void initialize (URL location, ResourceBundle resources) {
+        
     }
-
 }
