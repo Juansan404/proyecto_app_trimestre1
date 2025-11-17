@@ -36,6 +36,11 @@ public class miControlador implements Initializable{
     private ObservableList<Tatuador> listaTatuadores;
     private ObservableList<Cita> listaCitas;
 
+    // Variables para controlar qué panel está activo
+    private boolean panelClientesActivo = false;
+    private boolean panelTatuadoresActivo = false;
+    private boolean panelCitasActivo = false;
+
     //PANES PRINCIPALES
     @FXML
     private StackPane stackPanePrincipal;
@@ -57,16 +62,25 @@ public class miControlador implements Initializable{
     @FXML
     void menuClientes(ActionEvent event) {
         contenedorTablaClientes.toFront();
+        panelClientesActivo = true;
+        panelTatuadoresActivo = false;
+        panelCitasActivo = false;
     }
 
     @FXML
     void menuTatuadores(ActionEvent event) {
         contenedorTablaTatuadores.toFront();
+        panelClientesActivo = false;
+        panelTatuadoresActivo = true;
+        panelCitasActivo = false;
     }
 
     @FXML
     void menuCitas(ActionEvent event) {
         contenedorTablaCitas.toFront();
+        panelClientesActivo = false;
+        panelTatuadoresActivo = false;
+        panelCitasActivo = true;
     }
 
     @FXML
@@ -99,33 +113,97 @@ public class miControlador implements Initializable{
     //BOTONES MANIPULACION TABLAS
     @FXML
     void btnAnadir(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaAECita.fxml"));
-            Parent root = loader.load();
+        String panelActivo = getPanelActivo();
+        String rutaFXML = "";
+        String titulo = "";
 
-            Stage stage = new Stage();
-            stage.setTitle("Añadir/Editar Cita");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            System.out.println("Error al abrir ventana añadir cita: " + e.getMessage());
-            e.printStackTrace();
+        if (panelActivo.equals("clientes")) {
+            rutaFXML = "/ventanaAECliente.fxml";
+            titulo = "Añadir/Editar Cliente";
+        } else if (panelActivo.equals("tatuadores")) {
+            rutaFXML = "/ventanaAETatuador.fxml";
+            titulo = "Añadir/Editar Tatuador";
+        } else if (panelActivo.equals("citas")) {
+            rutaFXML = "/ventanaAECita.fxml";
+            titulo = "Añadir/Editar Cita";
         }
+
+        abrirVentana(rutaFXML, titulo);
     }
 
     @FXML
     void btnEditar(MouseEvent event) {
+        String panelActivo = getPanelActivo();
+        String rutaFXML = "";
+        String titulo = "";
 
+        if (panelActivo.equals("clientes")) {
+            rutaFXML = "/ventanaAECliente.fxml";
+            titulo = "Editar Cliente";
+        } else if (panelActivo.equals("tatuadores")) {
+            rutaFXML = "/ventanaAETatuador.fxml";
+            titulo = "Editar Tatuador";
+        } else if (panelActivo.equals("citas")) {
+            rutaFXML = "/ventanaAECita.fxml";
+            titulo = "Editar Cita";
+        }
+
+        abrirVentana(rutaFXML, titulo);
     }
 
     @FXML
     void btnBorrar(MouseEvent event) {
-
+        
     }
 
     @FXML
     void btnBuscar(MouseEvent event) {
+        String panelActivo = getPanelActivo();
+        String rutaFXML = "";
+        String titulo = "";
 
+        if (panelActivo.equals("clientes")) {
+            rutaFXML = "/ventanaBCliente.fxml";
+            titulo = "Buscar Cliente";
+        } else if (panelActivo.equals("tatuadores")) {
+            rutaFXML = "/ventanaBTatuador.fxml";
+            titulo = "Buscar Tatuador";
+        } else if (panelActivo.equals("citas")) {
+            rutaFXML = "/ventanaBCita.fxml";
+            titulo = "Buscar Cita";
+        }
+
+        abrirVentana(rutaFXML, titulo);
+    }
+
+    
+    private String getPanelActivo() {
+        if (panelClientesActivo) {
+            return "clientes";
+        } else if (panelTatuadoresActivo) {
+            return "tatuadores";
+        } else if (panelCitasActivo) {
+            return "citas";
+        }
+
+        // Por defecto, retornamos citas
+        return "citas";
+    }
+
+    
+    private void abrirVentana(String rutaFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error al abrir ventana " + titulo + ": " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
@@ -133,16 +211,25 @@ public class miControlador implements Initializable{
     @FXML
     void btnClientes(MouseEvent event) {
         contenedorTablaClientes.toFront();
+        panelClientesActivo = true;
+        panelTatuadoresActivo = false;
+        panelCitasActivo = false;
     }
 
     @FXML
     void btnTatuadores(MouseEvent event) {
         contenedorTablaTatuadores.toFront();
+        panelClientesActivo = false;
+        panelTatuadoresActivo = true;
+        panelCitasActivo = false;
     }
 
     @FXML
     void btnCitas(MouseEvent event) {
         contenedorTablaCitas.toFront();
+        panelClientesActivo = false;
+        panelTatuadoresActivo = false;
+        panelCitasActivo = true;
     }
 
     @Override
@@ -266,7 +353,7 @@ public class miControlador implements Initializable{
         try {
             Connection conn = DatabaseConnection.getConnection();
             Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM clientes");
+            ResultSet resultado = st.executeQuery("SELECT * FROM CLIENTES");
 
             while (resultado.next()) {
                 Cliente cliente = new Cliente(
@@ -275,7 +362,7 @@ public class miControlador implements Initializable{
                     resultado.getString("apellidos"),
                     resultado.getString("telefono"),
                     resultado.getString("email"),
-                    resultado.getDate("fecha_nac"),
+                    resultado.getDate("fecha_nacimiento"),
                     resultado.getString("notas")
                 );
                 listaClientes.add(cliente);
@@ -291,7 +378,7 @@ public class miControlador implements Initializable{
         try {
             Connection conn = DatabaseConnection.getConnection();
             Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM artistas");
+            ResultSet resultado = st.executeQuery("SELECT * FROM TATUADORES");
 
             while (resultado.next()) {
                 Tatuador tatuador = new Tatuador(
@@ -315,7 +402,7 @@ public class miControlador implements Initializable{
         try {
             Connection conn = DatabaseConnection.getConnection();
             Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM citas");
+            ResultSet resultado = st.executeQuery("SELECT * FROM CITAS");
 
             while (resultado.next()) {
                 Cita cita = new Cita(
