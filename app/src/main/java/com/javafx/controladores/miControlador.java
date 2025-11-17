@@ -119,13 +119,13 @@ public class miControlador implements Initializable{
 
         if (panelActivo.equals("clientes")) {
             rutaFXML = "/ventanaAECliente.fxml";
-            titulo = "Añadir/Editar Cliente";
+            titulo = "Añadir Cliente";
         } else if (panelActivo.equals("tatuadores")) {
             rutaFXML = "/ventanaAETatuador.fxml";
-            titulo = "Añadir/Editar Tatuador";
+            titulo = "Añadir Tatuador";
         } else if (panelActivo.equals("citas")) {
             rutaFXML = "/ventanaAECita.fxml";
-            titulo = "Añadir/Editar Cita";
+            titulo = "Añadir Cita";
         }
 
         abrirVentana(rutaFXML, titulo);
