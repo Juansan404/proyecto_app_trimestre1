@@ -1,5 +1,6 @@
-package com.javafx;
+package com.javafx.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,13 +17,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class miControlador implements Initializable{
 
@@ -63,7 +68,23 @@ public class miControlador implements Initializable{
     void menuCitas(ActionEvent event) {
         contenedorTablaCitas.toFront();
     }
-    
+
+    @FXML
+    void menuExit(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaExit.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Salir");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error al abrir ventana de salida: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
     // TABLAS
     @FXML
@@ -78,7 +99,18 @@ public class miControlador implements Initializable{
     //BOTONES MANIPULACION TABLAS
     @FXML
     void btnAnadir(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaAECita.fxml"));
+            Parent root = loader.load();
 
+            Stage stage = new Stage();
+            stage.setTitle("Añadir/Editar Cita");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error al abrir ventana añadir cita: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML

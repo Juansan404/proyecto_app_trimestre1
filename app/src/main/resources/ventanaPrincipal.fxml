@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.miControlador">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.miControlador">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -42,20 +42,24 @@
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="EXIT" />
+            <Menu mnemonicParsing="false" text="EXIT">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuExit" text="Salir" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
    <center>
-      <AnchorPane prefHeight="576.0" prefWidth="838.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="925.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" text="Añadir" />
-            <Button layoutX="85.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" text="Editar" />
-            <Button layoutX="131.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" text="Borrar" />
-            <Button layoutX="512.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" text="Buscar" />
-            <StackPane fx:id="stackPanePrincipal" layoutX="34.0" layoutY="71.0" prefHeight="276.0" prefWidth="529.0">
+            <Button layoutX="104.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" text="Editar" />
+            <Button layoutX="167.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" text="Borrar" />
+            <Button layoutX="907.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" text="Buscar" />
+            <StackPane fx:id="stackPanePrincipal" layoutX="34.0" layoutY="71.0" prefHeight="400.0" prefWidth="925.0">
                <children>
-                  <VBox fx:id="contenedorPrincipal" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: lightgrey;">
+                  <VBox fx:id="contenedorPrincipal" alignment="CENTER" prefHeight="484.0" prefWidth="904.0" style="-fx-background-color: lightgrey;">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TATTOOAGE" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione una opcion del menu para continuar" />
@@ -70,7 +74,7 @@
                   </VBox>
                   <VBox fx:id="contenedorTablaClientes" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: lightblue;">
                      <children>
-                        <TableView fx:id="tableViewClientes" prefHeight="275.0" prefWidth="530.0">
+                        <TableView fx:id="tableViewClientes" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
@@ -79,16 +83,16 @@
                      </children></VBox>
                   <VBox fx:id="contenedorTablaTatuadores" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: lightcoral;">
                      <children>
-                        <TableView fx:id="tableViewTatuadores" prefHeight="277.0" prefWidth="530.0">
+                        <TableView fx:id="tableViewTatuadores" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
                           </columns>
                         </TableView>
                      </children></VBox>
-                  <VBox fx:id="contenedorTablaCitas" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: lightgreen;">
+                  <VBox fx:id="contenedorTablaCitas" prefHeight="276.0" prefWidth="800.0" style="-fx-background-color: lightgreen;">
                      <children>
-                        <TableView fx:id="tableViewCitas" prefHeight="294.0" prefWidth="530.0">
+                        <TableView fx:id="tableViewCitas" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
                             <TableColumn prefWidth="75.0" text="C2" />
