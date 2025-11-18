@@ -54,7 +54,7 @@
       <AnchorPane prefHeight="500.0" prefWidth="925.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" text="➕ Añadir" />
-            <Button layoutX="104.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" text="✏ Editar" />
+            <Button fx:id="btnEditar" layoutX="104.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" text="✏ Editar" />
             <Button layoutX="167.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" text="🗑 Borrar" />
             <Button layoutX="907.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" text="🔍 Buscar" />
             <StackPane fx:id="stackPanePrincipal" layoutX="34.0" layoutY="71.0" prefHeight="400.0" prefWidth="925.0">

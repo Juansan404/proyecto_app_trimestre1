@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -65,6 +66,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
+        actualizarEstadoBotonEditar();
     }
 
     @FXML
@@ -73,6 +75,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
+        actualizarEstadoBotonEditar();
     }
 
     @FXML
@@ -81,6 +84,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
+        actualizarEstadoBotonEditar();
     }
 
     @FXML
@@ -111,6 +115,9 @@ public class miControlador implements Initializable{
     private TableView<Tatuador> tableViewTatuadores;
 
     //BOTONES MANIPULACION TABLAS
+    @FXML
+    private Button btnEditar;
+
     @FXML
     void btnAnadir(MouseEvent event) {
         String panelActivo = getPanelActivo();
@@ -176,7 +183,7 @@ public class miControlador implements Initializable{
         abrirVentana(rutaFXML, titulo);
     }
 
-    
+
     private String getPanelActivo() {
         if (panelClientesActivo) {
             return "clientes";
@@ -190,7 +197,19 @@ public class miControlador implements Initializable{
         return "citas";
     }
 
-    
+    private void actualizarEstadoBotonEditar() {
+        if (panelClientesActivo) {
+            btnEditar.setDisable(tableViewClientes.getSelectionModel().getSelectedItem() == null);
+        } else if (panelTatuadoresActivo) {
+            btnEditar.setDisable(tableViewTatuadores.getSelectionModel().getSelectedItem() == null);
+        } else if (panelCitasActivo) {
+            btnEditar.setDisable(tableViewCitas.getSelectionModel().getSelectedItem() == null);
+        } else {
+            btnEditar.setDisable(true);
+        }
+    }
+
+
     private void abrirVentana(String rutaFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
@@ -214,6 +233,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
+        actualizarEstadoBotonEditar();
     }
 
     @FXML
@@ -222,6 +242,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
+        actualizarEstadoBotonEditar();
     }
 
     @FXML
@@ -230,11 +251,12 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
+        actualizarEstadoBotonEditar();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
         // Inicializar listas observables
         listaClientes = FXCollections.observableArrayList();
         listaTatuadores = FXCollections.observableArrayList();
@@ -250,10 +272,33 @@ public class miControlador implements Initializable{
         cargarTatuadores();
         cargarCitas();
 
+        // Deshabilitar el botón de editar por defecto
+        btnEditar.setDisable(false);
+
+        // Agregar listeners a las tablas para habilitar/deshabilitar el botón de editar
+        tableViewClientes.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (panelClientesActivo) {
+                btnEditar.setDisable(newSelection == null);
+            }
+        });
+
+        tableViewTatuadores.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (panelTatuadoresActivo) {
+                btnEditar.setDisable(newSelection == null);
+            }
+        });
+
+        tableViewCitas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (panelCitasActivo) {
+                btnEditar.setDisable(newSelection == null);
+            }
+        });
+
         // Mostrar pantalla principal
         contenedorPrincipal.toFront();
     }
 
+    @SuppressWarnings("unchecked")
     private void configurarTablaClientes() {
         tableViewClientes.getColumns().clear();
 
@@ -281,6 +326,7 @@ public class miControlador implements Initializable{
         tableViewClientes.setItems(listaClientes);
     }
 
+    @SuppressWarnings("unchecked")
     private void configurarTablaTatuadores() {
         tableViewTatuadores.getColumns().clear();
 
@@ -312,6 +358,7 @@ public class miControlador implements Initializable{
         tableViewTatuadores.setItems(listaTatuadores);
     }
 
+    @SuppressWarnings("unchecked")
     private void configurarTablaCitas() {
         tableViewCitas.getColumns().clear();
 

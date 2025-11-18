@@ -27,7 +27,6 @@ public class ventanaExitController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Inicialización de la ventana
     }
 
 }

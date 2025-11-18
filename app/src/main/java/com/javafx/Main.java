@@ -22,7 +22,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root);
         primeraEscena.setScene(scene);
-        primeraEscena.setTitle("-TATTOOAGE-");
+        primeraEscena.setTitle("--TATTOOAGE--");
         primeraEscena.show();
     }
 }
