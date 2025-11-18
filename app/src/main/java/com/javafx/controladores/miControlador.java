@@ -235,7 +235,6 @@ public class miControlador implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
-
         // Inicializar listas observables
         listaClientes = FXCollections.observableArrayList();
         listaTatuadores = FXCollections.observableArrayList();
