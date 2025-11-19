@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.ventanaAECitaController">
    <children>
       <Label layoutX="29.0" layoutY="14.0" text="Cliente:" />
-      <ChoiceBox layoutX="29.0" layoutY="32.0" prefHeight="26.0" prefWidth="322.0" />
+      <TextField layoutX="29.0" layoutY="32.0" prefHeight="26.0" prefWidth="322.0" />
       <Label layoutX="29.0" layoutY="76.0" text="Tatuador:" />
       <ChoiceBox layoutX="29.0" layoutY="94.0" prefHeight="26.0" prefWidth="322.0" />
       <Label layoutX="29.0" layoutY="144.0" text="Fecha:" />
