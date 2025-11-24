@@ -2,13 +2,11 @@ package com.javafx.controladores;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
-import com.javafx.database.DatabaseConnection;
+import com.javafx.dao.CitaDAO;
+import com.javafx.dao.ClienteDAO;
+import com.javafx.dao.TatuadorDAO;
 import com.javafx.modelos.Cita;
 import com.javafx.modelos.Cliente;
 import com.javafx.modelos.Tatuador;
@@ -31,6 +29,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class miControlador implements Initializable{
+
+    // DAOs
+    private ClienteDAO clienteDAO;
+    private TatuadorDAO tatuadorDAO;
+    private CitaDAO citaDAO;
 
     // Listas observables para las tablas
     private ObservableList<Cliente> listaClientes;
@@ -257,6 +260,11 @@ public class miControlador implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // Inicializar DAOs
+        clienteDAO = new ClienteDAO();
+        tatuadorDAO = new TatuadorDAO();
+        citaDAO = new CitaDAO();
+
         // Inicializar listas observables
         listaClientes = FXCollections.observableArrayList();
         listaTatuadores = FXCollections.observableArrayList();
@@ -396,79 +404,17 @@ public class miControlador implements Initializable{
 
     private void cargarClientes() {
         listaClientes.clear();
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM CLIENTES");
-
-            while (resultado.next()) {
-                Cliente cliente = new Cliente(
-                    resultado.getInt("id_cliente"),
-                    resultado.getString("nombre"),
-                    resultado.getString("apellidos"),
-                    resultado.getString("telefono"),
-                    resultado.getString("email"),
-                    resultado.getDate("fecha_nacimiento"),
-                    resultado.getString("notas")
-                );
-                listaClientes.add(cliente);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al cargar clientes: " + e.getMessage());
-            e.printStackTrace();
-        }
+        listaClientes.addAll(clienteDAO.cargarClientes());
     }
 
     private void cargarTatuadores() {
         listaTatuadores.clear();
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM TATUADORES");
-
-            while (resultado.next()) {
-                Tatuador tatuador = new Tatuador(
-                    resultado.getInt("id_artista"),
-                    resultado.getString("nombre"),
-                    resultado.getString("apellidos"),
-                    resultado.getString("telefono"),
-                    resultado.getString("email"),
-                    resultado.getBoolean("activo")
-                );
-                listaTatuadores.add(tatuador);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al cargar tatuadores: " + e.getMessage());
-            e.printStackTrace();
-        }
+        listaTatuadores.addAll(tatuadorDAO.cargarTatuadores());
     }
 
     private void cargarCitas() {
         listaCitas.clear();
-        try {
-            Connection conn = DatabaseConnection.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM CITAS");
-
-            while (resultado.next()) {
-                Cita cita = new Cita(
-                    resultado.getInt("id_cita"),
-                    resultado.getInt("id_cliente"),
-                    resultado.getInt("id_artista"),
-                    resultado.getDate("fecha_cita"),
-                    resultado.getInt("duracion_aproximada"),
-                    resultado.getDouble("precio"),
-                    Cita.EstadoCita.fromString(resultado.getString("estado")),
-                    resultado.getString("sala"),
-                    resultado.getBytes("foto_diseno"),
-                    resultado.getString("notas")
-                );
-                listaCitas.add(cita);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al cargar citas: " + e.getMessage());
-            e.printStackTrace();
-        }
+        listaCitas.addAll(citaDAO.cargarCitas());
     }
 
     public void refrescarTablas() {
