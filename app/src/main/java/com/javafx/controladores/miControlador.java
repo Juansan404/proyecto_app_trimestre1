@@ -69,7 +69,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
-        actualizarEstadoBotonEditar();
+        actualizarEstadoBotones();
     }
 
     @FXML
@@ -78,7 +78,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
-        actualizarEstadoBotonEditar();
+        actualizarEstadoBotones();
     }
 
     @FXML
@@ -87,7 +87,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
-        actualizarEstadoBotonEditar();
+        actualizarEstadoBotones();
     }
 
     @FXML
@@ -119,7 +119,16 @@ public class miControlador implements Initializable{
 
     //BOTONES MANIPULACION TABLAS
     @FXML
+    private Button btnAnadir;
+
+    @FXML
     private Button btnEditar;
+
+    @FXML
+    private Button btnBorrar;
+
+    @FXML
+    private Button btnBuscar;
 
     @FXML
     void btnAnadir(MouseEvent event) {
@@ -200,7 +209,21 @@ public class miControlador implements Initializable{
         return "citas";
     }
 
-    private void actualizarEstadoBotonEditar() {
+    private void actualizarEstadoBotones() {
+        boolean algunPanelActivo = panelClientesActivo || panelTatuadoresActivo || panelCitasActivo;
+
+        // Mostrar u ocultar botones según si hay un panel activo
+        btnAnadir.setVisible(algunPanelActivo);
+        btnAnadir.setDisable(!algunPanelActivo);
+
+        btnEditar.setVisible(algunPanelActivo);
+        btnBorrar.setVisible(algunPanelActivo);
+        btnBorrar.setDisable(!algunPanelActivo);
+
+        btnBuscar.setVisible(algunPanelActivo);
+        btnBuscar.setDisable(!algunPanelActivo);
+
+        // Actualizar estado del botón editar según la selección
         if (panelClientesActivo) {
             btnEditar.setDisable(tableViewClientes.getSelectionModel().getSelectedItem() == null);
         } else if (panelTatuadoresActivo) {
@@ -236,7 +259,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
-        actualizarEstadoBotonEditar();
+        actualizarEstadoBotones();
     }
 
     @FXML
@@ -245,7 +268,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
-        actualizarEstadoBotonEditar();
+        actualizarEstadoBotones();
     }
 
     @FXML
@@ -254,7 +277,7 @@ public class miControlador implements Initializable{
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
-        actualizarEstadoBotonEditar();
+        actualizarEstadoBotones();
     }
 
     @Override
@@ -280,9 +303,6 @@ public class miControlador implements Initializable{
         cargarTatuadores();
         cargarCitas();
 
-        // Deshabilitar el botón de editar por defecto
-        btnEditar.setDisable(false);
-
         // Agregar listeners a las tablas para habilitar/deshabilitar el botón de editar
         tableViewClientes.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (panelClientesActivo) {
@@ -301,6 +321,9 @@ public class miControlador implements Initializable{
                 btnEditar.setDisable(newSelection == null);
             }
         });
+
+        // Ocultar y deshabilitar botones al inicio (pantalla principal activa)
+        actualizarEstadoBotones();
 
         // Mostrar pantalla principal
         contenedorPrincipal.toFront();
