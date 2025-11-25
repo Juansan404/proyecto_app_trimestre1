@@ -11,18 +11,18 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.ventanaAEClienteController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Nombre:" />
-      <TextField layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="314.0" />
+      <TextField fx:id="txtNombre" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="314.0" />
       <Label layoutX="14.0" layoutY="76.0" text="Apellidos:" />
-      <TextField layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="314.0" />
+      <TextField fx:id="txtApellidos" layoutX="14.0" layoutY="94.0" prefHeight="26.0" prefWidth="314.0" />
       <Label layoutX="14.0" layoutY="146.0" text="Email:" />
-      <TextField layoutX="14.0" layoutY="168.0" prefHeight="26.0" prefWidth="313.0" />
+      <TextField fx:id="txtEmail" layoutX="14.0" layoutY="168.0" prefHeight="26.0" prefWidth="313.0" />
       <Label layoutX="16.0" layoutY="215.0" text="Telefono:" />
-      <TextField layoutX="14.0" layoutY="233.0" />
+      <TextField fx:id="txtTelefono" layoutX="14.0" layoutY="233.0" />
       <Label layoutX="188.0" layoutY="215.0" text="Fecha Nacimiento:" />
-      <DatePicker layoutX="181.0" layoutY="233.0" prefHeight="26.0" prefWidth="150.0" />
+      <DatePicker fx:id="dateFechaNac" layoutX="181.0" layoutY="233.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="12.0" layoutY="278.0" text="Notas:" />
-      <TextArea layoutX="12.0" layoutY="296.0" prefHeight="139.0" prefWidth="314.0" />
-      <Button layoutX="89.0" layoutY="459.0" mnemonicParsing="false" text="Guardar" />
-      <Button layoutX="194.0" layoutY="459.0" mnemonicParsing="false" text="Cancelar" />
+      <TextArea fx:id="txtNotas" layoutX="12.0" layoutY="296.0" prefHeight="139.0" prefWidth="314.0" />
+      <Button layoutX="89.0" layoutY="459.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" text="Guardar" />
+      <Button layoutX="194.0" layoutY="459.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" text="Cancelar" />
    </children>
 </AnchorPane>

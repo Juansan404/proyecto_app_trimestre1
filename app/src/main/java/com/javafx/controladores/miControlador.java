@@ -2,6 +2,7 @@ package com.javafx.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.javafx.dao.CitaDAO;
@@ -147,7 +148,7 @@ public class miControlador implements Initializable{
             titulo = "Añadir Cita";
         }
 
-        abrirVentana(rutaFXML, titulo);
+        abrirVentana(rutaFXML, titulo, null);
     }
 
     @FXML
@@ -155,24 +156,57 @@ public class miControlador implements Initializable{
         String panelActivo = getPanelActivo();
         String rutaFXML = "";
         String titulo = "";
+        Object objetoSeleccionado = null;
 
         if (panelActivo.equals("clientes")) {
             rutaFXML = "/ventanaAECliente.fxml";
             titulo = "Editar Cliente";
+            objetoSeleccionado = tableViewClientes.getSelectionModel().getSelectedItem();
         } else if (panelActivo.equals("tatuadores")) {
             rutaFXML = "/ventanaAETatuador.fxml";
             titulo = "Editar Tatuador";
+            objetoSeleccionado = tableViewTatuadores.getSelectionModel().getSelectedItem();
         } else if (panelActivo.equals("citas")) {
             rutaFXML = "/ventanaAECita.fxml";
             titulo = "Editar Cita";
+            objetoSeleccionado = tableViewCitas.getSelectionModel().getSelectedItem();
         }
 
-        abrirVentana(rutaFXML, titulo);
+        abrirVentana(rutaFXML, titulo, objetoSeleccionado);
     }
 
     @FXML
     void btnBorrar(MouseEvent event) {
-        
+        String panelActivo = getPanelActivo();
+
+        if (panelActivo.equals("citas")) {
+            Cita citaSeleccionada = tableViewCitas.getSelectionModel().getSelectedItem();
+            if (citaSeleccionada != null) {
+                javafx.scene.control.Alert confirmacion = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                confirmacion.setTitle("Confirmar eliminación");
+                confirmacion.setHeaderText("¿Está seguro de eliminar esta cita?");
+                confirmacion.setContentText("Esta acción no se puede deshacer.");
+
+                confirmacion.showAndWait().ifPresent(response -> {
+                    if (response == javafx.scene.control.ButtonType.OK) {
+                        if (citaDAO.eliminarCita(citaSeleccionada.getId_cita())) {
+                            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+                            alerta.setTitle("Éxito");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("Cita eliminada correctamente");
+                            alerta.showAndWait();
+                            refrescarTablas();
+                        } else {
+                            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+                            alerta.setTitle("Error");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("No se pudo eliminar la cita");
+                            alerta.showAndWait();
+                        }
+                    }
+                });
+            }
+        }
     }
 
     @FXML
@@ -192,7 +226,7 @@ public class miControlador implements Initializable{
             titulo = "Buscar Cita";
         }
 
-        abrirVentana(rutaFXML, titulo);
+        abrirVentanaBusqueda(rutaFXML, titulo);
     }
 
 
@@ -236,10 +270,50 @@ public class miControlador implements Initializable{
     }
 
 
-    private void abrirVentana(String rutaFXML, String titulo) {
+    private void abrirVentana(String rutaFXML, String titulo, Object objetoAEditar) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
+
+            if (objetoAEditar != null) {
+                if (objetoAEditar instanceof Cita) {
+                    ventanaAECitaController controller = loader.getController();
+                    controller.setCitaAEditar((Cita) objetoAEditar);
+                } else if (objetoAEditar instanceof Cliente) {
+                    ventanaAEClienteController controller = loader.getController();
+                    controller.setClienteAEditar((Cliente) objetoAEditar);
+                } else if (objetoAEditar instanceof Tatuador) {
+                    ventanaAETatuadorController controller = loader.getController();
+                    controller.setTatuadorAEditar((Tatuador) objetoAEditar);
+                }
+            }
+
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.setOnHidden(e -> refrescarTablas());
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error al abrir ventana " + titulo + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirVentanaBusqueda(String rutaFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            Parent root = loader.load();
+
+            if (rutaFXML.contains("Cita")) {
+                ventanaBCitaController controller = loader.getController();
+                controller.setControladorPrincipal(this);
+            } else if (rutaFXML.contains("Cliente")) {
+                ventanaBClienteController controller = loader.getController();
+                controller.setControladorPrincipal(this);
+            } else if (rutaFXML.contains("Tatuador")) {
+                ventanaBTatuadorController controller = loader.getController();
+                controller.setControladorPrincipal(this);
+            }
 
             Stage stage = new Stage();
             stage.setTitle(titulo);
@@ -444,5 +518,20 @@ public class miControlador implements Initializable{
         cargarClientes();
         cargarTatuadores();
         cargarCitas();
+    }
+
+    public void actualizarTablaCitasConResultados(List<Cita> resultados) {
+        listaCitas.clear();
+        listaCitas.addAll(resultados);
+    }
+
+    public void actualizarTablaClientesConResultados(List<Cliente> resultados) {
+        listaClientes.clear();
+        listaClientes.addAll(resultados);
+    }
+
+    public void actualizarTablaTatuadoresConResultados(List<Tatuador> resultados) {
+        listaTatuadores.clear();
+        listaTatuadores.addAll(resultados);
     }
 }
