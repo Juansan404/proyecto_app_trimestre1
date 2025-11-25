@@ -132,6 +132,9 @@ public class miControlador implements Initializable{
     private Button btnBuscar;
 
     @FXML
+    private Button btnResetearFiltro;
+
+    @FXML
     void btnAnadir(MouseEvent event) {
         String panelActivo = getPanelActivo();
         String rutaFXML = "";
@@ -179,7 +182,61 @@ public class miControlador implements Initializable{
     void btnBorrar(MouseEvent event) {
         String panelActivo = getPanelActivo();
 
-        if (panelActivo.equals("citas")) {
+        if (panelActivo.equals("clientes")) {
+            Cliente clienteSeleccionado = tableViewClientes.getSelectionModel().getSelectedItem();
+            if (clienteSeleccionado != null) {
+                javafx.scene.control.Alert confirmacion = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                confirmacion.setTitle("Confirmar eliminación");
+                confirmacion.setHeaderText("¿Está seguro de eliminar este cliente?");
+                confirmacion.setContentText("Esta acción no se puede deshacer.");
+
+                confirmacion.showAndWait().ifPresent(response -> {
+                    if (response == javafx.scene.control.ButtonType.OK) {
+                        if (clienteDAO.eliminarCliente(clienteSeleccionado.getId_cliente())) {
+                            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+                            alerta.setTitle("Éxito");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("Cliente eliminado correctamente");
+                            alerta.showAndWait();
+                            refrescarTablas();
+                        } else {
+                            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+                            alerta.setTitle("Error");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("No se pudo eliminar el cliente");
+                            alerta.showAndWait();
+                        }
+                    }
+                });
+            }
+        } else if (panelActivo.equals("tatuadores")) {
+            Tatuador tatuadorSeleccionado = tableViewTatuadores.getSelectionModel().getSelectedItem();
+            if (tatuadorSeleccionado != null) {
+                javafx.scene.control.Alert confirmacion = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                confirmacion.setTitle("Confirmar eliminación");
+                confirmacion.setHeaderText("¿Está seguro de eliminar este tatuador?");
+                confirmacion.setContentText("Esta acción no se puede deshacer.");
+
+                confirmacion.showAndWait().ifPresent(response -> {
+                    if (response == javafx.scene.control.ButtonType.OK) {
+                        if (tatuadorDAO.eliminarTatuador(tatuadorSeleccionado.getId_artista())) {
+                            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+                            alerta.setTitle("Éxito");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("Tatuador eliminado correctamente");
+                            alerta.showAndWait();
+                            refrescarTablas();
+                        } else {
+                            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+                            alerta.setTitle("Error");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("No se pudo eliminar el tatuador");
+                            alerta.showAndWait();
+                        }
+                    }
+                });
+            }
+        } else if (panelActivo.equals("citas")) {
             Cita citaSeleccionada = tableViewCitas.getSelectionModel().getSelectedItem();
             if (citaSeleccionada != null) {
                 javafx.scene.control.Alert confirmacion = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
@@ -229,6 +286,12 @@ public class miControlador implements Initializable{
         abrirVentanaBusqueda(rutaFXML, titulo);
     }
 
+    @FXML
+    void btnResetearFiltro(MouseEvent event) {
+        refrescarTablas();
+        btnResetearFiltro.setVisible(false);
+    }
+
 
     private String getPanelActivo() {
         if (panelClientesActivo) {
@@ -252,20 +315,26 @@ public class miControlador implements Initializable{
 
         btnEditar.setVisible(algunPanelActivo);
         btnBorrar.setVisible(algunPanelActivo);
-        btnBorrar.setDisable(!algunPanelActivo);
 
         btnBuscar.setVisible(algunPanelActivo);
         btnBuscar.setDisable(!algunPanelActivo);
 
-        // Actualizar estado del botón editar según la selección
+        // Actualizar estado de los botones editar y borrar según la selección
         if (panelClientesActivo) {
-            btnEditar.setDisable(tableViewClientes.getSelectionModel().getSelectedItem() == null);
+            boolean tieneSeleccion = tableViewClientes.getSelectionModel().getSelectedItem() != null;
+            btnEditar.setDisable(!tieneSeleccion);
+            btnBorrar.setDisable(!tieneSeleccion);
         } else if (panelTatuadoresActivo) {
-            btnEditar.setDisable(tableViewTatuadores.getSelectionModel().getSelectedItem() == null);
+            boolean tieneSeleccion = tableViewTatuadores.getSelectionModel().getSelectedItem() != null;
+            btnEditar.setDisable(!tieneSeleccion);
+            btnBorrar.setDisable(!tieneSeleccion);
         } else if (panelCitasActivo) {
-            btnEditar.setDisable(tableViewCitas.getSelectionModel().getSelectedItem() == null);
+            boolean tieneSeleccion = tableViewCitas.getSelectionModel().getSelectedItem() != null;
+            btnEditar.setDisable(!tieneSeleccion);
+            btnBorrar.setDisable(!tieneSeleccion);
         } else {
             btnEditar.setDisable(true);
+            btnBorrar.setDisable(true);
         }
     }
 
@@ -377,22 +446,28 @@ public class miControlador implements Initializable{
         cargarTatuadores();
         cargarCitas();
 
-        // Agregar listeners a las tablas para habilitar/deshabilitar el botón de editar
+        // Agregar listeners a las tablas para habilitar/deshabilitar los botones de editar y borrar
         tableViewClientes.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (panelClientesActivo) {
-                btnEditar.setDisable(newSelection == null);
+                boolean tieneSeleccion = newSelection != null;
+                btnEditar.setDisable(!tieneSeleccion);
+                btnBorrar.setDisable(!tieneSeleccion);
             }
         });
 
         tableViewTatuadores.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (panelTatuadoresActivo) {
-                btnEditar.setDisable(newSelection == null);
+                boolean tieneSeleccion = newSelection != null;
+                btnEditar.setDisable(!tieneSeleccion);
+                btnBorrar.setDisable(!tieneSeleccion);
             }
         });
 
         tableViewCitas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (panelCitasActivo) {
-                btnEditar.setDisable(newSelection == null);
+                boolean tieneSeleccion = newSelection != null;
+                btnEditar.setDisable(!tieneSeleccion);
+                btnBorrar.setDisable(!tieneSeleccion);
             }
         });
 
@@ -523,15 +598,18 @@ public class miControlador implements Initializable{
     public void actualizarTablaCitasConResultados(List<Cita> resultados) {
         listaCitas.clear();
         listaCitas.addAll(resultados);
+        btnResetearFiltro.setVisible(true);
     }
 
     public void actualizarTablaClientesConResultados(List<Cliente> resultados) {
         listaClientes.clear();
         listaClientes.addAll(resultados);
+        btnResetearFiltro.setVisible(true);
     }
 
     public void actualizarTablaTatuadoresConResultados(List<Tatuador> resultados) {
         listaTatuadores.clear();
         listaTatuadores.addAll(resultados);
+        btnResetearFiltro.setVisible(true);
     }
 }
