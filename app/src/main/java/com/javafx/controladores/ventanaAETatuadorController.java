@@ -3,6 +3,10 @@ package com.javafx.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import com.javafx.dao.TatuadorDAO;
 import com.javafx.modelos.Tatuador;
 
@@ -34,6 +38,7 @@ public class ventanaAETatuadorController implements Initializable {
     private TatuadorDAO tatuadorDAO;
     private Tatuador tatuadorAEditar;
     private boolean modoEdicion = false;
+    private ValidationSupport validationSupport;
 
     public void setTatuadorAEditar(Tatuador tatuador) {
         this.tatuadorAEditar = tatuador;
@@ -48,17 +53,20 @@ public class ventanaAETatuadorController implements Initializable {
 
     @FXML
     void buttonGuardar(MouseEvent event) {
+        // Verificar validaciones
+        if (validationSupport.isInvalid()) {
+            mostrarAlerta("Error de Validación",
+                          "Por favor, corrija los errores en el formulario antes de guardar",
+                          Alert.AlertType.ERROR);
+            return;
+        }
+
         try {
             String nombre = txtNombre.getText().trim();
             String apellidos = txtApellidos.getText().trim();
             String email = txtEmail.getText().trim();
             String telefono = txtTelefono.getText().trim();
             boolean activo = checkActivo.isSelected();
-
-            if (nombre.isEmpty() || apellidos.isEmpty()) {
-                mostrarAlerta("Error", "El nombre y apellidos son obligatorios", Alert.AlertType.ERROR);
-                return;
-            }
 
             boolean exito;
             if (modoEdicion) {
@@ -90,6 +98,54 @@ public class ventanaAETatuadorController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         tatuadorDAO = new TatuadorDAO();
         checkActivo.setSelected(true);
+        configurarValidaciones();
+    }
+
+    private void configurarValidaciones() {
+        validationSupport = new ValidationSupport();
+
+
+        // Validador para nombre
+        Validator<String> nombreValidator = (control, value) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return ValidationResult.fromError(control, "El nombre es obligatorio");
+            }
+            return null;
+        };
+
+        // Validador para apellidos
+        Validator<String> apellidosValidator = (control, value) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return ValidationResult.fromError(control, "Los apellidos son obligatorios");
+            }
+            return null;
+        };
+
+        // Validador para email
+        Validator<String> emailValidator = (control, value) -> {
+            if (value != null && !value.trim().isEmpty()) {
+                String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+                if (!value.matches(emailRegex)) {
+                    return ValidationResult.fromError(control, "Email no válido");
+                }
+            }
+            return null;
+        };
+
+        // Validador para teléfono (si tiene valor debe tener 9 dígitos)
+        Validator<String> telefonoValidator = (control, value) -> {
+            if (value != null && !value.trim().isEmpty()) {
+                if (!value.matches("\\d{9}")) {
+                    return ValidationResult.fromError(control, "El teléfono debe tener 9 dígitos");
+                }
+            }
+            return null;
+        };
+
+        validationSupport.registerValidator(txtNombre, nombreValidator);
+        validationSupport.registerValidator(txtApellidos, apellidosValidator);
+        validationSupport.registerValidator(txtEmail, emailValidator);
+        validationSupport.registerValidator(txtTelefono, telefonoValidator);
     }
 
     private void cargarDatosTatuador() {

@@ -1,10 +1,15 @@
 package com.javafx.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 
 import com.javafx.dao.CitaDAO;
 import com.javafx.dao.ClienteDAO;
@@ -15,8 +20,12 @@ import com.javafx.modelos.Tatuador;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -27,7 +36,10 @@ import javafx.stage.Stage;
 public class ventanaAECitaController implements Initializable {
 
     @FXML
-    private ChoiceBox<Cliente> choiceCliente;
+    private TextField txtCliente;
+
+    @FXML
+    private Button btnBuscarCliente;
 
     @FXML
     private ChoiceBox<Tatuador> choiceTatuador;
@@ -55,11 +67,39 @@ public class ventanaAECitaController implements Initializable {
     private TatuadorDAO tatuadorDAO;
     private Cita citaAEditar;
     private boolean modoEdicion = false;
+    private Cliente clienteSeleccionado;
+    private ValidationSupport validationSupport;
 
     public void setCitaAEditar(Cita cita) {
         this.citaAEditar = cita;
         this.modoEdicion = true;
         cargarDatosCita();
+    }
+
+    @FXML
+    void buttonBuscarCliente(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaBCliente.fxml"));
+            Parent root = loader.load();
+
+            ventanaBClienteController controller = loader.getController();
+            controller.setControladorCita(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Buscar Cliente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            mostrarAlerta("Error", "Error al abrir ventana de búsqueda: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    public void setClienteSeleccionado(Cliente cliente) {
+        this.clienteSeleccionado = cliente;
+        if (cliente != null) {
+            txtCliente.setText(cliente.getNombre() + " " + cliente.getApellidos());
+        }
     }
 
     @FXML
@@ -69,8 +109,15 @@ public class ventanaAECitaController implements Initializable {
 
     @FXML
     void buttonGuardar(MouseEvent event) {
+        // Verificar validaciones
+        if (validationSupport.isInvalid()) {
+            mostrarAlerta("Error de Validación",
+                          "Por favor, corrija los errores en el formulario antes de guardar",
+                          Alert.AlertType.ERROR);
+            return;
+        }
+
         try {
-            Cliente clienteSeleccionado = choiceCliente.getValue();
             Tatuador tatuadorSeleccionado = choiceTatuador.getValue();
             LocalDate fechaLocal = dateFecha.getValue();
             int duracion = Integer.parseInt(txtDuracion.getText().trim());
@@ -120,26 +167,95 @@ public class ventanaAECitaController implements Initializable {
         clienteDAO = new ClienteDAO();
         tatuadorDAO = new TatuadorDAO();
 
-        cargarClientes();
         cargarTatuadores();
         configurarChoiceSala();
         configurarChoiceEstado();
+        configurarValidaciones();
     }
 
-    private void cargarClientes() {
-        List<Cliente> clientes = clienteDAO.cargarClientes();
-        choiceCliente.setItems(FXCollections.observableArrayList(clientes));
-        choiceCliente.setConverter(new javafx.util.StringConverter<Cliente>() {
-            @Override
-            public String toString(Cliente cliente) {
-                return cliente != null ? cliente.getNombre() + " " + cliente.getApellidos() : "";
-            }
+    private void configurarValidaciones() {
+        validationSupport = new ValidationSupport();
 
-            @Override
-            public Cliente fromString(String string) {
-                return null;
+        // Validador para cliente (obligatorio - debe haber cliente seleccionado)
+        Validator<String> clienteValidator = (control, value) -> {
+            if (clienteSeleccionado == null) {
+                return ValidationResult.fromError(control, "Debe buscar y seleccionar un cliente");
             }
-        });
+            return null;
+        };
+
+        // Validador para tatuador (obligatorio)
+        Validator<Object> tatuadorValidator = (control, value) -> {
+            if (value == null) {
+                return ValidationResult.fromError(control, "Debe seleccionar un tatuador");
+            }
+            return null;
+        };
+
+        // Validador para fecha (obligatorio)
+        Validator<LocalDate> fechaValidator = (control, value) -> {
+            if (value == null) {
+                return ValidationResult.fromError(control, "Debe seleccionar una fecha");
+            }
+            return null;
+        };
+
+        // Validador para duración (obligatorio, número entero positivo)
+        Validator<String> duracionValidator = (control, value) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return ValidationResult.fromError(control, "La duración es obligatoria");
+            }
+            try {
+                int num = Integer.parseInt(value.trim());
+                if (num <= 0) {
+                    return ValidationResult.fromError(control, "Debe ser un número positivo");
+                }
+            } catch (NumberFormatException e) {
+                return ValidationResult.fromError(control, "Debe ser un número entero");
+            }
+            return null;
+        };
+
+        // Validador para precio (obligatorio, número decimal positivo)
+        Validator<String> precioValidator = (control, value) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return ValidationResult.fromError(control, "El precio es obligatorio");
+            }
+            try {
+                double num = Double.parseDouble(value.trim().replace(',', '.'));
+                if (num <= 0) {
+                    return ValidationResult.fromError(control, "Debe ser un número positivo");
+                }
+            } catch (NumberFormatException e) {
+                return ValidationResult.fromError(control, "Debe ser un número decimal válido");
+            }
+            return null;
+        };
+
+        // Validador para sala (obligatorio)
+        Validator<Object> salaValidator = (control, value) -> {
+            if (value == null) {
+                return ValidationResult.fromError(control, "Debe seleccionar una sala");
+            }
+            return null;
+        };
+
+        // Validador para estado (obligatorio)
+        Validator<Object> estadoValidator = (control, value) -> {
+            if (value == null) {
+                return ValidationResult.fromError(control, "Debe seleccionar un estado");
+            }
+            return null;
+        };
+
+        // Registrar validadores
+        validationSupport.registerValidator(txtCliente, clienteValidator);
+        validationSupport.registerValidator(choiceTatuador, tatuadorValidator);
+        validationSupport.registerValidator(dateFecha, fechaValidator);
+        validationSupport.registerValidator(txtDuracion, duracionValidator);
+        validationSupport.registerValidator(txtPrecio, precioValidator);
+        validationSupport.registerValidator(choiceSala, salaValidator);
+        validationSupport.registerValidator(choiceEstado, estadoValidator);
     }
 
     private void cargarTatuadores() {
@@ -170,13 +286,14 @@ public class ventanaAECitaController implements Initializable {
 
     private void cargarDatosCita() {
         if (citaAEditar != null) {
-            for (Cliente c : choiceCliente.getItems()) {
-                if (c.getId_cliente() == citaAEditar.getId_cliente()) {
-                    choiceCliente.setValue(c);
-                    break;
-                }
+            // Cargar cliente
+            Cliente cliente = clienteDAO.obtenerClientePorId(citaAEditar.getId_cliente());
+            if (cliente != null) {
+                clienteSeleccionado = cliente;
+                txtCliente.setText(cliente.getNombre() + " " + cliente.getApellidos());
             }
 
+            // Cargar tatuador
             for (Tatuador t : choiceTatuador.getItems()) {
                 if (t.getId_artista() == citaAEditar.getId_artista()) {
                     choiceTatuador.setValue(t);
@@ -202,7 +319,7 @@ public class ventanaAECitaController implements Initializable {
     }
 
     private void cerrarVentana() {
-        Stage stage = (Stage) choiceCliente.getScene().getWindow();
+        Stage stage = (Stage) txtCliente.getScene().getWindow();
         stage.close();
     }
 

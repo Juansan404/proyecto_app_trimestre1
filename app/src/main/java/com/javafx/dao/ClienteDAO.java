@@ -98,6 +98,33 @@ public class ClienteDAO {
         }
     }
 
+    public Cliente obtenerClientePorId(int idCliente) {
+        String sql = "SELECT * FROM CLIENTES WHERE id_cliente = ?";
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idCliente);
+
+            ResultSet resultado = pstmt.executeQuery();
+
+            if (resultado.next()) {
+                return new Cliente(
+                    resultado.getInt("id_cliente"),
+                    resultado.getString("nombre"),
+                    resultado.getString("apellidos"),
+                    resultado.getString("telefono"),
+                    resultado.getString("email"),
+                    resultado.getDate("fecha_nacimiento"),
+                    resultado.getString("notas")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener cliente por ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Cliente> buscarClientes(String criterio, String valor) {
         List<Cliente> resultados = new ArrayList<>();
         String sql = "SELECT * FROM CLIENTES WHERE ";

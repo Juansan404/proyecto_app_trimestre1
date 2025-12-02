@@ -15,6 +15,9 @@ javafx {
 dependencies {
     // MySQL JDBC Driver para conectar con la base de datos
     implementation 'com.mysql:mysql-connector-j:8.2.0'
+
+    // ControlsFX para validaciones
+    implementation 'org.controlsfx:controlsfx:11.2.2'
 }
 
 java { //Se indica la versión de JDK que ha de utilizar

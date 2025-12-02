@@ -5,6 +5,10 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import com.javafx.dao.ClienteDAO;
 import com.javafx.modelos.Cliente;
 
@@ -40,6 +44,7 @@ public class ventanaAEClienteController implements Initializable {
     private ClienteDAO clienteDAO;
     private Cliente clienteAEditar;
     private boolean modoEdicion = false;
+    private ValidationSupport validationSupport;
 
     public void setClienteAEditar(Cliente cliente) {
         this.clienteAEditar = cliente;
@@ -54,6 +59,14 @@ public class ventanaAEClienteController implements Initializable {
 
     @FXML
     void buttonGuardar(MouseEvent event) {
+        // Verificar validaciones
+        if (validationSupport.isInvalid()) {
+            mostrarAlerta("Error de Validación",
+                          "Por favor, corrija los errores en el formulario antes de guardar",
+                          Alert.AlertType.ERROR);
+            return;
+        }
+
         try {
             String nombre = txtNombre.getText().trim();
             String apellidos = txtApellidos.getText().trim();
@@ -61,11 +74,6 @@ public class ventanaAEClienteController implements Initializable {
             String telefono = txtTelefono.getText().trim();
             LocalDate fechaLocal = dateFechaNac.getValue();
             String notas = txtNotas.getText().trim();
-
-            if (nombre.isEmpty() || apellidos.isEmpty()) {
-                mostrarAlerta("Error", "El nombre y apellidos son obligatorios", Alert.AlertType.ERROR);
-                return;
-            }
 
             Date fechaSQL = fechaLocal != null ? Date.valueOf(fechaLocal) : null;
 
@@ -99,6 +107,54 @@ public class ventanaAEClienteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         clienteDAO = new ClienteDAO();
+        configurarValidaciones();
+    }
+
+    private void configurarValidaciones() {
+        validationSupport = new ValidationSupport();
+
+        // Validador para nombre (obligatorio)
+        Validator<String> nombreValidator = (control, value) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return ValidationResult.fromError(control, "El nombre es obligatorio");
+            }
+            return null;
+        };
+
+        // Validador para apellidos (obligatorio)
+        Validator<String> apellidosValidator = (control, value) -> {
+            if (value == null || value.trim().isEmpty()) {
+                return ValidationResult.fromError(control, "Los apellidos son obligatorios");
+            }
+            return null;
+        };
+
+        // Validador para email (opcional, pero si tiene valor debe ser válido)
+        Validator<String> emailValidator = (control, value) -> {
+            if (value != null && !value.trim().isEmpty()) {
+                String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+                if (!value.matches(emailRegex)) {
+                    return ValidationResult.fromError(control, "Email no válido");
+                }
+            }
+            return null;
+        };
+
+        // Validador para teléfono (opcional, pero si tiene valor debe tener 9 dígitos)
+        Validator<String> telefonoValidator = (control, value) -> {
+            if (value != null && !value.trim().isEmpty()) {
+                if (!value.matches("\\d{9}")) {
+                    return ValidationResult.fromError(control, "El teléfono debe tener 9 dígitos");
+                }
+            }
+            return null;
+        };
+
+        // Registrar validadores
+        validationSupport.registerValidator(txtNombre, nombreValidator);
+        validationSupport.registerValidator(txtApellidos, apellidosValidator);
+        validationSupport.registerValidator(txtEmail, emailValidator);
+        validationSupport.registerValidator(txtTelefono, telefonoValidator);
     }
 
     private void cargarDatosCliente() {
