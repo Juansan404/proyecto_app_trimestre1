@@ -30,6 +30,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -176,6 +177,15 @@ public class ventanaAECitaController implements Initializable {
     private void configurarValidaciones() {
         validationSupport = new ValidationSupport();
 
+        // Configurar tooltips en los controles para mostrar ayuda al pasar el ratón
+        txtCliente.setTooltip(new Tooltip("Debe buscar y seleccionar un cliente"));
+        choiceTatuador.setTooltip(new Tooltip("Seleccione un tatuador"));
+        dateFecha.setTooltip(new Tooltip("Seleccione la fecha de la cita"));
+        txtDuracion.setTooltip(new Tooltip("Duración aproximada en minutos (número entero positivo)"));
+        txtPrecio.setTooltip(new Tooltip("Precio de la cita (número decimal positivo)"));
+        choiceSala.setTooltip(new Tooltip("Seleccione la sala (A, B, C o D)"));
+        choiceEstado.setTooltip(new Tooltip("Seleccione el estado de la cita"));
+
         // Validador para cliente (obligatorio - debe haber cliente seleccionado)
         Validator<String> clienteValidator = (control, value) -> {
             if (clienteSeleccionado == null) {
@@ -249,13 +259,13 @@ public class ventanaAECitaController implements Initializable {
         };
 
         // Registrar validadores
-        validationSupport.registerValidator(txtCliente, clienteValidator);
-        validationSupport.registerValidator(choiceTatuador, tatuadorValidator);
-        validationSupport.registerValidator(dateFecha, fechaValidator);
-        validationSupport.registerValidator(txtDuracion, duracionValidator);
-        validationSupport.registerValidator(txtPrecio, precioValidator);
-        validationSupport.registerValidator(choiceSala, salaValidator);
-        validationSupport.registerValidator(choiceEstado, estadoValidator);
+        validationSupport.registerValidator(txtCliente, false, clienteValidator);
+        validationSupport.registerValidator(choiceTatuador, false, tatuadorValidator);
+        validationSupport.registerValidator(dateFecha, false, fechaValidator);
+        validationSupport.registerValidator(txtDuracion, false, duracionValidator);
+        validationSupport.registerValidator(txtPrecio, false, precioValidator);
+        validationSupport.registerValidator(choiceSala, false, salaValidator);
+        validationSupport.registerValidator(choiceEstado, false, estadoValidator);
     }
 
     private void cargarTatuadores() {

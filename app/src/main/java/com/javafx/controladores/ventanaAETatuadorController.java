@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -105,6 +106,12 @@ public class ventanaAETatuadorController implements Initializable {
         validationSupport = new ValidationSupport();
 
 
+        // Configurar tooltips en los controles para mostrar ayuda al pasar el ratón
+        txtNombre.setTooltip(new Tooltip("El nombre es obligatorio"));
+        txtApellidos.setTooltip(new Tooltip("Los apellidos son obligatorios"));
+        txtEmail.setTooltip(new Tooltip("Formato: <texto>@<texto>.<texto>"));
+        txtTelefono.setTooltip(new Tooltip("Debe contener exactamente 9 dígitos"));
+
         // Validador para nombre
         Validator<String> nombreValidator = (control, value) -> {
             if (value == null || value.trim().isEmpty()) {
@@ -142,10 +149,10 @@ public class ventanaAETatuadorController implements Initializable {
             return null;
         };
 
-        validationSupport.registerValidator(txtNombre, nombreValidator);
-        validationSupport.registerValidator(txtApellidos, apellidosValidator);
-        validationSupport.registerValidator(txtEmail, emailValidator);
-        validationSupport.registerValidator(txtTelefono, telefonoValidator);
+        validationSupport.registerValidator(txtNombre, false, nombreValidator);
+        validationSupport.registerValidator(txtApellidos, false, apellidosValidator);
+        validationSupport.registerValidator(txtEmail, false, emailValidator);
+        validationSupport.registerValidator(txtTelefono, false, telefonoValidator);
     }
 
     private void cargarDatosTatuador() {

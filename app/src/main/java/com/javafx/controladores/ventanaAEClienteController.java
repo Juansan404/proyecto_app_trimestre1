@@ -159,10 +159,10 @@ public class ventanaAEClienteController implements Initializable {
         };
 
         // Registrar validadores
-        validationSupport.registerValidator(txtNombre, nombreValidator);
-        validationSupport.registerValidator(txtApellidos, apellidosValidator);
-        validationSupport.registerValidator(txtEmail, emailValidator);
-        validationSupport.registerValidator(txtTelefono, telefonoValidator);
+        validationSupport.registerValidator(txtNombre, false, nombreValidator);
+        validationSupport.registerValidator(txtApellidos, false, apellidosValidator);
+        validationSupport.registerValidator(txtEmail, false, emailValidator);
+        validationSupport.registerValidator(txtTelefono, false, telefonoValidator);
     }
 
     private void cargarDatosCliente() {
