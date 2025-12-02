@@ -125,7 +125,15 @@ public class ventanaBClienteController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colEmail.setPrefWidth(150);
 
-        tabla.getColumns().addAll(colId, colNombre, colApellidos, colTelefono, colEmail);
+        TableColumn<Cliente, java.sql.Date> colFechaNac = new TableColumn<>("Fecha Nacimiento");
+        colFechaNac.setCellValueFactory(new PropertyValueFactory<>("fecha_nac"));
+        colFechaNac.setPrefWidth(120);
+
+        TableColumn<Cliente, String> colNotas = new TableColumn<>("Notas");
+        colNotas.setCellValueFactory(new PropertyValueFactory<>("notas"));
+        colNotas.setPrefWidth(150);
+
+        tabla.getColumns().addAll(colId, colNombre, colApellidos, colTelefono, colEmail, colFechaNac, colNotas);
 
         // Crear botón seleccionar
         Button btnSeleccionar = new Button("Seleccionar");
@@ -145,7 +153,7 @@ public class ventanaBClienteController implements Initializable {
         layout.setPadding(new Insets(10));
         layout.getChildren().addAll(tabla, btnSeleccionar);
 
-        Scene scene = new Scene(layout, 550, 400);
+        Scene scene = new Scene(layout, 900, 400);
         ventanaSeleccion.setScene(scene);
         ventanaSeleccion.show();
     }

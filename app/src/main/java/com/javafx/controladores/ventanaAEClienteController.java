@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -113,7 +114,14 @@ public class ventanaAEClienteController implements Initializable {
     private void configurarValidaciones() {
         validationSupport = new ValidationSupport();
 
-        // Validador para nombre (obligatorio)
+
+        // Configurar tooltips en los controles para mostrar ayuda al pasar el ratón
+        txtNombre.setTooltip(new Tooltip("El nombre es obligatorio"));
+        txtApellidos.setTooltip(new Tooltip("Los apellidos son obligatorios"));
+        txtEmail.setTooltip(new Tooltip("Formato: <texto>@<texto>.<texto>"));
+        txtTelefono.setTooltip(new Tooltip("Debe contener exactamente 9 dígitos"));
+
+        // Validador para nombre
         Validator<String> nombreValidator = (control, value) -> {
             if (value == null || value.trim().isEmpty()) {
                 return ValidationResult.fromError(control, "El nombre es obligatorio");
@@ -121,7 +129,7 @@ public class ventanaAEClienteController implements Initializable {
             return null;
         };
 
-        // Validador para apellidos (obligatorio)
+        // Validador para apellidos
         Validator<String> apellidosValidator = (control, value) -> {
             if (value == null || value.trim().isEmpty()) {
                 return ValidationResult.fromError(control, "Los apellidos son obligatorios");
@@ -129,7 +137,7 @@ public class ventanaAEClienteController implements Initializable {
             return null;
         };
 
-        // Validador para email (opcional, pero si tiene valor debe ser válido)
+        // Validador para email
         Validator<String> emailValidator = (control, value) -> {
             if (value != null && !value.trim().isEmpty()) {
                 String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -140,7 +148,7 @@ public class ventanaAEClienteController implements Initializable {
             return null;
         };
 
-        // Validador para teléfono (opcional, pero si tiene valor debe tener 9 dígitos)
+        // Validador para teléfono (valor debe tener 9 dígitos)
         Validator<String> telefonoValidator = (control, value) -> {
             if (value != null && !value.trim().isEmpty()) {
                 if (!value.matches("\\d{9}")) {

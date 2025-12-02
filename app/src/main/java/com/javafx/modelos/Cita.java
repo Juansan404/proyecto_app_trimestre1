@@ -41,6 +41,10 @@ public class Cita {
     private byte[] foto_diseno;
     private String notas;
 
+    // Campos adicionales para mostrar en la tabla
+    private String nombreCliente;
+    private String nombreArtista;
+
     public Cita(int id_cita, int id_cliente, int id_artista, Date fecha_cita, int duracion_aproximada,
                 double precio, EstadoCita estado, String sala, byte[] foto_diseno, String notas) {
         this.id_cita = id_cita;
@@ -134,5 +138,33 @@ public class Cita {
 
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getNombreArtista() {
+        return nombreArtista;
+    }
+
+    public void setNombreArtista(String nombreArtista) {
+        this.nombreArtista = nombreArtista;
+    }
+
+    // Método auxiliar para construir el nombre completo del cliente
+    public void setNombreCompletoCliente(String nombre, String apellidos) {
+        this.nombreCliente = (nombre != null ? nombre : "") + " " + (apellidos != null ? apellidos : "");
+        this.nombreCliente = this.nombreCliente.trim();
+    }
+
+    // Método auxiliar para construir el nombre completo del artista
+    public void setNombreCompletoArtista(String nombre, String apellidos) {
+        this.nombreArtista = (nombre != null ? nombre : "") + " " + (apellidos != null ? apellidos : "");
+        this.nombreArtista = this.nombreArtista.trim();
     }
 }

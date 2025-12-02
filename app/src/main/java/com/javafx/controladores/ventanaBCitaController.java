@@ -58,7 +58,10 @@ public class ventanaBCitaController implements Initializable{
             return;
         }
 
-        List<Cita> resultados = citaDAO.buscarCitas(criterio, valor, fechaInicioSQL, fechaFinSQL);
+        // Convertir criterio a minúsculas para que coincida con el DAO
+        String criterioLowerCase = criterio != null ? criterio.toLowerCase() : null;
+
+        List<Cita> resultados = citaDAO.buscarCitas(criterioLowerCase, valor, fechaInicioSQL, fechaFinSQL);
 
         if (resultados.isEmpty()) {
             mostrarAlerta("Sin resultados", "No se encontraron citas con los criterios especificados", Alert.AlertType.INFORMATION);

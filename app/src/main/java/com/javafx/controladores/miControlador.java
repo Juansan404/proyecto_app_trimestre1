@@ -502,7 +502,15 @@ public class miControlador implements Initializable{
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colEmail.setPrefWidth(150);
 
-        tableViewClientes.getColumns().addAll(colId, colNombre, colApellidos, colTelefono, colEmail);
+        TableColumn<Cliente, java.sql.Date> colFechaNac = new TableColumn<>("Fecha Nacimiento");
+        colFechaNac.setCellValueFactory(new PropertyValueFactory<>("fecha_nac"));
+        colFechaNac.setPrefWidth(120);
+
+        TableColumn<Cliente, String> colNotas = new TableColumn<>("Notas");
+        colNotas.setCellValueFactory(new PropertyValueFactory<>("notas"));
+        colNotas.setPrefWidth(150);
+
+        tableViewClientes.getColumns().addAll(colId, colNombre, colApellidos, colTelefono, colEmail, colFechaNac, colNotas);
         tableViewClientes.setItems(listaClientes);
     }
 
@@ -546,13 +554,13 @@ public class miControlador implements Initializable{
         colId.setCellValueFactory(new PropertyValueFactory<>("id_cita"));
         colId.setPrefWidth(40);
 
-        TableColumn<Cita, Integer> colCliente = new TableColumn<>("ID Cliente");
-        colCliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
-        colCliente.setPrefWidth(80);
+        TableColumn<Cita, String> colCliente = new TableColumn<>("Cliente");
+        colCliente.setCellValueFactory(new PropertyValueFactory<>("nombreCliente"));
+        colCliente.setPrefWidth(120);
 
-        TableColumn<Cita, Integer> colArtista = new TableColumn<>("ID Artista");
-        colArtista.setCellValueFactory(new PropertyValueFactory<>("id_artista"));
-        colArtista.setPrefWidth(80);
+        TableColumn<Cita, String> colArtista = new TableColumn<>("Artista");
+        colArtista.setCellValueFactory(new PropertyValueFactory<>("nombreArtista"));
+        colArtista.setPrefWidth(120);
 
         TableColumn<Cita, String> colFecha = new TableColumn<>("Fecha");
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha_cita"));
@@ -570,7 +578,11 @@ public class miControlador implements Initializable{
         colSala.setCellValueFactory(new PropertyValueFactory<>("sala"));
         colSala.setPrefWidth(60);
 
-        tableViewCitas.getColumns().addAll(colId, colCliente, colArtista, colFecha, colPrecio, colEstado, colSala);
+        TableColumn<Cita, String> colNotas = new TableColumn<>("Notas");
+        colNotas.setCellValueFactory(new PropertyValueFactory<>("notas"));
+        colNotas.setPrefWidth(150);
+
+        tableViewCitas.getColumns().addAll(colId, colCliente, colArtista, colFecha, colPrecio, colEstado, colSala, colNotas);
         tableViewCitas.setItems(listaCitas);
     }
 

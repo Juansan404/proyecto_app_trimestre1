@@ -16,10 +16,16 @@ public class CitaDAO {
 
     public List<Cita> cargarCitas() {
         List<Cita> listaCitas = new ArrayList<>();
+        String sql = "SELECT c.*, " +
+                     "cl.nombre AS nombre_cliente, cl.apellidos AS apellidos_cliente, " +
+                     "t.nombre AS nombre_artista, t.apellidos AS apellidos_artista " +
+                     "FROM CITAS c " +
+                     "LEFT JOIN CLIENTES cl ON c.id_cliente = cl.id_cliente " +
+                     "LEFT JOIN TATUADORES t ON c.id_artista = t.id_artista";
         try {
             Connection conn = DatabaseConnection.getConnection();
             Statement st = conn.createStatement();
-            ResultSet resultado = st.executeQuery("SELECT * FROM CITAS");
+            ResultSet resultado = st.executeQuery(sql);
 
             while (resultado.next()) {
                 Cita cita = new Cita(
@@ -34,6 +40,8 @@ public class CitaDAO {
                     resultado.getBytes("foto_diseno"),
                     resultado.getString("notas")
                 );
+                cita.setNombreCompletoCliente(resultado.getString("nombre_cliente"), resultado.getString("apellidos_cliente"));
+                cita.setNombreCompletoArtista(resultado.getString("nombre_artista"), resultado.getString("apellidos_artista"));
                 listaCitas.add(cita);
             }
         } catch (SQLException e) {
@@ -110,27 +118,33 @@ public class CitaDAO {
 
     public List<Cita> buscarCitas(String criterio, String valor, Date fechaInicio, Date fechaFin) {
         List<Cita> listaCitas = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM CITAS WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT c.*, " +
+                                              "cl.nombre AS nombre_cliente, cl.apellidos AS apellidos_cliente, " +
+                                              "t.nombre AS nombre_artista, t.apellidos AS apellidos_artista " +
+                                              "FROM CITAS c " +
+                                              "LEFT JOIN CLIENTES cl ON c.id_cliente = cl.id_cliente " +
+                                              "LEFT JOIN TATUADORES t ON c.id_artista = t.id_artista " +
+                                              "WHERE 1=1");
 
         if (criterio != null && valor != null && !valor.trim().isEmpty()) {
             switch (criterio.toLowerCase()) {
                 case "cliente":
-                    sql.append(" AND id_cliente = ?");
+                    sql.append(" AND (LOWER(cl.nombre) LIKE ? OR LOWER(cl.apellidos) LIKE ? OR LOWER(CONCAT(cl.nombre, ' ', cl.apellidos)) LIKE ?)");
                     break;
                 case "artista":
-                    sql.append(" AND id_artista = ?");
+                    sql.append(" AND (LOWER(t.nombre) LIKE ? OR LOWER(t.apellidos) LIKE ? OR LOWER(CONCAT(t.nombre, ' ', t.apellidos)) LIKE ?)");
                     break;
                 case "estado":
-                    sql.append(" AND estado = ?");
+                    sql.append(" AND LOWER(c.estado) LIKE ?");
                     break;
                 case "sala":
-                    sql.append(" AND sala = ?");
+                    sql.append(" AND LOWER(c.sala) LIKE ?");
                     break;
             }
         }
 
         if (fechaInicio != null && fechaFin != null) {
-            sql.append(" AND fecha_cita BETWEEN ? AND ?");
+            sql.append(" AND c.fecha_cita BETWEEN ? AND ?");
         }
 
         try {
@@ -139,10 +153,14 @@ public class CitaDAO {
 
             int paramIndex = 1;
             if (criterio != null && valor != null && !valor.trim().isEmpty()) {
+                String valorBusqueda = "%" + valor.toLowerCase() + "%";
                 if (criterio.equalsIgnoreCase("cliente") || criterio.equalsIgnoreCase("artista")) {
-                    pst.setInt(paramIndex++, Integer.parseInt(valor));
+                    // Para cliente y artista, buscamos en nombre, apellidos y nombre completo
+                    pst.setString(paramIndex++, valorBusqueda);
+                    pst.setString(paramIndex++, valorBusqueda);
+                    pst.setString(paramIndex++, valorBusqueda);
                 } else {
-                    pst.setString(paramIndex++, valor);
+                    pst.setString(paramIndex++, valorBusqueda);
                 }
             }
 
@@ -166,6 +184,8 @@ public class CitaDAO {
                     resultado.getBytes("foto_diseno"),
                     resultado.getString("notas")
                 );
+                cita.setNombreCompletoCliente(resultado.getString("nombre_cliente"), resultado.getString("apellidos_cliente"));
+                cita.setNombreCompletoArtista(resultado.getString("nombre_artista"), resultado.getString("apellidos_artista"));
                 listaCitas.add(cita);
             }
         } catch (SQLException | NumberFormatException e) {
