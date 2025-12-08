@@ -21,13 +21,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
+import com.javafx.utils.ImageUtils;
 
 public class miControlador implements Initializable{
 
@@ -585,8 +591,84 @@ public class miControlador implements Initializable{
         colNotas.setCellValueFactory(new PropertyValueFactory<>("notas"));
         colNotas.setPrefWidth(150);
 
-        tableViewCitas.getColumns().addAll(colId, colCliente, colArtista, colFecha, colPrecio, colEstado, colSala, colNotas);
+        // Columna de botón para ver imagen
+        TableColumn<Cita, Void> colImagen = new TableColumn<>("Foto");
+        colImagen.setPrefWidth(80);
+
+        Callback<TableColumn<Cita, Void>, TableCell<Cita, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Cita, Void> call(final TableColumn<Cita, Void> param) {
+                final TableCell<Cita, Void> cell = new TableCell<>() {
+                    private final Button btn = new Button("Ver");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Cita cita = getTableView().getItems().get(getIndex());
+                            mostrarImagen(cita);
+                        });
+                        btn.getStyleClass().add("button-secondary");
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            Cita cita = getTableView().getItems().get(getIndex());
+                            // Solo mostrar el botón si hay imagen
+                            if (cita.getFoto_diseno() != null && cita.getFoto_diseno().length > 0) {
+                                setGraphic(btn);
+                            } else {
+                                setGraphic(null);
+                            }
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colImagen.setCellFactory(cellFactory);
+
+        tableViewCitas.getColumns().addAll(colId, colCliente, colArtista, colFecha, colPrecio, colEstado, colSala, colNotas, colImagen);
         tableViewCitas.setItems(listaCitas);
+    }
+
+    private void mostrarImagen(Cita cita) {
+        if (cita.getFoto_diseno() == null || cita.getFoto_diseno().length == 0) {
+            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+            alerta.setTitle("Sin imagen");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Esta cita no tiene foto de diseño");
+            alerta.showAndWait();
+            return;
+        }
+
+        try {
+            // Crear una ventana modal para mostrar la imagen
+            Stage ventanaImagen = new Stage();
+            ventanaImagen.setTitle("Foto de Diseño - Cita #" + cita.getId_cita());
+            ventanaImagen.initModality(Modality.APPLICATION_MODAL);
+
+            ImageView imageView = new ImageView();
+            ImageUtils.mostrarImagenEnImageView(imageView, cita.getFoto_diseno(), 600, 600);
+
+            StackPane root = new StackPane();
+            root.getChildren().add(imageView);
+            root.setStyle("-fx-padding: 20; -fx-background-color: #2c2c2c;");
+
+            Scene scene = new Scene(root);
+            ventanaImagen.setScene(scene);
+            ventanaImagen.show();
+        } catch (Exception e) {
+            javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Error al mostrar la imagen: " + e.getMessage());
+            alerta.showAndWait();
+            e.printStackTrace();
+        }
     }
 
     private void cargarClientes() {

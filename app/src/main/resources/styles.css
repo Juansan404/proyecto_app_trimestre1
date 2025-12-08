@@ -299,13 +299,14 @@
    COMBOBOX y CHOICEBOX
    ======================================== */
 .combo-box, .choice-box {
-    -fx-background-color: white;
-    -fx-border-color: -bg-medium;
+    -fx-background-color: -primary-medium;
+    -fx-border-color: -primary-light;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-min-height: 30px;
     -fx-pref-height: 30px;
+    -fx-font-size: 11px;
 }
 
 .combo-box:focused, .choice-box:focused {
@@ -313,14 +314,64 @@
     -fx-effect: dropshadow(gaussian, -accent-color, 8, 0.3, 0, 0);
 }
 
-.combo-box .list-cell, .choice-box .list-cell {
+/* Texto principal del ComboBox/ChoiceBox */
+.combo-box > .list-cell, .choice-box > .label {
+    -fx-text-fill: white;
+    -fx-padding: 3 35 3 10;
+    -fx-font-size: 11px;
+}
+
+/* Específico para el texto visible del ComboBox (no editable) */
+.combo-box:read-only > .list-cell {
+    -fx-padding: 5 40 5 10;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+}
+
+.combo-box .text-input {
+    -fx-padding: 3 35 3 10;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+}
+
+/* Flecha del dropdown */
+.combo-box .arrow, .choice-box .open-button .arrow {
     -fx-background-color: white;
-    -fx-text-fill: -text-dark;
+}
+
+.combo-box .arrow-button, .choice-box .open-button {
+    -fx-padding: 0 5 0 5;
+}
+
+/* Items del dropdown */
+.combo-box .list-cell, .choice-box .list-cell {
+    -fx-background-color: -primary-medium;
+    -fx-text-fill: white;
+    -fx-padding: 8px 10px;
+    -fx-font-size: 11px;
 }
 
 .combo-box .list-cell:hover, .choice-box .list-cell:hover {
     -fx-background-color: -accent-color;
     -fx-text-fill: white;
+}
+
+.combo-box .list-cell:selected, .choice-box .list-cell:selected {
+    -fx-background-color: -accent-color;
+    -fx-text-fill: white;
+}
+
+/* Dropdown del ChoiceBox */
+.choice-box .context-menu {
+    -fx-background-color: -primary-medium;
+    -fx-border-color: -accent-color;
+    -fx-border-width: 2px;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -primary-medium;
+    -fx-border-color: -accent-color;
+    -fx-border-width: 2px;
 }
 
 /* ========================================

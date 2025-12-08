@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
@@ -27,9 +28,12 @@
       <Label layoutX="260.0" layoutY="208.0" styleClass="label-form" text="Estado:" />
       <ChoiceBox fx:id="choiceEstado" layoutX="260.0" layoutY="230.0" prefHeight="26.0" prefWidth="89.0" />
       <Label layoutX="32.0" layoutY="272.0" styleClass="label-form" text="Foto diseño:" />
+      <Button fx:id="btnSeleccionarImagen" layoutX="32.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#buttonSeleccionarImagen" styleClass="button-secondary" text="Seleccionar" />
+      <Button fx:id="btnEliminarImagen" layoutX="32.0" layoutY="324.0" mnemonicParsing="false" onMouseClicked="#buttonEliminarImagen" styleClass="button-danger" text="Eliminar" />
+      <ImageView fx:id="imageViewPreview" fitHeight="96.0" fitWidth="96.0" layoutX="32.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="199.0" layoutY="272.0" styleClass="label-form" text="Notas:" />
       <TextArea fx:id="txtNotas" layoutX="198.0" layoutY="290.0" prefHeight="98.0" prefWidth="152.0" />
-      <Button layoutX="121.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" styleClass="button-success" text="Guardar" />
-      <Button layoutX="198.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" styleClass="button-danger" text="Cancelar" />
+      <Button layoutX="85.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" prefWidth="100.0" styleClass="button-success" text="Guardar" />
+      <Button layoutX="215.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" prefWidth="100.0" styleClass="button-danger" text="Cancelar" />
    </children>
 </AnchorPane>

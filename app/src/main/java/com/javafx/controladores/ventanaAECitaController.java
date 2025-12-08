@@ -31,8 +31,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import com.javafx.utils.ImageUtils;
 
 public class ventanaAECitaController implements Initializable {
 
@@ -63,6 +66,15 @@ public class ventanaAECitaController implements Initializable {
     @FXML
     private TextArea txtNotas;
 
+    @FXML
+    private Button btnSeleccionarImagen;
+
+    @FXML
+    private Button btnEliminarImagen;
+
+    @FXML
+    private ImageView imageViewPreview;
+
     private CitaDAO citaDAO;
     private ClienteDAO clienteDAO;
     private TatuadorDAO tatuadorDAO;
@@ -70,6 +82,7 @@ public class ventanaAECitaController implements Initializable {
     private boolean modoEdicion = false;
     private Cliente clienteSeleccionado;
     private ValidationSupport validationSupport;
+    private byte[] imagenSeleccionada;
 
     public void setCitaAEditar(Cita cita) {
         this.citaAEditar = cita;
@@ -110,6 +123,26 @@ public class ventanaAECitaController implements Initializable {
     }
 
     @FXML
+    void buttonSeleccionarImagen(MouseEvent event) {
+        Stage stage = (Stage) txtCliente.getScene().getWindow();
+        byte[] imagen = ImageUtils.seleccionarYConvertirImagen(stage);
+
+        if (imagen != null) {
+            imagenSeleccionada = imagen;
+            // Mostrar preview
+            ImageUtils.mostrarImagenEnImageView(imageViewPreview, imagen, 96, 96);
+            mostrarAlerta("Éxito", "Imagen cargada correctamente", Alert.AlertType.INFORMATION);
+        }
+    }
+
+    @FXML
+    void buttonEliminarImagen(MouseEvent event) {
+        imagenSeleccionada = null;
+        imageViewPreview.setImage(null);
+        mostrarAlerta("Éxito", "Imagen eliminada", Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
     void buttonGuardar(MouseEvent event) {
         // Verificar validaciones
         if (validationSupport.isInvalid()) {
@@ -142,12 +175,12 @@ public class ventanaAECitaController implements Initializable {
                 citaAEditar.setEstado(estado);
                 citaAEditar.setSala(sala);
                 citaAEditar.setNotas(notas);
-                citaAEditar.setFoto_diseno(null);
+                citaAEditar.setFoto_diseno(imagenSeleccionada);
 
                 exito = citaDAO.actualizarCita(citaAEditar);
             } else {
                 Cita nuevaCita = new Cita(0, clienteSeleccionado.getId_cliente(), tatuadorSeleccionado.getId_artista(),
-                    fechaSQL, duracion, precio, estado, sala, null, notas);
+                    fechaSQL, duracion, precio, estado, sala, imagenSeleccionada, notas);
                 exito = citaDAO.insertarCita(nuevaCita);
             }
 
@@ -330,6 +363,12 @@ public class ventanaAECitaController implements Initializable {
             choiceEstado.setValue(citaAEditar.getEstado().getValor());
             choiceSala.setValue(citaAEditar.getSala());
             txtNotas.setText(citaAEditar.getNotas());
+
+            // Cargar imagen si existe
+            if (citaAEditar.getFoto_diseno() != null && citaAEditar.getFoto_diseno().length > 0) {
+                imagenSeleccionada = citaAEditar.getFoto_diseno();
+                ImageUtils.mostrarImagenEnImageView(imageViewPreview, imagenSeleccionada, 96, 96);
+            }
         }
     }
 
