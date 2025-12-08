@@ -26,6 +26,10 @@ java { //Se indica la versión de JDK que ha de utilizar
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 application { //Definimos clase principal del proyecto
     mainClass = 'com.javafx.Main'
 }
@@ -34,7 +38,7 @@ sourceSets {
   main {
     resources {
         srcDirs = ["src/main/resources"]
-        includes = ["**/*.fxml","**/*.png","**/*.properties"]  //Importante para poder abrir una extensión no reconocida
+        includes = ["**/*.fxml","**/*.png","**/*.properties","**/*.css"]  //Importante para poder abrir una extensión no reconocida
     }
   }
 }

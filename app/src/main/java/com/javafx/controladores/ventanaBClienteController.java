@@ -81,6 +81,13 @@ public class ventanaBClienteController implements Initializable {
         comboCriterio.setItems(FXCollections.observableArrayList(
             "Nombre", "Apellidos", "Email", "Telefono"
         ));
+
+        // Detectar Enter en el campo de texto
+        txtValor.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonAceptar(null);
+            }
+        });
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

@@ -81,6 +81,7 @@ public class ventanaAECitaController implements Initializable {
     void buttonBuscarCliente(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaBCliente.fxml"));
+            loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
             Parent root = loader.load();
 
             ventanaBClienteController controller = loader.getController();
@@ -172,6 +173,18 @@ public class ventanaAECitaController implements Initializable {
         configurarChoiceSala();
         configurarChoiceEstado();
         configurarValidaciones();
+
+        // Detectar Enter en los campos de texto para guardar
+        txtDuracion.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtPrecio.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
     }
 
     private void configurarValidaciones() {

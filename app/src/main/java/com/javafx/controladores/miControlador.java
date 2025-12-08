@@ -95,6 +95,7 @@ public class miControlador implements Initializable{
     void menuExit(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaExit.fxml"));
+            loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -342,6 +343,7 @@ public class miControlador implements Initializable{
     private void abrirVentana(String rutaFXML, String titulo, Object objetoAEditar) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
             Parent root = loader.load();
 
             if (objetoAEditar != null) {
@@ -371,6 +373,7 @@ public class miControlador implements Initializable{
     private void abrirVentanaBusqueda(String rutaFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+            loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
             Parent root = loader.load();
 
             if (rutaFXML.contains("Cita")) {

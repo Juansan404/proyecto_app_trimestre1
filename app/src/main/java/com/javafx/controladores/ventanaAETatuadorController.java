@@ -100,6 +100,28 @@ public class ventanaAETatuadorController implements Initializable {
         tatuadorDAO = new TatuadorDAO();
         checkActivo.setSelected(true);
         configurarValidaciones();
+
+        // Detectar Enter en los campos de texto para guardar
+        txtNombre.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtApellidos.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtEmail.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtTelefono.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
     }
 
     private void configurarValidaciones() {

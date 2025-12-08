@@ -18,7 +18,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primeraEscena) throws Exception { //puede lanzar excep'
-        Parent root = FXMLLoader.load(getClass().getResource("/ventanaPrincipal.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaPrincipal.fxml"));
+        loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
+        Parent root = loader.load();
 
         Scene scene = new Scene(root);
         primeraEscena.setScene(scene);

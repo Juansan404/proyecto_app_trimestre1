@@ -65,6 +65,13 @@ public class ventanaBTatuadorController implements Initializable {
         comboCriterio.setItems(FXCollections.observableArrayList(
             "Nombre", "Apellidos", "Email", "Activo"
         ));
+
+        // Detectar Enter en el campo de texto
+        txtValor.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonAceptar(null);
+            }
+        });
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

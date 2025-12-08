@@ -9,27 +9,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.ventanaAECitaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="397.0" styleClass="container-form" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.ventanaAECitaController">
    <children>
-      <Label layoutX="29.0" layoutY="14.0" text="Cliente:" />
+      <Label layoutX="29.0" layoutY="14.0" styleClass="label-form" text="Cliente:" />
       <TextField fx:id="txtCliente" editable="false" layoutX="29.0" layoutY="32.0" prefHeight="26.0" prefWidth="254.0" />
-      <Button fx:id="btnBuscarCliente" layoutX="290.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#buttonBuscarCliente" text="Buscar" />
-      <Label layoutX="29.0" layoutY="76.0" text="Tatuador:" />
+      <Button fx:id="btnBuscarCliente" layoutX="290.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#buttonBuscarCliente" styleClass="button-secondary" text="Buscar" />
+      <Label layoutX="29.0" layoutY="76.0" styleClass="label-form" text="Tatuador:" />
       <ChoiceBox fx:id="choiceTatuador" layoutX="29.0" layoutY="94.0" prefHeight="26.0" prefWidth="322.0" />
-      <Label layoutX="29.0" layoutY="144.0" text="Fecha:" />
+      <Label layoutX="29.0" layoutY="144.0" styleClass="label-form" text="Fecha:" />
       <DatePicker fx:id="dateFecha" layoutX="29.0" layoutY="162.0" prefHeight="26.0" prefWidth="143.0" />
-      <Label layoutX="199.0" layoutY="144.0" text="Sala:" />
+      <Label layoutX="199.0" layoutY="144.0" styleClass="label-form" text="Sala:" />
       <ChoiceBox fx:id="choiceSala" layoutX="199.0" layoutY="163.0" prefHeight="26.0" prefWidth="152.0" />
-      <Label layoutX="29.0" layoutY="208.0" text="Duración:" />
+      <Label layoutX="29.0" layoutY="208.0" styleClass="label-form" text="Duración:" />
       <TextField fx:id="txtDuracion" layoutX="29.0" layoutY="230.0" prefHeight="26.0" prefWidth="109.0" />
-      <Label layoutX="147.0" layoutY="208.0" text="Precio:" />
+      <Label layoutX="147.0" layoutY="208.0" styleClass="label-form" text="Precio:" />
       <TextField fx:id="txtPrecio" layoutX="147.0" layoutY="230.0" prefHeight="26.0" prefWidth="102.0" />
-      <Label layoutX="260.0" layoutY="208.0" text="Estado:" />
+      <Label layoutX="260.0" layoutY="208.0" styleClass="label-form" text="Estado:" />
       <ChoiceBox fx:id="choiceEstado" layoutX="260.0" layoutY="230.0" prefHeight="26.0" prefWidth="89.0" />
-      <Label layoutX="32.0" layoutY="272.0" text="Foto diseño:" />
-      <Label layoutX="199.0" layoutY="272.0" text="Notas:" />
+      <Label layoutX="32.0" layoutY="272.0" styleClass="label-form" text="Foto diseño:" />
+      <Label layoutX="199.0" layoutY="272.0" styleClass="label-form" text="Notas:" />
       <TextArea fx:id="txtNotas" layoutX="198.0" layoutY="290.0" prefHeight="98.0" prefWidth="152.0" />
-      <Button layoutX="121.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" text="Guardar" />
-      <Button layoutX="198.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" text="Cancelar" />
+      <Button layoutX="121.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" styleClass="button-success" text="Guardar" />
+      <Button layoutX="198.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" styleClass="button-danger" text="Cancelar" />
    </children>
 </AnchorPane>

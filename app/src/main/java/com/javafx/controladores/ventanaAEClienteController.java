@@ -109,6 +109,28 @@ public class ventanaAEClienteController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         clienteDAO = new ClienteDAO();
         configurarValidaciones();
+
+        // Detectar Enter en los campos de texto para guardar
+        txtNombre.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtApellidos.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtEmail.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
+        txtTelefono.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                buttonGuardar(null);
+            }
+        });
     }
 
     private void configurarValidaciones() {
