@@ -18,7 +18,7 @@ public class StageUtils {
             try {
                 appIcon = new Image(StageUtils.class.getResourceAsStream("/images/logo.png"));
             } catch (Exception e) {
-                System.err.println("No se pudo cargar el icono de la aplicación: " + e.getMessage());
+                System.out.println("No se pudo cargar el icono de la aplicación: " + e.getMessage());
                 return;
             }
         }

@@ -56,6 +56,9 @@ public class miControlador implements Initializable{
 
     //PANES PRINCIPALES
     @FXML
+    private javafx.scene.layout.BorderPane borderPanePrincipal;
+
+    @FXML
     private StackPane stackPanePrincipal;
 
     @FXML
@@ -776,6 +779,9 @@ public class miControlador implements Initializable{
     }
 
     private void aplicarClasesEstilo() {
+        // Aplicar imagen de fondo al BorderPane principal
+        borderPanePrincipal.getStyleClass().add("background-container");
+
         // Aplicar clases de estilo a los contenedores
         contenedorPrincipal.getStyleClass().add("container-principal");
         contenedorTablaClientes.getStyleClass().add("container-form");

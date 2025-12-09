@@ -29,7 +29,7 @@ public class ImageUtils {
             try {
                 return convertirArchivoABytes(archivo);
             } catch (IOException e) {
-                System.err.println("Error al leer la imagen: " + e.getMessage());
+                System.out.println("Error al leer la imagen: " + e.getMessage());
                 return null;
             }
         }
@@ -62,7 +62,7 @@ public class ImageUtils {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
             return new Image(bais);
         } catch (Exception e) {
-            System.err.println("Error al convertir bytes a imagen: " + e.getMessage());
+            System.out.println("Error al convertir bytes a imagen: " + e.getMessage());
             return null;
         }
     }
