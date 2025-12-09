@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import com.javafx.utils.StageUtils;
+import com.javafx.utils.CSSUtils;
 
 public class ventanaBClienteController implements Initializable {
 
@@ -163,6 +164,7 @@ public class ventanaBClienteController implements Initializable {
         layout.getChildren().addAll(tabla, btnSeleccionar);
 
         Scene scene = new Scene(layout, 900, 400);
+        CSSUtils.aplicarEstilos(scene);
         ventanaSeleccion.setScene(scene);
         StageUtils.setAppIcon(ventanaSeleccion);
         ventanaSeleccion.show();

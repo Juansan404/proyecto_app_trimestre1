@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 
 import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
+import com.javafx.utils.CSSUtils;
 
 public class ventanaAECitaController implements Initializable {
 
@@ -103,7 +104,9 @@ public class ventanaAECitaController implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Buscar Cliente");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            CSSUtils.aplicarEstilos(scene);
+            stage.setScene(scene);
             StageUtils.setAppIcon(stage);
             stage.show();
         } catch (IOException e) {

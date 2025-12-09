@@ -1,6 +1,7 @@
 package com.javafx;
 
 import com.javafx.utils.StageUtils;
+import com.javafx.utils.CSSUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +25,7 @@ public class Main extends Application {
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
+        CSSUtils.aplicarEstilos(scene);
         primeraEscena.setScene(scene);
         primeraEscena.setTitle("--TATTOOAGE--");
 

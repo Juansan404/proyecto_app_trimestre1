@@ -18,7 +18,7 @@
       <Label layoutX="16.0" layoutY="211.0" text="Teléfono:" />
       <TextField fx:id="txtTelefono" layoutX="16.0" layoutY="229.0" prefHeight="26.0" prefWidth="154.0" />
       <CheckBox fx:id="checkActivo" layoutX="217.0" layoutY="233.0" mnemonicParsing="false" text="Activo" />
-      <Button layoutX="67.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" text="Guardar" />
-      <Button layoutX="171.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" text="Cancelar" />
+      <Button layoutX="35.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" prefWidth="100.0" text="Guardar" />
+      <Button layoutX="160.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" prefWidth="100.0" text="Cancelar" />
    </children>
 </AnchorPane>

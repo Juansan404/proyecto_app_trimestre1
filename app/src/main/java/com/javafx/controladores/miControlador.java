@@ -35,6 +35,7 @@ import javafx.util.Callback;
 
 import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
+import com.javafx.utils.CSSUtils;
 
 public class miControlador implements Initializable{
 
@@ -132,7 +133,9 @@ public class miControlador implements Initializable{
 
             Stage stage = new Stage();
             stage.setTitle("Salir");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            CSSUtils.aplicarEstilos(scene);
+            stage.setScene(scene);
             StageUtils.setAppIcon(stage);
             stage.show();
         } catch (IOException e) {
@@ -167,6 +170,15 @@ public class miControlador implements Initializable{
 
     @FXML
     private Button btnResetearFiltro;
+
+    @FXML
+    private Button btnClientesPanel;
+
+    @FXML
+    private Button btnTatuadoresPanel;
+
+    @FXML
+    private Button btnCitasPanel;
 
     @FXML
     void btnAnadir(MouseEvent event) {
@@ -394,7 +406,9 @@ public class miControlador implements Initializable{
 
             Stage stage = new Stage();
             stage.setTitle(titulo);
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            CSSUtils.aplicarEstilos(scene);
+            stage.setScene(scene);
             StageUtils.setAppIcon(stage);
             stage.setOnHidden(e -> refrescarTablas());
             stage.show();
@@ -423,7 +437,9 @@ public class miControlador implements Initializable{
 
             Stage stage = new Stage();
             stage.setTitle(titulo);
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            CSSUtils.aplicarEstilos(scene);
+            stage.setScene(scene);
             StageUtils.setAppIcon(stage);
             stage.show();
         } catch (IOException e) {
@@ -475,6 +491,9 @@ public class miControlador implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Aplicar clases de estilo a los contenedores
+        aplicarClasesEstilo();
 
         // Inicializar DAOs
         clienteDAO = new ClienteDAO();
@@ -754,5 +773,25 @@ public class miControlador implements Initializable{
         listaTatuadores.clear();
         listaTatuadores.addAll(resultados);
         btnResetearFiltro.setVisible(true);
+    }
+
+    private void aplicarClasesEstilo() {
+        // Aplicar clases de estilo a los contenedores
+        contenedorPrincipal.getStyleClass().add("container-principal");
+        contenedorTablaClientes.getStyleClass().add("container-form");
+        contenedorTablaTatuadores.getStyleClass().add("container-form");
+        contenedorTablaCitas.getStyleClass().add("container-form");
+
+        // Aplicar clases de estilo a los botones de acción
+        btnAnadir.getStyleClass().add("button-success");
+        btnEditar.getStyleClass().add("button-primary");
+        btnBorrar.getStyleClass().add("button-danger");
+        btnBuscar.getStyleClass().add("button-secondary");
+        btnResetearFiltro.getStyleClass().add("button-secondary");
+
+        // Aplicar clases de estilo a los botones del panel principal
+        btnClientesPanel.getStyleClass().add("button-primary");
+        btnTatuadoresPanel.getStyleClass().add("button-primary");
+        btnCitasPanel.getStyleClass().add("button-primary");
     }
 }

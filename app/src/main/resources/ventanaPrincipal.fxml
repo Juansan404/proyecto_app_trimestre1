@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.miControlador">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.miControlador">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -52,29 +52,29 @@
       </MenuBar>
    </top>
    <center>
-      <AnchorPane prefHeight="500.0" prefWidth="925.0" styleClass="background-container" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="925.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" prefWidth="95.0" styleClass="button-success" text="➕ Añadir" />
-            <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" prefWidth="95.0" styleClass="button-primary" text="✏ Editar" />
-            <Button fx:id="btnBorrar" layoutX="254.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" prefWidth="95.0" styleClass="button-danger" text="🗑 Borrar" />
-            <Button fx:id="btnBuscar" layoutX="845.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" prefWidth="90.0" styleClass="button-secondary" text="🔍 Buscar" />
-            <Button fx:id="btnResetearFiltro" layoutX="695.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnResetearFiltro" prefWidth="140.0" styleClass="button-secondary" text="↻ Resetear filtro" visible="false" />
+            <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" prefWidth="95.0" text="➕ Añadir" />
+            <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" prefWidth="95.0" text="✏ Editar" />
+            <Button fx:id="btnBorrar" layoutX="254.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" prefWidth="95.0" text="🗑 Borrar" />
+            <Button fx:id="btnBuscar" layoutX="845.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" prefWidth="90.0" text="🔍 Buscar" />
+            <Button fx:id="btnResetearFiltro" layoutX="695.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnResetearFiltro" prefWidth="140.0" text="↻ Resetear filtro" visible="false" />
             <StackPane fx:id="stackPanePrincipal" layoutX="34.0" layoutY="71.0" prefHeight="400.0" prefWidth="925.0">
                <children>
-                  <VBox fx:id="contenedorPrincipal" alignment="CENTER" prefHeight="484.0" prefWidth="904.0" styleClass="container-principal">
+                  <VBox fx:id="contenedorPrincipal" alignment="CENTER" prefHeight="484.0" prefWidth="904.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-title" text="TATTOOAGE" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-subtitle" text="Seleccione una opción del menú para continuar" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TATTOOAGE" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione una opción del menú para continuar" />
                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#btnClientes" styleClass="button-primary" text="Clientes" />
-                              <Button mnemonicParsing="false" onMouseClicked="#btnTatuadores" styleClass="button-primary" text="Tatuadores" />
-                              <Button mnemonicParsing="false" onMouseClicked="#btnCitas" styleClass="button-primary" text="Citas" />
+                              <Button fx:id="btnClientesPanel" mnemonicParsing="false" onMouseClicked="#btnClientes" text="Clientes" />
+                              <Button fx:id="btnTatuadoresPanel" mnemonicParsing="false" onMouseClicked="#btnTatuadores" text="Tatuadores" />
+                              <Button fx:id="btnCitasPanel" mnemonicParsing="false" onMouseClicked="#btnCitas" text="Citas" />
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="contenedorTablaClientes" prefHeight="200.0" prefWidth="100.0" styleClass="container-tabla">
+                  <VBox fx:id="contenedorTablaClientes" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <TableView fx:id="tableViewClientes" VBox.vgrow="ALWAYS">
                           <columns>
@@ -83,7 +83,7 @@
                           </columns>
                         </TableView>
                      </children></VBox>
-                  <VBox fx:id="contenedorTablaTatuadores" prefHeight="200.0" prefWidth="100.0" styleClass="container-tabla">
+                  <VBox fx:id="contenedorTablaTatuadores" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <TableView fx:id="tableViewTatuadores" VBox.vgrow="ALWAYS">
                           <columns>
@@ -92,7 +92,7 @@
                           </columns>
                         </TableView>
                      </children></VBox>
-                  <VBox fx:id="contenedorTablaCitas" prefHeight="276.0" prefWidth="800.0" styleClass="container-tabla">
+                  <VBox fx:id="contenedorTablaCitas" prefHeight="276.0" prefWidth="800.0">
                      <children>
                         <TableView fx:id="tableViewCitas" VBox.vgrow="ALWAYS">
                           <columns>
