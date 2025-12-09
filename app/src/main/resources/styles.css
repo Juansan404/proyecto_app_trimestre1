@@ -304,8 +304,8 @@
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-min-height: 30px;
-    -fx-pref-height: 30px;
+    -fx-min-height: 35px;
+    -fx-pref-height: 35px;
     -fx-font-size: 11px;
 }
 
@@ -317,19 +317,21 @@
 /* Texto principal del ComboBox/ChoiceBox */
 .combo-box > .list-cell, .choice-box > .label {
     -fx-text-fill: white;
-    -fx-padding: 3 35 3 10;
+    -fx-padding: 6 35 6 10;
     -fx-font-size: 11px;
+    -fx-alignment: center-left;
 }
 
 /* Específico para el texto visible del ComboBox (no editable) */
 .combo-box:read-only > .list-cell {
-    -fx-padding: 5 40 5 10;
+    -fx-padding: 7 40 7 10;
     -fx-text-fill: white;
     -fx-font-size: 11px;
+    -fx-alignment: center-left;
 }
 
 .combo-box .text-input {
-    -fx-padding: 3 35 3 10;
+    -fx-padding: 6 35 6 10;
     -fx-text-fill: white;
     -fx-font-size: 11px;
 }
@@ -343,29 +345,110 @@
     -fx-padding: 0 5 0 5;
 }
 
-/* Items del dropdown */
-.combo-box .list-cell, .choice-box .list-cell {
+/* Items del dropdown - Fondo y padding */
+.combo-box-popup .list-view .list-cell {
     -fx-background-color: -primary-medium;
-    -fx-text-fill: white;
     -fx-padding: 8px 10px;
     -fx-font-size: 11px;
 }
 
-.combo-box .list-cell:hover, .choice-box .list-cell:hover {
-    -fx-background-color: -accent-color;
-    -fx-text-fill: white;
+.choice-box .list-cell {
+    -fx-background-color: -primary-medium;
+    -fx-padding: 8px 10px;
+    -fx-font-size: 11px;
 }
 
-.combo-box .list-cell:selected, .choice-box .list-cell:selected {
-    -fx-background-color: -accent-color;
-    -fx-text-fill: white;
+/* Color de texto BLANCO para las celdas del dropdown */
+.combo-box-popup .list-view .list-cell,
+.combo-box-popup .list-view .list-cell > *,
+.combo-box-popup .list-view .list-cell .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
 }
 
-/* Dropdown del ChoiceBox */
+.choice-box .list-cell,
+.choice-box .list-cell > *,
+.choice-box .list-cell .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+/* Estados hover y selected con texto blanco */
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: -accent-color;
+}
+
+.combo-box-popup .list-view .list-cell:hover,
+.combo-box-popup .list-view .list-cell:hover > *,
+.combo-box-popup .list-view .list-cell:hover .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: -accent-color;
+}
+
+.combo-box-popup .list-view .list-cell:selected,
+.combo-box-popup .list-view .list-cell:selected > *,
+.combo-box-popup .list-view .list-cell:selected .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+.choice-box .list-cell:hover {
+    -fx-background-color: -accent-color;
+}
+
+.choice-box .list-cell:hover,
+.choice-box .list-cell:hover > *,
+.choice-box .list-cell:hover .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+.choice-box .list-cell:selected {
+    -fx-background-color: -accent-color;
+}
+
+.choice-box .list-cell:selected,
+.choice-box .list-cell:selected > *,
+.choice-box .list-cell:selected .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+/* Dropdown del ChoiceBox - contenedor */
 .choice-box .context-menu {
     -fx-background-color: -primary-medium;
     -fx-border-color: -accent-color;
     -fx-border-width: 2px;
+}
+
+/* IMPORTANTE: ChoiceBox usa context-menu, no list-view como ComboBox */
+.choice-box .menu-item {
+    -fx-background-color: -primary-medium;
+    -fx-text-fill: white !important;
+    -fx-padding: 8px 10px;
+}
+
+.choice-box .menu-item:hover {
+    -fx-background-color: -accent-color;
+    -fx-text-fill: white !important;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: -accent-color;
+    -fx-text-fill: white !important;
+}
+
+.choice-box .menu-item .label {
+    -fx-text-fill: white !important;
+}
+
+.choice-box .menu-item:hover .label,
+.choice-box .menu-item:focused .label {
+    -fx-text-fill: white !important;
 }
 
 .combo-box-popup .list-view {
@@ -428,8 +511,19 @@
 /* ========================================
    CONTENEDORES
    ======================================== */
+
+/* Fondo de imagen global para todas las secciones */
+.background-container {
+    -fx-background-image: url('images/background_image.png');
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* Contenedor de bienvenida con overlay blanco semitransparente */
 .container-principal {
-    -fx-background-color: linear-gradient(to bottom, #ffffff, -bg-light);
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 10px;
     -fx-padding: 20px;
 }
 

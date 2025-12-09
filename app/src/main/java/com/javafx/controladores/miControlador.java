@@ -72,6 +72,10 @@ public class miControlador implements Initializable{
     //OPCIONES MENU
     @FXML
     void menuClientes(ActionEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorTablaClientes.setVisible(true);
         contenedorTablaClientes.toFront();
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
@@ -81,6 +85,10 @@ public class miControlador implements Initializable{
 
     @FXML
     void menuTatuadores(ActionEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorTablaTatuadores.setVisible(true);
         contenedorTablaTatuadores.toFront();
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
@@ -90,10 +98,27 @@ public class miControlador implements Initializable{
 
     @FXML
     void menuCitas(ActionEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(true);
         contenedorTablaCitas.toFront();
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
+        actualizarEstadoBotones();
+    }
+
+    @FXML
+    void menuInicio(ActionEvent event) {
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorPrincipal.setVisible(true);
+        contenedorPrincipal.toFront();
+        panelClientesActivo = false;
+        panelTatuadoresActivo = false;
+        panelCitasActivo = false;
         actualizarEstadoBotones();
     }
 
@@ -407,6 +432,10 @@ public class miControlador implements Initializable{
     //BOTONES STACKPANE PRINCIPAL
     @FXML
     void btnClientes(MouseEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorTablaClientes.setVisible(true);
         contenedorTablaClientes.toFront();
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
@@ -416,6 +445,10 @@ public class miControlador implements Initializable{
 
     @FXML
     void btnTatuadores(MouseEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorTablaTatuadores.setVisible(true);
         contenedorTablaTatuadores.toFront();
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
@@ -425,6 +458,10 @@ public class miControlador implements Initializable{
 
     @FXML
     void btnCitas(MouseEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(true);
         contenedorTablaCitas.toFront();
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
@@ -483,7 +520,11 @@ public class miControlador implements Initializable{
         // Ocultar y deshabilitar botones al inicio (pantalla principal activa)
         actualizarEstadoBotones();
 
-        // Mostrar pantalla principal
+        // Ocultar todos los contenedores de tablas y mostrar solo la pantalla principal
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorPrincipal.setVisible(true);
         contenedorPrincipal.toFront();
     }
 

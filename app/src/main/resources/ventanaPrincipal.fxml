@@ -44,6 +44,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="EXIT">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuInicio" text="Volver al inicio" />
                   <MenuItem mnemonicParsing="false" onAction="#menuExit" text="Salir" />
                </items>
             </Menu>
@@ -51,7 +52,7 @@
       </MenuBar>
    </top>
    <center>
-      <AnchorPane prefHeight="500.0" prefWidth="925.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="925.0" styleClass="background-container" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" prefWidth="95.0" styleClass="button-success" text="➕ Añadir" />
             <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" prefWidth="95.0" styleClass="button-primary" text="✏ Editar" />
