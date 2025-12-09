@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.javafx.database.DatabaseConnection;
+import com.javafx.exceptions.DatabaseConnectionException;
 import com.javafx.modelos.Tatuador;
 
 public class TatuadorDAO {
 
-    public List<Tatuador> cargarTatuadores() {
+    public List<Tatuador> cargarTatuadores() throws DatabaseConnectionException {
         List<Tatuador> listaTatuadores = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -31,6 +32,8 @@ public class TatuadorDAO {
                 );
                 listaTatuadores.add(tatuador);
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al cargar tatuadores: " + e.getMessage());
             e.printStackTrace();
@@ -38,7 +41,7 @@ public class TatuadorDAO {
         return listaTatuadores;
     }
 
-    public boolean insertarTatuador(Tatuador tatuador) {
+    public boolean insertarTatuador(Tatuador tatuador) throws DatabaseConnectionException {
         String sql = "INSERT INTO TATUADORES (nombre, apellidos, telefono, email, activo) VALUES (?, ?, ?, ?, ?)";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -51,6 +54,8 @@ public class TatuadorDAO {
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al insertar tatuador: " + e.getMessage());
             e.printStackTrace();
@@ -58,7 +63,7 @@ public class TatuadorDAO {
         }
     }
 
-    public boolean actualizarTatuador(Tatuador tatuador) {
+    public boolean actualizarTatuador(Tatuador tatuador) throws DatabaseConnectionException {
         String sql = "UPDATE TATUADORES SET nombre = ?, apellidos = ?, telefono = ?, email = ?, activo = ? WHERE id_artista = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -72,6 +77,8 @@ public class TatuadorDAO {
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al actualizar tatuador: " + e.getMessage());
             e.printStackTrace();
@@ -79,7 +86,7 @@ public class TatuadorDAO {
         }
     }
 
-    public boolean eliminarTatuador(int idArtista) {
+    public boolean eliminarTatuador(int idArtista) throws DatabaseConnectionException {
         String sql = "DELETE FROM TATUADORES WHERE id_artista = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -88,6 +95,8 @@ public class TatuadorDAO {
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al eliminar tatuador: " + e.getMessage());
             e.printStackTrace();
@@ -95,7 +104,7 @@ public class TatuadorDAO {
         }
     }
 
-    public List<Tatuador> buscarTatuadores(String criterio, String valor) {
+    public List<Tatuador> buscarTatuadores(String criterio, String valor) throws DatabaseConnectionException {
         List<Tatuador> resultados = new ArrayList<>();
         String sql = "SELECT * FROM TATUADORES WHERE ";
 
@@ -139,6 +148,8 @@ public class TatuadorDAO {
                 );
                 resultados.add(tatuador);
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al buscar tatuadores: " + e.getMessage());
             e.printStackTrace();

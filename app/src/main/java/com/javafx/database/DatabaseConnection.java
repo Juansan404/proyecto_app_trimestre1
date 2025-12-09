@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.javafx.exceptions.DatabaseConnectionException;
+
 public class DatabaseConnection {
     private static final String URL;
     private static final String USER;
@@ -36,6 +38,9 @@ public class DatabaseConnection {
             }
         } catch (SQLException e) {
             System.out.println("No se conectó con la base de datos, error: " + e.getMessage());
+            throw new DatabaseConnectionException(
+                "Error de conectividad: No se pudo establecer conexión con la base de datos. " +
+                "Verifique que el servidor esté activo y la configuración sea correcta.", e);
         }
         return conexion;
     }

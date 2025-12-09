@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.javafx.database.DatabaseConnection;
+import com.javafx.exceptions.DatabaseConnectionException;
 import com.javafx.modelos.Cliente;
 
 public class ClienteDAO {
 
-    public List<Cliente> cargarClientes() {
+    public List<Cliente> cargarClientes() throws DatabaseConnectionException {
         List<Cliente> listaClientes = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -32,6 +33,8 @@ public class ClienteDAO {
                 );
                 listaClientes.add(cliente);
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al cargar clientes: " + e.getMessage());
             e.printStackTrace();
@@ -39,7 +42,7 @@ public class ClienteDAO {
         return listaClientes;
     }
 
-    public boolean insertarCliente(Cliente cliente) {
+    public boolean insertarCliente(Cliente cliente) throws DatabaseConnectionException {
         String sql = "INSERT INTO CLIENTES (nombre, apellidos, telefono, email, fecha_nacimiento, notas) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -53,6 +56,8 @@ public class ClienteDAO {
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al insertar cliente: " + e.getMessage());
             e.printStackTrace();
@@ -60,7 +65,7 @@ public class ClienteDAO {
         }
     }
 
-    public boolean actualizarCliente(Cliente cliente) {
+    public boolean actualizarCliente(Cliente cliente) throws DatabaseConnectionException {
         String sql = "UPDATE CLIENTES SET nombre = ?, apellidos = ?, telefono = ?, email = ?, fecha_nacimiento = ?, notas = ? WHERE id_cliente = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -75,6 +80,8 @@ public class ClienteDAO {
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al actualizar cliente: " + e.getMessage());
             e.printStackTrace();
@@ -82,7 +89,7 @@ public class ClienteDAO {
         }
     }
 
-    public boolean eliminarCliente(int idCliente) {
+    public boolean eliminarCliente(int idCliente) throws DatabaseConnectionException {
         String sql = "DELETE FROM CLIENTES WHERE id_cliente = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -91,6 +98,8 @@ public class ClienteDAO {
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al eliminar cliente: " + e.getMessage());
             e.printStackTrace();
@@ -98,7 +107,7 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente obtenerClientePorId(int idCliente) {
+    public Cliente obtenerClientePorId(int idCliente) throws DatabaseConnectionException {
         String sql = "SELECT * FROM CLIENTES WHERE id_cliente = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -118,6 +127,8 @@ public class ClienteDAO {
                     resultado.getString("notas")
                 );
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al obtener cliente por ID: " + e.getMessage());
             e.printStackTrace();
@@ -125,7 +136,7 @@ public class ClienteDAO {
         return null;
     }
 
-    public List<Cliente> buscarClientes(String criterio, String valor) {
+    public List<Cliente> buscarClientes(String criterio, String valor) throws DatabaseConnectionException {
         List<Cliente> resultados = new ArrayList<>();
         String sql = "SELECT * FROM CLIENTES WHERE ";
 
@@ -165,6 +176,8 @@ public class ClienteDAO {
                 );
                 resultados.add(cliente);
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al buscar clientes: " + e.getMessage());
             e.printStackTrace();

@@ -39,6 +39,8 @@ import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
 import com.javafx.utils.CSSUtils;
 import com.javafx.utils.AnimationUtils;
+import com.javafx.utils.ErrorUtils;
+import com.javafx.exceptions.DatabaseConnectionException;
 
 public class ventanaAECitaController implements Initializable {
 
@@ -200,6 +202,8 @@ public class ventanaAECitaController implements Initializable {
             } else {
                 mostrarAlerta("Error", "No se pudo " + (modoEdicion ? "actualizar" : "crear") + " la cita", Alert.AlertType.ERROR);
             }
+        } catch (DatabaseConnectionException e) {
+            ErrorUtils.mostrarErrorConectividad(e);
         } catch (Exception e) {
             mostrarAlerta("Error", "Error: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -325,19 +329,23 @@ public class ventanaAECitaController implements Initializable {
     }
 
     private void cargarTatuadores() {
-        List<Tatuador> tatuadores = tatuadorDAO.cargarTatuadores();
-        choiceTatuador.setItems(FXCollections.observableArrayList(tatuadores));
-        choiceTatuador.setConverter(new javafx.util.StringConverter<Tatuador>() {
-            @Override
-            public String toString(Tatuador tatuador) {
-                return tatuador != null ? tatuador.getNombre() + " " + tatuador.getApellidos() : "";
-            }
+        try {
+            List<Tatuador> tatuadores = tatuadorDAO.cargarTatuadores();
+            choiceTatuador.setItems(FXCollections.observableArrayList(tatuadores));
+            choiceTatuador.setConverter(new javafx.util.StringConverter<Tatuador>() {
+                @Override
+                public String toString(Tatuador tatuador) {
+                    return tatuador != null ? tatuador.getNombre() + " " + tatuador.getApellidos() : "";
+                }
 
-            @Override
-            public Tatuador fromString(String string) {
-                return null;
-            }
-        });
+                @Override
+                public Tatuador fromString(String string) {
+                    return null;
+                }
+            });
+        } catch (DatabaseConnectionException e) {
+            ErrorUtils.mostrarErrorConectividad(e);
+        }
     }
 
     private void configurarChoiceSala() {
@@ -352,32 +360,36 @@ public class ventanaAECitaController implements Initializable {
 
     private void cargarDatosCita() {
         if (citaAEditar != null) {
-            // Cargar cliente
-            Cliente cliente = clienteDAO.obtenerClientePorId(citaAEditar.getId_cliente());
-            if (cliente != null) {
-                clienteSeleccionado = cliente;
-                txtCliente.setText(cliente.getNombre() + " " + cliente.getApellidos());
-            }
-
-            // Cargar tatuador
-            for (Tatuador t : choiceTatuador.getItems()) {
-                if (t.getId_artista() == citaAEditar.getId_artista()) {
-                    choiceTatuador.setValue(t);
-                    break;
+            try {
+                // Cargar cliente
+                Cliente cliente = clienteDAO.obtenerClientePorId(citaAEditar.getId_cliente());
+                if (cliente != null) {
+                    clienteSeleccionado = cliente;
+                    txtCliente.setText(cliente.getNombre() + " " + cliente.getApellidos());
                 }
-            }
 
-            dateFecha.setValue(citaAEditar.getFecha_cita().toLocalDate());
-            txtDuracion.setText(String.valueOf(citaAEditar.getDuracion_aproximada()));
-            txtPrecio.setText(String.valueOf(citaAEditar.getPrecio()));
-            choiceEstado.setValue(citaAEditar.getEstado().getValor());
-            choiceSala.setValue(citaAEditar.getSala());
-            txtNotas.setText(citaAEditar.getNotas());
+                // Cargar tatuador
+                for (Tatuador t : choiceTatuador.getItems()) {
+                    if (t.getId_artista() == citaAEditar.getId_artista()) {
+                        choiceTatuador.setValue(t);
+                        break;
+                    }
+                }
 
-            // Cargar imagen si existe
-            if (citaAEditar.getFoto_diseno() != null && citaAEditar.getFoto_diseno().length > 0) {
-                imagenSeleccionada = citaAEditar.getFoto_diseno();
-                ImageUtils.mostrarImagenEnImageView(imageViewPreview, imagenSeleccionada, 96, 96);
+                dateFecha.setValue(citaAEditar.getFecha_cita().toLocalDate());
+                txtDuracion.setText(String.valueOf(citaAEditar.getDuracion_aproximada()));
+                txtPrecio.setText(String.valueOf(citaAEditar.getPrecio()));
+                choiceEstado.setValue(citaAEditar.getEstado().getValor());
+                choiceSala.setValue(citaAEditar.getSala());
+                txtNotas.setText(citaAEditar.getNotas());
+
+                // Cargar imagen si existe
+                if (citaAEditar.getFoto_diseno() != null && citaAEditar.getFoto_diseno().length > 0) {
+                    imagenSeleccionada = citaAEditar.getFoto_diseno();
+                    ImageUtils.mostrarImagenEnImageView(imageViewPreview, imagenSeleccionada, 96, 96);
+                }
+            } catch (DatabaseConnectionException e) {
+                ErrorUtils.mostrarErrorConectividad(e);
             }
         }
     }

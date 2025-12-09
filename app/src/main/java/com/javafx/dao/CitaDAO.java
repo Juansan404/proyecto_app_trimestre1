@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.javafx.database.DatabaseConnection;
+import com.javafx.exceptions.DatabaseConnectionException;
 import com.javafx.modelos.Cita;
 
 public class CitaDAO {
 
-    public List<Cita> cargarCitas() {
+    public List<Cita> cargarCitas() throws DatabaseConnectionException {
         List<Cita> listaCitas = new ArrayList<>();
         String sql = "SELECT c.*, " +
                      "cl.nombre AS nombre_cliente, cl.apellidos AS apellidos_cliente, " +
@@ -44,6 +45,8 @@ public class CitaDAO {
                 cita.setNombreCompletoArtista(resultado.getString("nombre_artista"), resultado.getString("apellidos_artista"));
                 listaCitas.add(cita);
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al cargar citas: " + e.getMessage());
             e.printStackTrace();
@@ -51,7 +54,7 @@ public class CitaDAO {
         return listaCitas;
     }
 
-    public boolean insertarCita(Cita cita) {
+    public boolean insertarCita(Cita cita) throws DatabaseConnectionException {
         String sql = "INSERT INTO CITAS (id_cliente, id_artista, fecha_cita, duracion_aproximada, precio, estado, sala, foto_diseno, notas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -68,6 +71,8 @@ public class CitaDAO {
 
             int filasAfectadas = pst.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al insertar cita: " + e.getMessage());
             e.printStackTrace();
@@ -75,7 +80,7 @@ public class CitaDAO {
         }
     }
 
-    public boolean actualizarCita(Cita cita) {
+    public boolean actualizarCita(Cita cita) throws DatabaseConnectionException {
         String sql = "UPDATE CITAS SET id_cliente = ?, id_artista = ?, fecha_cita = ?, duracion_aproximada = ?, precio = ?, estado = ?, sala = ?, foto_diseno = ?, notas = ? WHERE id_cita = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -93,6 +98,8 @@ public class CitaDAO {
 
             int filasAfectadas = pst.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al actualizar cita: " + e.getMessage());
             e.printStackTrace();
@@ -100,7 +107,7 @@ public class CitaDAO {
         }
     }
 
-    public boolean eliminarCita(int idCita) {
+    public boolean eliminarCita(int idCita) throws DatabaseConnectionException {
         String sql = "DELETE FROM CITAS WHERE id_cita = ?";
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -109,6 +116,8 @@ public class CitaDAO {
 
             int filasAfectadas = pst.executeUpdate();
             return filasAfectadas > 0;
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException e) {
             System.out.println("Error al eliminar cita: " + e.getMessage());
             e.printStackTrace();
@@ -116,7 +125,7 @@ public class CitaDAO {
         }
     }
 
-    public List<Cita> buscarCitas(String criterio, String valor, Date fechaInicio, Date fechaFin) {
+    public List<Cita> buscarCitas(String criterio, String valor, Date fechaInicio, Date fechaFin) throws DatabaseConnectionException {
         List<Cita> listaCitas = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT c.*, " +
                                               "cl.nombre AS nombre_cliente, cl.apellidos AS apellidos_cliente, " +
@@ -188,6 +197,8 @@ public class CitaDAO {
                 cita.setNombreCompletoArtista(resultado.getString("nombre_artista"), resultado.getString("apellidos_artista"));
                 listaCitas.add(cita);
             }
+        } catch (DatabaseConnectionException e) {
+            throw e;
         } catch (SQLException | NumberFormatException e) {
             System.out.println("Error al buscar citas: " + e.getMessage());
             e.printStackTrace();
