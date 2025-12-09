@@ -418,36 +418,36 @@
     -fx-fill: white !important;
 }
 
-/* Dropdown del ChoiceBox - contenedor */
-.choice-box .context-menu {
+/* Dropdown del ChoiceBox - contenedor (DEBE IR DESPUÉS de context-menu general) */
+.choice-box > .context-menu {
     -fx-background-color: -primary-medium;
     -fx-border-color: -accent-color;
     -fx-border-width: 2px;
 }
 
 /* IMPORTANTE: ChoiceBox usa context-menu, no list-view como ComboBox */
-.choice-box .menu-item {
+.choice-box > .context-menu .menu-item {
     -fx-background-color: -primary-medium;
     -fx-text-fill: white !important;
     -fx-padding: 8px 10px;
 }
 
-.choice-box .menu-item:hover {
+.choice-box > .context-menu .menu-item:hover {
     -fx-background-color: -accent-color;
     -fx-text-fill: white !important;
 }
 
-.choice-box .menu-item:focused {
+.choice-box > .context-menu .menu-item:focused {
     -fx-background-color: -accent-color;
     -fx-text-fill: white !important;
 }
 
-.choice-box .menu-item .label {
+.choice-box > .context-menu .menu-item .label {
     -fx-text-fill: white !important;
 }
 
-.choice-box .menu-item:hover .label,
-.choice-box .menu-item:focused .label {
+.choice-box > .context-menu .menu-item:hover .label,
+.choice-box > .context-menu .menu-item:focused .label {
     -fx-text-fill: white !important;
 }
 
@@ -455,6 +455,54 @@
     -fx-background-color: -primary-medium;
     -fx-border-color: -accent-color;
     -fx-border-width: 2px;
+}
+
+/* ========================================
+   CONTEXT MENU (Menú Contextual)
+   ======================================== */
+.context-menu {
+    -fx-background-color: white;
+    -fx-border-color: -primary-light;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 0;
+    -fx-effect: dropshadow(gaussian, -shadow-strong, 15, 0, 0, 3);
+}
+
+.context-menu .menu-item {
+    -fx-background-color: white;
+    -fx-padding: 8px 20px;
+    -fx-text-fill: -text-dark;
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: -accent-color;
+    -fx-text-fill: white;
+}
+
+.context-menu .menu-item:focused {
+    -fx-background-color: -accent-color;
+    -fx-text-fill: white;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: -text-dark;
+    -fx-font-size: 13px;
+}
+
+.context-menu .menu-item:hover .label,
+.context-menu .menu-item:focused .label {
+    -fx-text-fill: white;
+}
+
+.context-menu .separator {
+    -fx-padding: 3px 0;
+}
+
+.context-menu .separator .line {
+    -fx-border-color: -bg-medium;
+    -fx-border-width: 1px 0 0 0;
 }
 
 /* ========================================

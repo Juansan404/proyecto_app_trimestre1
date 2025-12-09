@@ -23,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import com.javafx.utils.StageUtils;
+
 public class ventanaBClienteController implements Initializable {
 
     @FXML
@@ -162,6 +164,7 @@ public class ventanaBClienteController implements Initializable {
 
         Scene scene = new Scene(layout, 900, 400);
         ventanaSeleccion.setScene(scene);
+        StageUtils.setAppIcon(ventanaSeleccion);
         ventanaSeleccion.show();
     }
 

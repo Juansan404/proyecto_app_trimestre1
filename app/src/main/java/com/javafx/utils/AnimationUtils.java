@@ -9,7 +9,6 @@ import javafx.util.Duration;
 /**
  * Clase de utilidades para animaciones en JavaFX
  * Basada en las recomendaciones del PDF de Animaciones JavaFX
- * @author TATTOOAGE
  */
 public class AnimationUtils {
 
@@ -19,8 +18,6 @@ public class AnimationUtils {
 
     /**
      * Aplica animación de fade in (aparecer gradualmente)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void fadeIn(Node node, double durationMillis) {
         FadeTransition fade = new FadeTransition(Duration.millis(durationMillis), node);
@@ -31,8 +28,6 @@ public class AnimationUtils {
 
     /**
      * Aplica animación de fade out (desaparecer gradualmente)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void fadeOut(Node node, double durationMillis) {
         FadeTransition fade = new FadeTransition(Duration.millis(durationMillis), node);
@@ -43,9 +38,6 @@ public class AnimationUtils {
 
     /**
      * Fade out con acción al finalizar
-     * @param node Nodo a animar
-     * @param durationMillis Duración
-     * @param onFinished Acción a ejecutar al terminar
      */
     public static void fadeOutAndThen(Node node, double durationMillis, Runnable onFinished) {
         FadeTransition fade = new FadeTransition(Duration.millis(durationMillis), node);
@@ -61,8 +53,6 @@ public class AnimationUtils {
 
     /**
      * Desliza un nodo desde la izquierda
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void slideInFromLeft(Node node, double durationMillis) {
         TranslateTransition translate = new TranslateTransition(Duration.millis(durationMillis), node);
@@ -79,8 +69,6 @@ public class AnimationUtils {
 
     /**
      * Desliza un nodo hacia la izquierda (salida)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void slideOutToLeft(Node node, double durationMillis) {
         TranslateTransition translate = new TranslateTransition(Duration.millis(durationMillis), node);
@@ -97,8 +85,6 @@ public class AnimationUtils {
 
     /**
      * Desliza un nodo desde la derecha
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void slideInFromRight(Node node, double durationMillis) {
         TranslateTransition translate = new TranslateTransition(Duration.millis(durationMillis), node);
@@ -115,8 +101,6 @@ public class AnimationUtils {
 
     /**
      * Desliza un nodo desde arriba
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void slideInFromTop(Node node, double durationMillis) {
         TranslateTransition translate = new TranslateTransition(Duration.millis(durationMillis), node);
@@ -137,8 +121,6 @@ public class AnimationUtils {
 
     /**
      * Aplica animación de zoom in (aparecer con crecimiento)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void scaleIn(Node node, double durationMillis) {
         ScaleTransition scale = new ScaleTransition(Duration.millis(durationMillis), node);
@@ -157,8 +139,6 @@ public class AnimationUtils {
 
     /**
      * Aplica animación de zoom out (desaparecer con reducción)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void scaleOut(Node node, double durationMillis) {
         ScaleTransition scale = new ScaleTransition(Duration.millis(durationMillis), node);
@@ -177,9 +157,6 @@ public class AnimationUtils {
 
     /**
      * Efecto de pulso (aumenta y reduce el tamaño)
-     * @param node Nodo a animar
-     * @param durationMillis Duración de un ciclo
-     * @param cycles Número de ciclos
      */
     public static void pulse(Node node, double durationMillis, int cycles) {
         ScaleTransition scale = new ScaleTransition(Duration.millis(durationMillis), node);
@@ -198,8 +175,6 @@ public class AnimationUtils {
 
     /**
      * Rotación completa (360 grados)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void rotate360(Node node, double durationMillis) {
         RotateTransition rotate = new RotateTransition(Duration.millis(durationMillis), node);
@@ -210,8 +185,6 @@ public class AnimationUtils {
 
     /**
      * Rotación continua (infinita)
-     * @param node Nodo a animar
-     * @param durationMillis Duración de una rotación completa
      */
     public static void rotateContinuous(Node node, double durationMillis) {
         RotateTransition rotate = new RotateTransition(Duration.millis(durationMillis), node);
@@ -227,7 +200,6 @@ public class AnimationUtils {
 
     /**
      * Efecto shake (temblor) - útil para indicar error
-     * @param node Nodo a animar
      */
     public static void shake(Node node) {
         Timeline timeline = new Timeline(
@@ -244,8 +216,6 @@ public class AnimationUtils {
 
     /**
      * Efecto bounce (rebote)
-     * @param node Nodo a animar
-     * @param durationMillis Duración en milisegundos
      */
     public static void bounce(Node node, double durationMillis) {
         TranslateTransition translate = new TranslateTransition(Duration.millis(durationMillis / 4), node);
@@ -266,8 +236,6 @@ public class AnimationUtils {
 
     /**
      * Efecto de destello (flash) con cambio de opacidad
-     * @param node Nodo a animar
-     * @param cycles Número de destellos
      */
     public static void flash(Node node, int cycles) {
         FadeTransition fade = new FadeTransition(Duration.millis(200), node);
@@ -284,9 +252,6 @@ public class AnimationUtils {
 
     /**
      * Añade efecto de sombra animado (glow)
-     * @param node Nodo al que aplicar el efecto
-     * @param color Color de la sombra
-     * @param durationMillis Duración de la animación
      */
     public static void glowEffect(Node node, Color color, double durationMillis) {
         DropShadow dropShadow = new DropShadow();
@@ -307,9 +272,6 @@ public class AnimationUtils {
 
     /**
      * Animación de transición suave entre dos nodos (crossfade)
-     * @param nodeOut Nodo que desaparece
-     * @param nodeIn Nodo que aparece
-     * @param durationMillis Duración en milisegundos
      */
     public static void crossFade(Node nodeOut, Node nodeIn, double durationMillis) {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(durationMillis), nodeOut);
@@ -326,9 +288,6 @@ public class AnimationUtils {
 
     /**
      * Transición de "cambio de vista" con slide
-     * @param nodeOut Nodo que sale
-     * @param nodeIn Nodo que entra
-     * @param durationMillis Duración
      */
     public static void slideTransition(Node nodeOut, Node nodeIn, double durationMillis) {
         // Nodo que sale: se desliza hacia la izquierda y desaparece
@@ -362,7 +321,6 @@ public class AnimationUtils {
 
     /**
      * Detiene todas las animaciones de un nodo
-     * @param node Nodo cuyas animaciones se detendrán
      */
     public static void stopAllAnimations(Node node) {
         node.setTranslateX(0);
@@ -375,7 +333,6 @@ public class AnimationUtils {
 
     /**
      * Resetea la posición y propiedades de un nodo
-     * @param node Nodo a resetear
      */
     public static void resetNode(Node node) {
         node.setTranslateX(0);

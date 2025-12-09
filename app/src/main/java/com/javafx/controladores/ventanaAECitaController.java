@@ -36,6 +36,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import com.javafx.utils.ImageUtils;
+import com.javafx.utils.StageUtils;
 
 public class ventanaAECitaController implements Initializable {
 
@@ -103,6 +104,7 @@ public class ventanaAECitaController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Buscar Cliente");
             stage.setScene(new Scene(root));
+            StageUtils.setAppIcon(stage);
             stage.show();
         } catch (IOException e) {
             mostrarAlerta("Error", "Error al abrir ventana de búsqueda: " + e.getMessage(), Alert.AlertType.ERROR);

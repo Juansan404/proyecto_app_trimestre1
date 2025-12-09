@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import com.javafx.utils.ImageUtils;
+import com.javafx.utils.StageUtils;
 
 public class miControlador implements Initializable{
 
@@ -132,6 +133,7 @@ public class miControlador implements Initializable{
             Stage stage = new Stage();
             stage.setTitle("Salir");
             stage.setScene(new Scene(root));
+            StageUtils.setAppIcon(stage);
             stage.show();
         } catch (IOException e) {
             System.out.println("Error al abrir ventana de salida: " + e.getMessage());
@@ -393,6 +395,7 @@ public class miControlador implements Initializable{
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(new Scene(root));
+            StageUtils.setAppIcon(stage);
             stage.setOnHidden(e -> refrescarTablas());
             stage.show();
         } catch (IOException e) {
@@ -421,6 +424,7 @@ public class miControlador implements Initializable{
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(new Scene(root));
+            StageUtils.setAppIcon(stage);
             stage.show();
         } catch (IOException e) {
             System.out.println("Error al abrir ventana " + titulo + ": " + e.getMessage());
@@ -701,6 +705,7 @@ public class miControlador implements Initializable{
 
             Scene scene = new Scene(root);
             ventanaImagen.setScene(scene);
+            StageUtils.setAppIcon(ventanaImagen);
             ventanaImagen.show();
         } catch (Exception e) {
             javafx.scene.control.Alert alerta = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);

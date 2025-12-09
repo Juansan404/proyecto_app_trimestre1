@@ -15,8 +15,6 @@ public class ImageUtils {
 
     /**
      * Abre un selector de archivos y convierte la imagen seleccionada a byte[]
-     * @param stage Ventana padre para el FileChooser
-     * @return byte[] de la imagen, o null si no se seleccionó nada
      */
     public static byte[] seleccionarYConvertirImagen(Stage stage) {
         FileChooser fileChooser = new FileChooser();
@@ -40,9 +38,6 @@ public class ImageUtils {
 
     /**
      * Convierte un archivo a byte[]
-     * @param archivo Archivo a convertir
-     * @return byte[] del archivo
-     * @throws IOException Si hay error al leer el archivo
      */
     public static byte[] convertirArchivoABytes(File archivo) throws IOException {
         try (FileInputStream fis = new FileInputStream(archivo);
@@ -59,8 +54,6 @@ public class ImageUtils {
 
     /**
      * Convierte byte[] a Image de JavaFX
-     * @param bytes byte[] de la imagen
-     * @return Image de JavaFX, o null si bytes es null
      */
     public static Image convertirBytesAImage(byte[] bytes) {
         if (bytes == null || bytes.length == 0) {
@@ -76,8 +69,6 @@ public class ImageUtils {
 
     /**
      * Convierte byte[] a String Base64
-     * @param bytes byte[] a convertir
-     * @return String en Base64
      */
     public static String convertirBytesABase64(byte[] bytes) {
         if (bytes == null || bytes.length == 0) {
@@ -88,8 +79,6 @@ public class ImageUtils {
 
     /**
      * Convierte String Base64 a byte[]
-     * @param base64 String en Base64
-     * @return byte[] de la imagen
      */
     public static byte[] convertirBase64ABytes(String base64) {
         if (base64 == null || base64.isEmpty()) {
@@ -100,10 +89,6 @@ public class ImageUtils {
 
     /**
      * Muestra una imagen en un ImageView desde byte[]
-     * @param imageView ImageView donde mostrar
-     * @param bytes byte[] de la imagen
-     * @param ancho Ancho máximo
-     * @param alto Alto máximo
      */
     public static void mostrarImagenEnImageView(ImageView imageView, byte[] bytes, double ancho, double alto) {
         Image imagen = convertirBytesAImage(bytes);
