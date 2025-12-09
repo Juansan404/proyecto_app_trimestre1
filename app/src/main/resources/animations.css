@@ -291,3 +291,14 @@
 .notification-info {
     -fx-border-color: #3498db;
 }
+
+/* ========================================
+   FADE IN PARA CAMBIOS DE PANEL EN STACKPANE
+   ======================================== */
+.panel-fade-in {
+    -fx-opacity: 1.0;
+}
+
+.panel-hidden {
+    -fx-opacity: 0.0;
+}

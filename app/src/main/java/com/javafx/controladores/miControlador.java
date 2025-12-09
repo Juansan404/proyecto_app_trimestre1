@@ -36,6 +36,7 @@ import javafx.util.Callback;
 import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
 import com.javafx.utils.CSSUtils;
+import com.javafx.utils.AnimationUtils;
 
 public class miControlador implements Initializable{
 
@@ -82,6 +83,7 @@ public class miControlador implements Initializable{
         contenedorTablaCitas.setVisible(false);
         contenedorTablaClientes.setVisible(true);
         contenedorTablaClientes.toFront();
+        AnimationUtils.fadeIn(contenedorTablaClientes);
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
@@ -95,6 +97,7 @@ public class miControlador implements Initializable{
         contenedorTablaCitas.setVisible(false);
         contenedorTablaTatuadores.setVisible(true);
         contenedorTablaTatuadores.toFront();
+        AnimationUtils.fadeIn(contenedorTablaTatuadores);
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
@@ -108,6 +111,7 @@ public class miControlador implements Initializable{
         contenedorTablaTatuadores.setVisible(false);
         contenedorTablaCitas.setVisible(true);
         contenedorTablaCitas.toFront();
+        AnimationUtils.fadeIn(contenedorTablaCitas);
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
@@ -121,6 +125,7 @@ public class miControlador implements Initializable{
         contenedorTablaCitas.setVisible(false);
         contenedorPrincipal.setVisible(true);
         contenedorPrincipal.toFront();
+        AnimationUtils.fadeIn(contenedorPrincipal);
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
@@ -143,6 +148,26 @@ public class miControlador implements Initializable{
             stage.show();
         } catch (IOException e) {
             System.out.println("Error al abrir ventana de salida: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void menuGuia(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaGuia.fxml"));
+            loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Guía de Usuario");
+            Scene scene = new Scene(root);
+            CSSUtils.aplicarEstilos(scene);
+            stage.setScene(scene);
+            StageUtils.setAppIcon(stage);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error al abrir ventana de guía: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -460,6 +485,7 @@ public class miControlador implements Initializable{
         contenedorTablaCitas.setVisible(false);
         contenedorTablaClientes.setVisible(true);
         contenedorTablaClientes.toFront();
+        AnimationUtils.fadeIn(contenedorTablaClientes);
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
@@ -473,6 +499,7 @@ public class miControlador implements Initializable{
         contenedorTablaCitas.setVisible(false);
         contenedorTablaTatuadores.setVisible(true);
         contenedorTablaTatuadores.toFront();
+        AnimationUtils.fadeIn(contenedorTablaTatuadores);
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
@@ -486,6 +513,7 @@ public class miControlador implements Initializable{
         contenedorTablaTatuadores.setVisible(false);
         contenedorTablaCitas.setVisible(true);
         contenedorTablaCitas.toFront();
+        AnimationUtils.fadeIn(contenedorTablaCitas);
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;

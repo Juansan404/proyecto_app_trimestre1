@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
 import com.javafx.utils.CSSUtils;
+import com.javafx.utils.AnimationUtils;
 
 public class ventanaAECitaController implements Initializable {
 
@@ -151,9 +152,13 @@ public class ventanaAECitaController implements Initializable {
     void buttonGuardar(MouseEvent event) {
         // Verificar validaciones
         if (validationSupport.isInvalid()) {
-            mostrarAlerta("Error de Validación",
-                          "Por favor, corrija los errores en el formulario antes de guardar",
-                          Alert.AlertType.ERROR);
+            // Aplicar animación shake a los campos con errores
+            validationSupport.getRegisteredControls().forEach(control -> {
+                if (validationSupport.getValidationResult().getErrors().stream()
+                        .anyMatch(error -> error.getTarget() == control)) {
+                    AnimationUtils.shake(control);
+                }
+            });
             return;
         }
 

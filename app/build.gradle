@@ -18,6 +18,9 @@ dependencies {
 
     // ControlsFX para validaciones
     implementation 'org.controlsfx:controlsfx:11.2.2'
+
+    // PDFfx para visualizar PDFs
+    implementation 'com.dlsc.pdfviewfx:pdfviewfx:3.4.1'
 }
 
 java { //Se indica la versión de JDK que ha de utilizar
@@ -38,7 +41,7 @@ sourceSets {
   main {
     resources {
         srcDirs = ["src/main/resources"]
-        includes = ["**/*.fxml","**/*.png","**/*.properties","**/*.css"]  //Importante para poder abrir una extensión no reconocida
+        includes = ["**/*.fxml","**/*.png","**/*.properties","**/*.css","**/*.pdf"]  //Importante para poder abrir una extensión no reconocida
     }
   }
 }

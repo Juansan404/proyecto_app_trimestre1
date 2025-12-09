@@ -9,16 +9,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.ventanaAETatuadorController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Nombre:" />
+      <Label layoutX="14.0" layoutY="14.0" mnemonicParsing="true" text="Nombre:" />
       <TextField fx:id="txtNombre" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="258.0" />
-      <Label layoutX="14.0" layoutY="76.0" text="Apellidos:" />
+      <Label layoutX="14.0" layoutY="76.0" mnemonicParsing="true" text="Apellidos:" />
       <TextField fx:id="txtApellidos" layoutX="15.0" layoutY="94.0" prefHeight="26.0" prefWidth="257.0" />
-      <Label layoutX="14.0" layoutY="143.0" text="Email:" />
+      <Label layoutX="14.0" layoutY="143.0" mnemonicParsing="true" text="Email:" />
       <TextField fx:id="txtEmail" layoutX="14.0" layoutY="160.0" prefHeight="26.0" prefWidth="258.0" />
-      <Label layoutX="16.0" layoutY="211.0" text="Teléfono:" />
+      <Label layoutX="16.0" layoutY="211.0" mnemonicParsing="true" text="Teléfono:" />
       <TextField fx:id="txtTelefono" layoutX="16.0" layoutY="229.0" prefHeight="26.0" prefWidth="154.0" />
-      <CheckBox fx:id="checkActivo" layoutX="217.0" layoutY="233.0" mnemonicParsing="false" text="Activo" />
-      <Button layoutX="35.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#buttonGuardar" prefWidth="100.0" text="Guardar" />
-      <Button layoutX="160.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#buttonCancelar" prefWidth="100.0" text="Cancelar" />
+      <CheckBox fx:id="checkActivo" layoutX="217.0" layoutY="233.0" mnemonicParsing="true" text="Activo" />
+      <Button layoutX="35.0" layoutY="306.0" mnemonicParsing="true" onMouseClicked="#buttonGuardar" prefWidth="100.0" text="Guardar" />
+      <Button layoutX="160.0" layoutY="306.0" mnemonicParsing="true" onMouseClicked="#buttonCancelar" prefWidth="100.0" text="Cancelar" />
    </children>
 </AnchorPane>

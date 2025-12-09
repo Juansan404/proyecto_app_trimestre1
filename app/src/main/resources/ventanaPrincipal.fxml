@@ -17,35 +17,36 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="true" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="true" text="Close" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Clientes">
+            <Menu mnemonicParsing="true" text="Clientes">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuClientes" text="Mostrar tabla clientes" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuClientes" text="Mostrar tabla clientes" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" onAction="#menuTatuadores" text="Tatuadores">
+            <Menu mnemonicParsing="true" onAction="#menuTatuadores" text="Tatuadores">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Mostar tabla tatuadores" />
+                  <MenuItem mnemonicParsing="true" text="Mostar tabla tatuadores" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Citas">
+            <Menu mnemonicParsing="true" text="Citas">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuCitas" text="Mostrar tabla citas" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuCitas" text="Mostrar tabla citas" />
                </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="true" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="true" onAction="#menuGuia" text="Guía" />
+              <MenuItem mnemonicParsing="true" text="About" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="EXIT">
+            <Menu mnemonicParsing="true" text="EXIT">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuInicio" text="Volver al inicio" />
-                  <MenuItem mnemonicParsing="false" onAction="#menuExit" text="Salir" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuInicio" text="Volver al inicio" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuExit" text="Salir" />
                </items>
             </Menu>
         </menus>
@@ -54,11 +55,11 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="925.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnAnadir" prefWidth="95.0" text="➕ Añadir" />
-            <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnEditar" prefWidth="95.0" text="✏ Editar" />
-            <Button fx:id="btnBorrar" layoutX="254.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBorrar" prefWidth="95.0" text="🗑 Borrar" />
-            <Button fx:id="btnBuscar" layoutX="845.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnBuscar" prefWidth="90.0" text="🔍 Buscar" />
-            <Button fx:id="btnResetearFiltro" layoutX="695.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#btnResetearFiltro" prefWidth="140.0" text="↻ Resetear filtro" visible="false" />
+            <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnAnadir" prefWidth="95.0" text="➕ Añadir" />
+            <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnEditar" prefWidth="95.0" text="✏ Editar" />
+            <Button fx:id="btnBorrar" layoutX="254.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnBorrar" prefWidth="95.0" text="🗑 Borrar" />
+            <Button fx:id="btnBuscar" layoutX="845.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnBuscar" prefWidth="90.0" text="🔍 Buscar" />
+            <Button fx:id="btnResetearFiltro" layoutX="695.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnResetearFiltro" prefWidth="140.0" text="↻ Resetear filtro" visible="false" />
             <StackPane fx:id="stackPanePrincipal" layoutX="34.0" layoutY="71.0" prefHeight="400.0" prefWidth="925.0">
                <children>
                   <VBox fx:id="contenedorPrincipal" alignment="CENTER" prefHeight="484.0" prefWidth="904.0">
@@ -67,9 +68,9 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione una opción del menú para continuar" />
                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15">
                            <children>
-                              <Button fx:id="btnClientesPanel" mnemonicParsing="false" onMouseClicked="#btnClientes" text="Clientes" />
-                              <Button fx:id="btnTatuadoresPanel" mnemonicParsing="false" onMouseClicked="#btnTatuadores" text="Tatuadores" />
-                              <Button fx:id="btnCitasPanel" mnemonicParsing="false" onMouseClicked="#btnCitas" text="Citas" />
+                              <Button fx:id="btnClientesPanel" mnemonicParsing="true" onMouseClicked="#btnClientes" text="Clientes" />
+                              <Button fx:id="btnTatuadoresPanel" mnemonicParsing="true" onMouseClicked="#btnTatuadores" text="Tatuadores" />
+                              <Button fx:id="btnCitasPanel" mnemonicParsing="true" onMouseClicked="#btnCitas" text="Citas" />
                            </children>
                         </HBox>
                      </children>

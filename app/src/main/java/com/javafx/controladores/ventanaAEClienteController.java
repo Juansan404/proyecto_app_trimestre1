@@ -11,6 +11,7 @@ import org.controlsfx.validation.Validator;
 
 import com.javafx.dao.ClienteDAO;
 import com.javafx.modelos.Cliente;
+import com.javafx.utils.AnimationUtils;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,9 +63,13 @@ public class ventanaAEClienteController implements Initializable {
     void buttonGuardar(MouseEvent event) {
         // Verificar validaciones
         if (validationSupport.isInvalid()) {
-            mostrarAlerta("Error de Validación",
-                          "Por favor, corrija los errores en el formulario antes de guardar",
-                          Alert.AlertType.ERROR);
+            // Aplicar animación shake a los campos con errores
+            validationSupport.getRegisteredControls().forEach(control -> {
+                if (validationSupport.getValidationResult().getErrors().stream()
+                        .anyMatch(error -> error.getTarget() == control)) {
+                    AnimationUtils.shake(control);
+                }
+            });
             return;
         }
 
