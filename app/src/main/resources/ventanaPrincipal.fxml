@@ -37,6 +37,11 @@
                   <MenuItem mnemonicParsing="true" onAction="#menuCitas" text="Mostrar tabla citas" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="true" text="Informes">
+               <items>
+                  <MenuItem mnemonicParsing="true" onAction="#menuInformes" text="Ver informes" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="true" text="Help">
             <items>
               <MenuItem mnemonicParsing="true" onAction="#menuGuia" text="Guía" />
@@ -102,6 +107,27 @@
                           </columns>
                         </TableView>
                      </children></VBox>
+                  <VBox fx:id="contenedorInformes" prefHeight="400.0" prefWidth="925.0" spacing="10" style="-fx-background-color: white;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="15" prefHeight="50.0" style="-fx-padding: 10;">
+                           <children>
+                              <Label text="Informes" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                              <CheckBox fx:id="checkIncrustado" text="Incrustado" />
+                              <Label text="Filtra Título" />
+                              <TextField prefWidth="200.0" />
+                              <Button text="Informe" />
+                              <Button text="Inf. Imágenes" />
+                              <Button text="Inf. Gráficas" />
+                              <Button text="&gt;&gt;" />
+                           </children>
+                        </HBox>
+                        <StackPane VBox.vgrow="ALWAYS" style="-fx-border-color: lightgray; -fx-border-width: 1;">
+                           <children>
+                              <Label text="Área de visualización de informes" style="-fx-text-fill: gray;" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
                </children>
             </StackPane>
          </children>

@@ -73,7 +73,16 @@ public class miControlador implements Initializable{
 
     @FXML
     private VBox contenedorTablaTatuadores;
-    
+
+    @FXML
+    private VBox contenedorInformes;
+
+    @FXML
+    private javafx.scene.control.CheckBox checkIncrustado;
+
+    // Variables para controlar el panel de informes
+    private boolean panelInformesActivo = false;
+
 
     //OPCIONES MENU
     @FXML
@@ -81,12 +90,14 @@ public class miControlador implements Initializable{
         contenedorPrincipal.setVisible(false);
         contenedorTablaTatuadores.setVisible(false);
         contenedorTablaCitas.setVisible(false);
+        contenedorInformes.setVisible(false);
         contenedorTablaClientes.setVisible(true);
         contenedorTablaClientes.toFront();
         AnimationUtils.fadeIn(contenedorTablaClientes);
         panelClientesActivo = true;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
+        panelInformesActivo = false;
         actualizarEstadoBotones();
     }
 
@@ -95,12 +106,14 @@ public class miControlador implements Initializable{
         contenedorPrincipal.setVisible(false);
         contenedorTablaClientes.setVisible(false);
         contenedorTablaCitas.setVisible(false);
+        contenedorInformes.setVisible(false);
         contenedorTablaTatuadores.setVisible(true);
         contenedorTablaTatuadores.toFront();
         AnimationUtils.fadeIn(contenedorTablaTatuadores);
         panelClientesActivo = false;
         panelTatuadoresActivo = true;
         panelCitasActivo = false;
+        panelInformesActivo = false;
         actualizarEstadoBotones();
     }
 
@@ -109,12 +122,30 @@ public class miControlador implements Initializable{
         contenedorPrincipal.setVisible(false);
         contenedorTablaClientes.setVisible(false);
         contenedorTablaTatuadores.setVisible(false);
+        contenedorInformes.setVisible(false);
         contenedorTablaCitas.setVisible(true);
         contenedorTablaCitas.toFront();
         AnimationUtils.fadeIn(contenedorTablaCitas);
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = true;
+        panelInformesActivo = false;
+        actualizarEstadoBotones();
+    }
+
+    @FXML
+    void menuInformes(ActionEvent event) {
+        contenedorPrincipal.setVisible(false);
+        contenedorTablaClientes.setVisible(false);
+        contenedorTablaTatuadores.setVisible(false);
+        contenedorTablaCitas.setVisible(false);
+        contenedorInformes.setVisible(true);
+        contenedorInformes.toFront();
+        AnimationUtils.fadeIn(contenedorInformes);
+        panelClientesActivo = false;
+        panelTatuadoresActivo = false;
+        panelCitasActivo = false;
+        panelInformesActivo = true;
         actualizarEstadoBotones();
     }
 
@@ -123,12 +154,14 @@ public class miControlador implements Initializable{
         contenedorTablaClientes.setVisible(false);
         contenedorTablaTatuadores.setVisible(false);
         contenedorTablaCitas.setVisible(false);
+        contenedorInformes.setVisible(false);
         contenedorPrincipal.setVisible(true);
         contenedorPrincipal.toFront();
         AnimationUtils.fadeIn(contenedorPrincipal);
         panelClientesActivo = false;
         panelTatuadoresActivo = false;
         panelCitasActivo = false;
+        panelInformesActivo = false;
         actualizarEstadoBotones();
     }
 
@@ -545,6 +578,9 @@ public class miControlador implements Initializable{
         cargarClientes();
         cargarTatuadores();
         cargarCitas();
+
+        // Configurar visibilidad inicial del contenedor de informes
+        contenedorInformes.setVisible(false);
 
         // Agregar listeners a las tablas para habilitar/deshabilitar los botones de editar y borrar
         tableViewClientes.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

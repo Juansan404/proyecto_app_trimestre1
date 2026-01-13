@@ -5,7 +5,9 @@
       "Bash(./gradlew clean:*)",
       "Bash(dir /s /b \"c:\\Users\\User\\Desktop\\FPDAM\\SEGUNDO CURSO\\INTERFACES\\Tema2\\proyecto_app_primerTrimestre\\app\")",
       "Bash(findstr:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git checkout:*)",
+      "Bash(./gradlew build:*)"
     ]
   }
 }
