@@ -1,13 +1,19 @@
 package com.javafx.controladores;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+
 
 import com.javafx.dao.CitaDAO;
 import com.javafx.dao.ClienteDAO;
 import com.javafx.dao.TatuadorDAO;
+import com.javafx.database.DatabaseConnection;
 import com.javafx.modelos.Cita;
 import com.javafx.modelos.Cliente;
 import com.javafx.modelos.Tatuador;
@@ -20,15 +26,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -37,6 +47,15 @@ import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
 import com.javafx.utils.CSSUtils;
 import com.javafx.utils.AnimationUtils;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+
+
 
 public class miControlador implements Initializable{
 
@@ -80,9 +99,19 @@ public class miControlador implements Initializable{
     @FXML
     private javafx.scene.control.CheckBox checkIncrustado;
 
+    @FXML
+    private ComboBox<String> comboEstadoInforme;
+
+    @FXML
+    private WebView wv;
+
     // Variables para controlar el panel de informes
     private boolean panelInformesActivo = false;
 
+    // Parámetros de informe
+    @SuppressWarnings("rawtypes")
+    Map parametros = new HashMap();
+    
 
     //OPCIONES MENU
     @FXML
@@ -582,6 +611,10 @@ public class miControlador implements Initializable{
         // Configurar visibilidad inicial del contenedor de informes
         contenedorInformes.setVisible(false);
 
+        // Inicializar ComboBox de estados para informes
+        comboEstadoInforme.getItems().addAll("Todos", "Pendiente", "Confirmada", "Cancelada", "Completada");
+        comboEstadoInforme.setValue("Todos");
+
         // Agregar listeners a las tablas para habilitar/deshabilitar los botones de editar y borrar
         tableViewClientes.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (panelClientesActivo) {
@@ -863,5 +896,115 @@ public class miControlador implements Initializable{
         btnClientesPanel.getStyleClass().add("button-primary");
         btnTatuadoresPanel.getStyleClass().add("button-primary");
         btnCitasPanel.getStyleClass().add("button-primary");
+    }
+
+    // ===================== MÉTODOS DE INFORMES =====================
+
+    @FXML
+    @SuppressWarnings("unchecked")
+    void btnInforme(ActionEvent event) {
+        // Obtener el estado seleccionado del ComboBox
+        String estadoSeleccionado = comboEstadoInforme.getValue();
+
+        // Configurar el parámetro ESTADO_FILTRO
+        parametros.clear();
+        parametros.put("ESTADO_FILTRO", estadoSeleccionado);
+
+        if (checkIncrustado.isSelected()) {
+            // Informe incrustado en el WebView
+            lanzaInforme("/informes/citas_por_sala.jrxml", parametros, 0);
+        } else {
+            // Informe en ventana nueva
+            lanzaInforme("/informes/citas_por_sala.jrxml", parametros, 1);
+        }
+    }
+
+    @FXML
+    void btnInformeGrafico(ActionEvent event) {
+        // Informe gráfico sin parámetros (excluye canceladas automáticamente en la query)
+        parametros.clear();
+
+        if (checkIncrustado.isSelected()) {
+            // Informe incrustado en el WebView
+            lanzaInforme("/informes/informe_graficov2.jrxml", parametros, 0);
+        } else {
+            // Informe en ventana nueva
+            lanzaInforme("/informes/informe_graficov2.jrxml", parametros, 1);
+        }
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private void lanzaInforme(String rutaInf, Map param, int tipo) {
+        try {
+            // Crear carpeta informes si no existe
+            File carpetaInformes = new File("informes");
+            if (!carpetaInformes.exists()) {
+                carpetaInformes.mkdirs();
+            }
+
+            // Compilar el informe .jrxml
+            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream(rutaInf));
+
+            try {
+                // Obtener conexión
+                Connection conexion = DatabaseConnection.getConnection();
+
+                // Llenar el informe con los datos de la conexión
+                JasperPrint jasperPrint = JasperFillManager.fillReport(report, param, conexion);
+
+                if (!jasperPrint.getPages().isEmpty()) {
+                    // Nombre base del archivo
+                    String nombreBase = rutaInf.substring(rutaInf.lastIndexOf('/') + 1, rutaInf.lastIndexOf('.'));
+
+                    // Exportar a PDF
+                    String pdfOutputPath = "informes/" + nombreBase + "_informe.pdf";
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, pdfOutputPath);
+
+                    // Exportar a HTML
+                    String outputHtmlFile = "informes/" + nombreBase + "_informe.html";
+                    JasperExportManager.exportReportToHtmlFile(jasperPrint, outputHtmlFile);
+
+                    // Mostrar en WebView
+                    if (tipo == 0) {
+                        wv.getEngine().load(new File(outputHtmlFile).toURI().toString());
+                    } else {
+                        WebView wvnuevo = new WebView();
+                        wvnuevo.getEngine().load(new File(outputHtmlFile).toURI().toString());
+                        StackPane stackPane = new StackPane(wvnuevo);
+                        Scene scene = new Scene(stackPane, 900, 600);
+                        Stage stage = new Stage();
+                        stage.setTitle("Informe de Citas");
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.setResizable(true);
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+
+                    // Mostrar mensaje de éxito
+                    String estadoFiltro = (String) param.get("ESTADO_FILTRO");
+                    String mensajeFiltro = (estadoFiltro == null || estadoFiltro.equals("Todos")) ? "todos los estados" : estadoFiltro;
+                    System.out.println("Informe generado correctamente para: " + mensajeFiltro);
+
+                } else {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Información");
+                    alert.setHeaderText("Sin resultados");
+                    alert.setContentText("No se encontraron citas para el estado seleccionado: " + comboEstadoInforme.getValue());
+                    alert.showAndWait();
+                }
+
+            } catch (JRException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error al generar el informe");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 }

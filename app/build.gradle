@@ -21,6 +21,11 @@ dependencies {
 
     // PDFfx para visualizar PDFs
     implementation 'com.dlsc.pdfviewfx:pdfviewfx:3.4.1'
+
+    // JasperReports para generación de informes
+    implementation 'net.sf.jasperreports:jasperreports:7.0.1'
+    implementation 'net.sf.jasperreports:jasperreports-pdf:7.0.1'
+    implementation 'net.sf.jasperreports:jasperreports-charts:7.0.1'
 }
 
 java { //Se indica la versión de JDK que ha de utilizar
@@ -37,11 +42,24 @@ application { //Definimos clase principal del proyecto
     mainClass = 'com.javafx.Main'
 }
 
+run {
+    jvmArgs = [
+        '--add-exports', 'javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED',
+        '--add-exports', 'javafx.graphics/com.sun.javafx.sg.prism.web=ALL-UNNAMED',
+        '--add-exports', 'javafx.web/com.sun.javafx.webkit=ALL-UNNAMED',
+        '--add-exports', 'javafx.web/com.sun.webkit=ALL-UNNAMED',
+        '--add-exports', 'javafx.web/com.sun.javafx.webkit.prism=ALL-UNNAMED',
+        '--add-opens', 'javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED',
+        '--add-opens', 'javafx.graphics/javafx.scene=ALL-UNNAMED',
+        '--add-opens', 'javafx.web/javafx.scene.web=ALL-UNNAMED'
+    ]
+}
+
 sourceSets {
   main {
     resources {
         srcDirs = ["src/main/resources"]
-        includes = ["**/*.fxml","**/*.png","**/*.properties","**/*.css","**/*.pdf"]  //Importante para poder abrir una extensión no reconocida
+        includes = ["**/*.fxml","**/*.png","**/*.properties","**/*.css","**/*.pdf","**/*.jrxml","**/*.jasper"]  //Importante para poder abrir una extensión no reconocida
     }
   }
 }

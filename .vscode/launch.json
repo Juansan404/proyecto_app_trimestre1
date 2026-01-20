@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -9,15 +6,8 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "com.javafx.Main",
-            "projectName": "app"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}",
-            "vmArgs": "--module-path C:\\javafx-sdk-25\\lib --add-modules javafx.base,javafx.controls,javafx.fxml --enable-native-access=javafx.graphics",
-            "projectName": "app"
+            "projectName": "app",
+            "vmArgs": "--module-path C:\\javafx-sdk-25\\lib --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.web,javafx.swing,javafx.media --enable-native-access=javafx.graphics --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.sg.prism.web=ALL-UNNAMED --add-exports javafx.web/com.sun.javafx.webkit=ALL-UNNAMED --add-exports javafx.web/com.sun.webkit=ALL-UNNAMED --add-exports javafx.web/com.sun.javafx.webkit.prism=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens javafx.web/javafx.scene.web=ALL-UNNAMED"
         }
     ]
 }

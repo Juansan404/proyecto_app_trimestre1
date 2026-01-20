@@ -1,0 +1,181 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="tattooage_all_citas" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="data_adapter_tattooage"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50.0" bold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18.0"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12.0" bold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12.0"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle backcolor="#969593">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<query language="SQL"><![CDATA[SELECT * FROM CITAS]]></query>
+	<field name="id_cita" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_cita"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_cita"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="id_cliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="id_artista" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_artista"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_artista"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="fecha_cita" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_cita"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_cita"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="duracion_aproximada" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="duracion_aproximada"/>
+		<property name="com.jaspersoft.studio.field.label" value="duracion_aproximada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="precio" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precio"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="sala" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sala"/>
+		<property name="com.jaspersoft.studio.field.label" value="sala"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="notas" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="notas"/>
+		<property name="com.jaspersoft.studio.field.label" value="notas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="136" splitType="Stretch">
+		<element kind="image" uuid="1c003177-754c-448f-8ce1-16868856f545" x="0" y="0" width="164" height="126" hImageAlign="Center" vImageAlign="Middle">
+			<expression><![CDATA["C:\\Users\\User\\Desktop\\FPDAM\\SEGUNDO CURSO\\INTERFACES\\Tema2\\proyecto_app_primerTrimestre\\app\\src\\main\\resources\\images\\logo.png"]]></expression>
+			<box>
+				<pen lineWidth="1.0" lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd" x="270" y="0" width="263" height="62" vTextAlign="Middle" style="Title">
+			<text><![CDATA[TattooAge]]></text>
+		</element>
+		<element kind="staticText" uuid="f6a78448-8260-4445-a9e0-e3fb53b080d9" x="303" y="62" width="196" height="22" forecolor="#969593" fontName="Times New Roman" style="SubTitle">
+			<text><![CDATA[Informe Citas]]></text>
+		</element>
+		<element kind="staticText" uuid="8240065e-64b6-4170-b5d9-6341598e7b35" x="172" y="94" width="383" height="42" fontSize="10.0" hTextAlign="Right">
+			<text><![CDATA[]]></text>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="16" splitType="Stretch">
+		<element kind="line" uuid="e9d2002a-c8ee-4649-a258-640dad29110c" positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+		<element kind="staticText" uuid="d2d4e2b3-328a-4c07-bae1-322a1bfa07e0" x="0" y="0" width="89" height="15" forecolor="#030303" backcolor="#C2BFBC" style="Column header">
+			<text><![CDATA[id_cita]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f447ef7b-70ea-47a3-8ed9-d4e8a35c7144"/>
+		</element>
+		<element kind="staticText" uuid="fa5f54cc-a8b5-4cee-b433-b82ed35433b5" x="89" y="0" width="89" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[id_cliente]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65025522-7646-4403-b90c-f1738ac474af"/>
+		</element>
+		<element kind="staticText" uuid="0f935d5d-1bdc-49e9-9f7f-abc443cfa0ea" x="178" y="0" width="89" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[id_artista]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9e366bca-7431-475f-afcb-fd5d25d28e72"/>
+		</element>
+		<element kind="staticText" uuid="8bed597f-536a-4285-9239-bcd03a083320" x="267" y="0" width="89" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[fecha_cita]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f756f7f-c5d9-4a7c-9516-907b28214a18"/>
+		</element>
+		<element kind="staticText" uuid="f58c9bf9-50bd-4ef6-b93f-a87e1883e872" x="356" y="0" width="89" height="15" forecolor="#030202" style="Column header">
+			<text><![CDATA[duracion_aproximada]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f4a4c87d-f340-4af6-b9d1-0bfd95f83e9a"/>
+		</element>
+		<element kind="staticText" uuid="4850d230-0bb4-4c52-b37f-6fc013cff46b" x="445" y="0" width="89" height="15" forecolor="#030202" style="Column header">
+			<text><![CDATA[precio]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="27a15f64-d379-4ecf-95b2-c6bd57b296ed"/>
+		</element>
+		<element kind="staticText" uuid="3d6766ff-2624-4c4c-b010-9b05742c3424" x="534" y="0" width="89" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[estado]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72d16e90-d91f-40aa-9599-c79a13e16fa0"/>
+		</element>
+		<element kind="staticText" uuid="548ca21a-d394-43cf-bd17-f5c895f193bb" x="623" y="0" width="89" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[sala]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e14fad4-a889-423f-ad18-a7c46a4853c9"/>
+		</element>
+		<element kind="staticText" uuid="f3e45414-9805-4cb1-8ece-5767d3302a8f" x="712" y="0" width="89" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[notas]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a2784a2d-094d-41b7-a7ae-3c242fc4083f"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<element kind="frame" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d174" mode="Opaque" x="0" y="0" width="802" height="15" style="Row">
+				<element kind="textField" uuid="17c8ca2f-c16a-4b03-bc91-31878cc3c13c" x="0" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{id_cita}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f447ef7b-70ea-47a3-8ed9-d4e8a35c7144"/>
+				</element>
+				<element kind="textField" uuid="d3fda351-640c-4cc2-92a9-6d1aa4cf74aa" x="89" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{id_cliente}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65025522-7646-4403-b90c-f1738ac474af"/>
+				</element>
+				<element kind="textField" uuid="a813f4cc-931c-4c39-9c50-29959380bff0" x="178" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{id_artista}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9e366bca-7431-475f-afcb-fd5d25d28e72"/>
+				</element>
+				<element kind="textField" uuid="cbe97e9b-354e-4408-8f79-f293c5558eb0" x="267" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{fecha_cita}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f756f7f-c5d9-4a7c-9516-907b28214a18"/>
+				</element>
+				<element kind="textField" uuid="61c8dafe-a9a9-4c17-85c2-4b733f334593" x="356" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{duracion_aproximada}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f4a4c87d-f340-4af6-b9d1-0bfd95f83e9a"/>
+				</element>
+				<element kind="textField" uuid="4abde0d2-c981-411e-9563-5ccf41a43307" x="445" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{precio}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="27a15f64-d379-4ecf-95b2-c6bd57b296ed"/>
+				</element>
+				<element kind="textField" uuid="045bfdef-1c61-4338-bf41-63ddab827aaf" x="534" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{estado}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72d16e90-d91f-40aa-9599-c79a13e16fa0"/>
+				</element>
+				<element kind="textField" uuid="222ac7f1-82ec-48a8-b597-e60d0664df1c" x="623" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{sala}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e14fad4-a889-423f-ad18-a7c46a4853c9"/>
+				</element>
+				<element kind="textField" uuid="d6724eb4-ea01-46e0-8507-4c22026077dc" x="712" y="0" width="89" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{notas}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a2784a2d-094d-41b7-a7ae-3c242fc4083f"/>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="6" splitType="Stretch">
+		<element kind="line" uuid="fa5e88d5-a011-4e32-8f12-ce923f903111" positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="25" splitType="Stretch">
+		<element kind="frame" uuid="5d8169bd-4a75-48c8-8a68-6d3ad5ba9402" mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#595454" backcolor="#595753">
+			<element kind="textField" uuid="e5e27efa-b599-499b-9ca3-848cb511cb7b" x="783" y="1" width="40" height="20" forecolor="#FFFFFF" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+			<element kind="textField" uuid="18cfe1ca-f7d6-48b0-9827-28578b42a5e0" x="703" y="1" width="80" height="20" forecolor="#FFFFFF" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="fbce24bb-3cb1-44a3-8eec-8c067ddbe5b5" x="22" y="1" width="197" height="20" forecolor="#FFFFFF" fontSize="10.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary splitType="Stretch"/>
+</jasperReport>
