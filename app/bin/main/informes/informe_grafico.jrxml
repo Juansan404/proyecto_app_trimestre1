@@ -1,0 +1,103 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="informe_grafico" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93162">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="data_adapter_tattooage"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50.0" bold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18.0"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12.0" bold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12.0"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle backcolor="#E6F3FF">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<query language="SQL"><![CDATA[SELECT fecha_cita, precio FROM CITAS WHERE estado != 'Cancelada' ORDER BY fecha_cita]]></query>
+	<field name="fecha_cita" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_cita"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_cita"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<field name="precio" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precio"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CITAS"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="136" splitType="Stretch">
+		<element kind="image" uuid="1c003177-754c-448f-8ce1-16868856f546" x="0" y="0" width="164" height="126" hImageAlign="Center" vImageAlign="Middle">
+			<expression><![CDATA["C:\\Users\\User\\Desktop\\FPDAM\\SEGUNDO CURSO\\INTERFACES\\Tema2\\proyecto_app_primerTrimestre\\app\\src\\main\\resources\\images\\logo.png"]]></expression>
+			<box>
+				<pen lineWidth="1.0" lineStyle="Solid"/>
+			</box>
+		</element>
+		<element kind="staticText" uuid="bc1ce1da-8232-46ea-be55-cec4abb986de" x="270" y="0" width="263" height="62" vTextAlign="Middle" style="Title">
+			<text><![CDATA[TattooAge]]></text>
+		</element>
+		<element kind="staticText" uuid="f6a78448-8260-4445-a9e0-e3fb53b080da" x="303" y="62" width="196" height="22" forecolor="#969593" fontName="Times New Roman" style="SubTitle">
+			<text><![CDATA[Informe Grafico]]></text>
+		</element>
+		<element kind="staticText" uuid="8240065e-64b6-4170-b5d9-6341598e7b36" x="270" y="94" width="263" height="30" fontSize="12.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Precios por Fecha (sin canceladas)]]></text>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="16" splitType="Stretch">
+		<element kind="line" uuid="e9d2002a-c8ee-4649-a258-640dad29110d" positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+		<element kind="staticText" uuid="8bed597f-536a-4285-9239-bcd03a083321" x="200" y="0" width="200" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[Fecha]]></text>
+		</element>
+		<element kind="staticText" uuid="4850d230-0bb4-4c52-b37f-6fc013cff46c" x="400" y="0" width="200" height="15" forecolor="#030303" style="Column header">
+			<text><![CDATA[Precio (€)]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<element kind="frame" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d175" mode="Opaque" x="0" y="0" width="802" height="15" style="Row">
+				<element kind="textField" uuid="cbe97e9b-354e-4408-8f79-f293c5558eb1" x="200" y="0" width="200" height="15" textAdjust="StretchHeight" pattern="dd/MM/yyyy" style="Detail">
+					<expression><![CDATA[$F{fecha_cita}]]></expression>
+				</element>
+				<element kind="textField" uuid="4abde0d2-c981-411e-9563-5ccf41a43308" x="400" y="0" width="200" height="15" textAdjust="StretchHeight" pattern="#,##0.00 €" style="Detail">
+					<expression><![CDATA[$F{precio}]]></expression>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="6" splitType="Stretch">
+		<element kind="line" uuid="fa5e88d5-a011-4e32-8f12-ce923f903112" positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="25" splitType="Stretch">
+		<element kind="frame" uuid="5d8169bd-4a75-48c8-8a68-6d3ad5ba9403" mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#595454" backcolor="#595753">
+			<element kind="textField" uuid="e5e27efa-b599-499b-9ca3-848cb511cb7c" x="783" y="1" width="40" height="20" forecolor="#FFFFFF" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+			<element kind="textField" uuid="18cfe1ca-f7d6-48b0-9827-28578b42a5e1" x="703" y="1" width="80" height="20" forecolor="#FFFFFF" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="fbce24bb-3cb1-44a3-8eec-8c067ddbe5b6" x="22" y="1" width="197" height="20" forecolor="#FFFFFF" fontSize="10.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary height="300" splitType="Stretch">
+		<element kind="chart" chartType="bar" uuid="a1b2c3d4-e5f6-7890-abcd-ef1234567890" x="50" y="10" width="700" height="280" evaluationTime="Report">
+			<dataset kind="category" resetType="Report">
+				<series>
+					<seriesExpression><![CDATA["Precio"]]></seriesExpression>
+					<categoryExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{fecha_cita})]]></categoryExpression>
+					<valueExpression><![CDATA[$F{precio}]]></valueExpression>
+				</series>
+			</dataset>
+			<plot labelRotation="45.0">
+				<seriesColor order="0" color="#4472C4"/>
+			</plot>
+			<titleExpression><![CDATA["Precios por Fecha"]]></titleExpression>
+			<subtitleExpression><![CDATA["(Citas no canceladas)"]]></subtitleExpression>
+			<categoryAxisLabelExpression><![CDATA["Fecha"]]></categoryAxisLabelExpression>
+			<valueAxisLabelExpression><![CDATA["Precio (€)"]]></valueAxisLabelExpression>
+		</element>
+	</summary>
+</jasperReport>

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
 
 <BorderPane fx:id="borderPanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.controladores.miControlador">
    <top>
@@ -35,6 +40,11 @@
             <Menu mnemonicParsing="true" text="Citas">
                <items>
                   <MenuItem mnemonicParsing="true" onAction="#menuCitas" text="Mostrar tabla citas" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="true" text="Informes">
+               <items>
+                  <MenuItem mnemonicParsing="true" onAction="#menuInformes" text="Ver informes" />
                </items>
             </Menu>
           <Menu mnemonicParsing="true" text="Help">
@@ -102,6 +112,21 @@
                           </columns>
                         </TableView>
                      </children></VBox>
+                  <VBox fx:id="contenedorInformes" prefHeight="400.0" prefWidth="925.0" spacing="10" style="-fx-background-color: white;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="15" prefHeight="50.0" style="-fx-padding: 10;">
+                           <children>
+                              <Label text="Informes" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                              <CheckBox fx:id="checkIncrustado" text="Incrustado" selected="true" />
+                              <Label text="Filtrar por Estado:" />
+                              <ComboBox fx:id="comboEstadoInforme" prefWidth="150.0" promptText="Seleccionar estado" />
+                              <Button fx:id="btnInforme" onAction="#btnInforme" text="Generar Informe" />
+                              <Button fx:id="btnInformeGrafico" onAction="#btnInformeGrafico" text="Informe Grafico" />
+                           </children>
+                        </HBox>
+                        <WebView fx:id="wv" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                </children>
             </StackPane>
          </children>
