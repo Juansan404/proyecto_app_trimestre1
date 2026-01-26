@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -22,41 +23,41 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="true" text="File">
+          <Menu mnemonicParsing="true" text="_File">
             <items>
-              <MenuItem mnemonicParsing="true" text="Close" />
+              <MenuItem mnemonicParsing="true" text="_Close" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="true" text="Clientes">
+            <Menu mnemonicParsing="true" text="_Clientes">
                <items>
-                  <MenuItem mnemonicParsing="true" onAction="#menuClientes" text="Mostrar tabla clientes" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuClientes" text="_Mostrar tabla clientes" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="true" onAction="#menuTatuadores" text="Tatuadores">
+            <Menu mnemonicParsing="true" onAction="#menuTatuadores" text="_Tatuadores">
                <items>
-                  <MenuItem mnemonicParsing="true" text="Mostar tabla tatuadores" />
+                  <MenuItem mnemonicParsing="true" text="_Mostar tabla tatuadores" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="true" text="Citas">
+            <Menu mnemonicParsing="true" text="C_itas">
                <items>
-                  <MenuItem mnemonicParsing="true" onAction="#menuCitas" text="Mostrar tabla citas" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuCitas" text="_Mostrar tabla citas" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="true" text="Informes">
+            <Menu mnemonicParsing="true" text="I_nformes">
                <items>
-                  <MenuItem mnemonicParsing="true" onAction="#menuInformes" text="Ver informes" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuInformes" text="_Ver informes" />
                </items>
             </Menu>
-          <Menu mnemonicParsing="true" text="Help">
+          <Menu mnemonicParsing="true" text="_Help">
             <items>
-              <MenuItem mnemonicParsing="true" onAction="#menuGuia" text="Guía" />
-              <MenuItem mnemonicParsing="true" text="About" />
+              <MenuItem mnemonicParsing="true" onAction="#menuGuia" text="_Guía" />
+              <MenuItem mnemonicParsing="true" text="_About" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="true" text="EXIT">
+            <Menu mnemonicParsing="true" text="_EXIT">
                <items>
-                  <MenuItem mnemonicParsing="true" onAction="#menuInicio" text="Volver al inicio" />
-                  <MenuItem mnemonicParsing="true" onAction="#menuExit" text="Salir" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuInicio" text="_Volver al inicio" />
+                  <MenuItem mnemonicParsing="true" onAction="#menuExit" text="_Salir" />
                </items>
             </Menu>
         </menus>
@@ -65,11 +66,21 @@
    <center>
       <AnchorPane prefHeight="500.0" prefWidth="925.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnAnadir" prefWidth="95.0" text="➕ Añadir" />
-            <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnEditar" prefWidth="95.0" text="✏ Editar" />
-            <Button fx:id="btnBorrar" layoutX="254.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnBorrar" prefWidth="95.0" text="🗑 Borrar" />
-            <Button fx:id="btnBuscar" layoutX="845.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnBuscar" prefWidth="90.0" text="🔍 Buscar" />
-            <Button fx:id="btnResetearFiltro" layoutX="695.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnResetearFiltro" prefWidth="140.0" text="↻ Resetear filtro" visible="false" />
+            <Button fx:id="btnAnadir" layoutX="34.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnAnadir" prefWidth="95.0" text="➕ _Añadir">
+               <tooltip><Tooltip text="Añadir nuevo registro (Alt+A)" /></tooltip>
+            </Button>
+            <Button fx:id="btnEditar" layoutX="144.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnEditar" prefWidth="95.0" text="✏ _Editar">
+               <tooltip><Tooltip text="Editar registro seleccionado (Alt+E)" /></tooltip>
+            </Button>
+            <Button fx:id="btnBorrar" layoutX="254.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnBorrar" prefWidth="95.0" text="🗑 _Borrar">
+               <tooltip><Tooltip text="Borrar registro seleccionado (Alt+B)" /></tooltip>
+            </Button>
+            <Button fx:id="btnBuscar" layoutX="845.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnBuscar" prefWidth="90.0" text="🔍 B_uscar">
+               <tooltip><Tooltip text="Buscar registros (Alt+U)" /></tooltip>
+            </Button>
+            <Button fx:id="btnResetearFiltro" layoutX="695.0" layoutY="27.0" mnemonicParsing="true" onMouseClicked="#btnResetearFiltro" prefWidth="140.0" text="↻ _Resetear filtro" visible="false">
+               <tooltip><Tooltip text="Quitar filtro de búsqueda (Alt+R)" /></tooltip>
+            </Button>
             <StackPane fx:id="stackPanePrincipal" layoutX="34.0" layoutY="71.0" prefHeight="400.0" prefWidth="925.0">
                <children>
                   <VBox fx:id="contenedorPrincipal" alignment="CENTER" prefHeight="484.0" prefWidth="904.0">
@@ -78,15 +89,22 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione una opción del menú para continuar" />
                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15">
                            <children>
-                              <Button fx:id="btnClientesPanel" mnemonicParsing="true" onMouseClicked="#btnClientes" text="Clientes" />
-                              <Button fx:id="btnTatuadoresPanel" mnemonicParsing="true" onMouseClicked="#btnTatuadores" text="Tatuadores" />
-                              <Button fx:id="btnCitasPanel" mnemonicParsing="true" onMouseClicked="#btnCitas" text="Citas" />
+                              <Button fx:id="btnClientesPanel" mnemonicParsing="true" onMouseClicked="#btnClientes" text="_Clientes">
+                                 <tooltip><Tooltip text="Ver tabla de clientes (Alt+C)" /></tooltip>
+                              </Button>
+                              <Button fx:id="btnTatuadoresPanel" mnemonicParsing="true" onMouseClicked="#btnTatuadores" text="_Tatuadores">
+                                 <tooltip><Tooltip text="Ver tabla de tatuadores (Alt+T)" /></tooltip>
+                              </Button>
+                              <Button fx:id="btnCitasPanel" mnemonicParsing="true" onMouseClicked="#btnCitas" text="C_itas">
+                                 <tooltip><Tooltip text="Ver tabla de citas (Alt+I)" /></tooltip>
+                              </Button>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
                   <VBox fx:id="contenedorTablaClientes" prefHeight="200.0" prefWidth="100.0">
                      <children>
+                        <Label fx:id="lblErrorClientes" alignment="CENTER" prefHeight="400.0" prefWidth="925.0" style="-fx-font-size: 16px; -fx-text-fill: #cc0000; -fx-background-color: #ffe6e6; -fx-padding: 20;" text="Error de conexion: No se pudo conectar con la base de datos." visible="false" managed="false" wrapText="true" VBox.vgrow="ALWAYS" />
                         <TableView fx:id="tableViewClientes" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
@@ -96,6 +114,7 @@
                      </children></VBox>
                   <VBox fx:id="contenedorTablaTatuadores" prefHeight="200.0" prefWidth="100.0">
                      <children>
+                        <Label fx:id="lblErrorTatuadores" alignment="CENTER" prefHeight="400.0" prefWidth="925.0" style="-fx-font-size: 16px; -fx-text-fill: #cc0000; -fx-background-color: #ffe6e6; -fx-padding: 20;" text="Error de conexion: No se pudo conectar con la base de datos." visible="false" managed="false" wrapText="true" VBox.vgrow="ALWAYS" />
                         <TableView fx:id="tableViewTatuadores" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
@@ -105,6 +124,7 @@
                      </children></VBox>
                   <VBox fx:id="contenedorTablaCitas" prefHeight="276.0" prefWidth="800.0">
                      <children>
+                        <Label fx:id="lblErrorCitas" alignment="CENTER" prefHeight="400.0" prefWidth="925.0" style="-fx-font-size: 16px; -fx-text-fill: #cc0000; -fx-background-color: #ffe6e6; -fx-padding: 20;" text="Error de conexion: No se pudo conectar con la base de datos." visible="false" managed="false" wrapText="true" VBox.vgrow="ALWAYS" />
                         <TableView fx:id="tableViewCitas" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="C1" />
@@ -117,11 +137,17 @@
                         <HBox alignment="CENTER_LEFT" spacing="15" prefHeight="50.0" style="-fx-padding: 10;">
                            <children>
                               <Label text="Informes" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
-                              <CheckBox fx:id="checkIncrustado" text="Incrustado" selected="true" />
+                              <CheckBox fx:id="checkIncrustado" mnemonicParsing="true" text="_Incrustado" selected="true">
+                                 <tooltip><Tooltip text="Mostrar informe dentro de la aplicación (Alt+I)" /></tooltip>
+                              </CheckBox>
                               <Label text="Filtrar por Estado:" />
                               <ComboBox fx:id="comboEstadoInforme" prefWidth="150.0" promptText="Seleccionar estado" />
-                              <Button fx:id="btnInforme" onAction="#btnInforme" text="Generar Informe" />
-                              <Button fx:id="btnInformeGrafico" onAction="#btnInformeGrafico" text="Informe Grafico" />
+                              <Button fx:id="btnInforme" mnemonicParsing="true" onAction="#btnInforme" text="_Generar Informe">
+                                 <tooltip><Tooltip text="Generar informe de citas por sala (Alt+G)" /></tooltip>
+                              </Button>
+                              <Button fx:id="btnInformeGrafico" mnemonicParsing="true" onAction="#btnInformeGrafico" text="Informe G_rafico">
+                                 <tooltip><Tooltip text="Generar informe gráfico de citas (Alt+R)" /></tooltip>
+                              </Button>
                            </children>
                         </HBox>
                         <WebView fx:id="wv" VBox.vgrow="ALWAYS" />

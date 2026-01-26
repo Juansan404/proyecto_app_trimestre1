@@ -399,6 +399,8 @@ public class ventanaAECitaController implements Initializable {
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
+        Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        StageUtils.setAppIcon(alertStage);
         alerta.showAndWait();
     }
 

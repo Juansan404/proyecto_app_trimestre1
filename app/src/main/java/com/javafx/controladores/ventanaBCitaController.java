@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.javafx.dao.CitaDAO;
 import com.javafx.modelos.Cita;
+import com.javafx.utils.StageUtils;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -99,6 +100,8 @@ public class ventanaBCitaController implements Initializable{
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
+        Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        StageUtils.setAppIcon(alertStage);
         alerta.showAndWait();
     }
 

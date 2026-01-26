@@ -10,6 +10,7 @@ import org.controlsfx.validation.Validator;
 import com.javafx.dao.TatuadorDAO;
 import com.javafx.modelos.Tatuador;
 import com.javafx.utils.AnimationUtils;
+import com.javafx.utils.StageUtils;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -197,6 +198,8 @@ public class ventanaAETatuadorController implements Initializable {
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
+        Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        StageUtils.setAppIcon(alertStage);
         alerta.showAndWait();
     }
 

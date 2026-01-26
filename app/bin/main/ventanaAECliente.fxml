@@ -22,7 +22,7 @@
       <DatePicker fx:id="dateFechaNac" layoutX="181.0" layoutY="233.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="12.0" layoutY="278.0" mnemonicParsing="true" text="Notas:" />
       <TextArea fx:id="txtNotas" layoutX="12.0" layoutY="296.0" prefHeight="139.0" prefWidth="314.0" />
-      <Button fx:id="btnGuardar" layoutX="60.0" layoutY="459.0" mnemonicParsing="true" onMouseClicked="#buttonGuardar" prefWidth="100.0" text="Guardar" />
-      <Button fx:id="btnCancelar" layoutX="190.0" layoutY="459.0" mnemonicParsing="true" onMouseClicked="#buttonCancelar" prefWidth="100.0" text="Cancelar" />
+      <Button fx:id="btnGuardar" layoutX="60.0" layoutY="459.0" mnemonicParsing="true" onMouseClicked="#buttonGuardar" defaultButton="true" prefWidth="100.0" text="💾 _Guardar" />
+      <Button fx:id="btnCancelar" layoutX="190.0" layoutY="459.0" mnemonicParsing="true" onMouseClicked="#buttonCancelar" cancelButton="true" prefWidth="100.0" text="❌ _Cancelar" />
    </children>
 </AnchorPane>

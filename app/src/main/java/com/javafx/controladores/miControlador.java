@@ -74,6 +74,11 @@ public class miControlador implements Initializable{
     private boolean panelTatuadoresActivo = false;
     private boolean panelCitasActivo = false;
 
+    // Variables para controlar errores de conexión
+    private boolean errorConexionClientes = false;
+    private boolean errorConexionTatuadores = false;
+    private boolean errorConexionCitas = false;
+
     //PANES PRINCIPALES
     @FXML
     private javafx.scene.layout.BorderPane borderPanePrincipal;
@@ -202,6 +207,7 @@ public class miControlador implements Initializable{
             Parent root = loader.load();
 
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Salir");
             Scene scene = new Scene(root);
             CSSUtils.aplicarEstilos(scene);
@@ -222,6 +228,7 @@ public class miControlador implements Initializable{
             Parent root = loader.load();
 
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Guía de Usuario");
             Scene scene = new Scene(root);
             CSSUtils.aplicarEstilos(scene);
@@ -244,6 +251,16 @@ public class miControlador implements Initializable{
 
     @FXML
     private TableView<Tatuador> tableViewTatuadores;
+
+    // LABELS DE ERROR DE CONEXION
+    @FXML
+    private javafx.scene.control.Label lblErrorClientes;
+
+    @FXML
+    private javafx.scene.control.Label lblErrorTatuadores;
+
+    @FXML
+    private javafx.scene.control.Label lblErrorCitas;
 
     //BOTONES MANIPULACION TABLAS
     @FXML
@@ -325,6 +342,8 @@ public class miControlador implements Initializable{
                 confirmacion.setTitle("Confirmar eliminación");
                 confirmacion.setHeaderText("¿Está seguro de eliminar este cliente?");
                 confirmacion.setContentText("Esta acción no se puede deshacer.");
+                Stage confirmStage = (Stage) confirmacion.getDialogPane().getScene().getWindow();
+                StageUtils.setAppIcon(confirmStage);
 
                 confirmacion.showAndWait().ifPresent(response -> {
                     if (response == javafx.scene.control.ButtonType.OK) {
@@ -333,6 +352,8 @@ public class miControlador implements Initializable{
                             alerta.setTitle("Éxito");
                             alerta.setHeaderText(null);
                             alerta.setContentText("Cliente eliminado correctamente");
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            StageUtils.setAppIcon(alertStage);
                             alerta.showAndWait();
                             refrescarTablas();
                         } else {
@@ -340,6 +361,8 @@ public class miControlador implements Initializable{
                             alerta.setTitle("Error");
                             alerta.setHeaderText(null);
                             alerta.setContentText("No se pudo eliminar el cliente");
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            StageUtils.setAppIcon(alertStage);
                             alerta.showAndWait();
                         }
                     }
@@ -352,6 +375,8 @@ public class miControlador implements Initializable{
                 confirmacion.setTitle("Confirmar eliminación");
                 confirmacion.setHeaderText("¿Está seguro de eliminar este tatuador?");
                 confirmacion.setContentText("Esta acción no se puede deshacer.");
+                Stage confirmStage = (Stage) confirmacion.getDialogPane().getScene().getWindow();
+                StageUtils.setAppIcon(confirmStage);
 
                 confirmacion.showAndWait().ifPresent(response -> {
                     if (response == javafx.scene.control.ButtonType.OK) {
@@ -360,6 +385,8 @@ public class miControlador implements Initializable{
                             alerta.setTitle("Éxito");
                             alerta.setHeaderText(null);
                             alerta.setContentText("Tatuador eliminado correctamente");
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            StageUtils.setAppIcon(alertStage);
                             alerta.showAndWait();
                             refrescarTablas();
                         } else {
@@ -367,6 +394,8 @@ public class miControlador implements Initializable{
                             alerta.setTitle("Error");
                             alerta.setHeaderText(null);
                             alerta.setContentText("No se pudo eliminar el tatuador");
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            StageUtils.setAppIcon(alertStage);
                             alerta.showAndWait();
                         }
                     }
@@ -379,6 +408,8 @@ public class miControlador implements Initializable{
                 confirmacion.setTitle("Confirmar eliminación");
                 confirmacion.setHeaderText("¿Está seguro de eliminar esta cita?");
                 confirmacion.setContentText("Esta acción no se puede deshacer.");
+                Stage confirmStage = (Stage) confirmacion.getDialogPane().getScene().getWindow();
+                StageUtils.setAppIcon(confirmStage);
 
                 confirmacion.showAndWait().ifPresent(response -> {
                     if (response == javafx.scene.control.ButtonType.OK) {
@@ -387,6 +418,8 @@ public class miControlador implements Initializable{
                             alerta.setTitle("Éxito");
                             alerta.setHeaderText(null);
                             alerta.setContentText("Cita eliminada correctamente");
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            StageUtils.setAppIcon(alertStage);
                             alerta.showAndWait();
                             refrescarTablas();
                         } else {
@@ -394,6 +427,8 @@ public class miControlador implements Initializable{
                             alerta.setTitle("Error");
                             alerta.setHeaderText(null);
                             alerta.setContentText("No se pudo eliminar la cita");
+                            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+                            StageUtils.setAppIcon(alertStage);
                             alerta.showAndWait();
                         }
                     }
@@ -445,15 +480,27 @@ public class miControlador implements Initializable{
     private void actualizarEstadoBotones() {
         boolean algunPanelActivo = panelClientesActivo || panelTatuadoresActivo || panelCitasActivo;
 
+        // Verificar si hay error de conexión en el panel activo
+        boolean hayErrorConexion = (panelClientesActivo && errorConexionClientes) ||
+                                   (panelTatuadoresActivo && errorConexionTatuadores) ||
+                                   (panelCitasActivo && errorConexionCitas);
+
         // Mostrar u ocultar botones según si hay un panel activo
         btnAnadir.setVisible(algunPanelActivo);
-        btnAnadir.setDisable(!algunPanelActivo);
+        btnAnadir.setDisable(!algunPanelActivo || hayErrorConexion);
 
         btnEditar.setVisible(algunPanelActivo);
         btnBorrar.setVisible(algunPanelActivo);
 
         btnBuscar.setVisible(algunPanelActivo);
-        btnBuscar.setDisable(!algunPanelActivo);
+        btnBuscar.setDisable(!algunPanelActivo || hayErrorConexion);
+
+        // Si hay error de conexión, deshabilitar todos los botones
+        if (hayErrorConexion) {
+            btnEditar.setDisable(true);
+            btnBorrar.setDisable(true);
+            return;
+        }
 
         // Actualizar estado de los botones editar y borrar según la selección
         if (panelClientesActivo) {
@@ -495,6 +542,7 @@ public class miControlador implements Initializable{
             }
 
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle(titulo);
             Scene scene = new Scene(root);
             CSSUtils.aplicarEstilos(scene);
@@ -526,6 +574,7 @@ public class miControlador implements Initializable{
             }
 
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle(titulo);
             Scene scene = new Scene(root);
             CSSUtils.aplicarEstilos(scene);
@@ -757,13 +806,15 @@ public class miControlador implements Initializable{
 
         // Columna de botón para ver imagen
         TableColumn<Cita, Void> colImagen = new TableColumn<>("Foto");
-        colImagen.setPrefWidth(80);
+        colImagen.setPrefWidth(70);
+        colImagen.setMinWidth(70);
+        colImagen.setStyle("-fx-alignment: CENTER;");
 
         Callback<TableColumn<Cita, Void>, TableCell<Cita, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Cita, Void> call(final TableColumn<Cita, Void> param) {
                 final TableCell<Cita, Void> cell = new TableCell<>() {
-                    private final Button btn = new Button("Ver");
+                    private final Button btn = new Button("🖼 Ver");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -771,11 +822,14 @@ public class miControlador implements Initializable{
                             mostrarImagen(cita);
                         });
                         btn.getStyleClass().add("button-secondary");
+                        btn.setMinWidth(60);
+                        btn.setMaxWidth(60);
                     }
 
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
+                        setAlignment(javafx.geometry.Pos.CENTER);
                         if (empty) {
                             setGraphic(null);
                         } else {
@@ -805,6 +859,8 @@ public class miControlador implements Initializable{
             alerta.setTitle("Sin imagen");
             alerta.setHeaderText(null);
             alerta.setContentText("Esta cita no tiene foto de diseño");
+            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+            StageUtils.setAppIcon(alertStage);
             alerta.showAndWait();
             return;
         }
@@ -831,6 +887,8 @@ public class miControlador implements Initializable{
             alerta.setTitle("Error");
             alerta.setHeaderText(null);
             alerta.setContentText("Error al mostrar la imagen: " + e.getMessage());
+            Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+            StageUtils.setAppIcon(alertStage);
             alerta.showAndWait();
             e.printStackTrace();
         }
@@ -838,17 +896,59 @@ public class miControlador implements Initializable{
 
     private void cargarClientes() {
         listaClientes.clear();
-        listaClientes.addAll(clienteDAO.cargarClientes());
+        try {
+            listaClientes.addAll(clienteDAO.cargarClientes());
+            errorConexionClientes = false;
+            lblErrorClientes.setVisible(false);
+            lblErrorClientes.setManaged(false);
+            tableViewClientes.setVisible(true);
+            tableViewClientes.setManaged(true);
+        } catch (Exception e) {
+            errorConexionClientes = true;
+            lblErrorClientes.setVisible(true);
+            lblErrorClientes.setManaged(true);
+            tableViewClientes.setVisible(false);
+            tableViewClientes.setManaged(false);
+            System.out.println("Error al cargar clientes: " + e.getMessage());
+        }
     }
 
     private void cargarTatuadores() {
         listaTatuadores.clear();
-        listaTatuadores.addAll(tatuadorDAO.cargarTatuadores());
+        try {
+            listaTatuadores.addAll(tatuadorDAO.cargarTatuadores());
+            errorConexionTatuadores = false;
+            lblErrorTatuadores.setVisible(false);
+            lblErrorTatuadores.setManaged(false);
+            tableViewTatuadores.setVisible(true);
+            tableViewTatuadores.setManaged(true);
+        } catch (Exception e) {
+            errorConexionTatuadores = true;
+            lblErrorTatuadores.setVisible(true);
+            lblErrorTatuadores.setManaged(true);
+            tableViewTatuadores.setVisible(false);
+            tableViewTatuadores.setManaged(false);
+            System.out.println("Error al cargar tatuadores: " + e.getMessage());
+        }
     }
 
     private void cargarCitas() {
         listaCitas.clear();
-        listaCitas.addAll(citaDAO.cargarCitas());
+        try {
+            listaCitas.addAll(citaDAO.cargarCitas());
+            errorConexionCitas = false;
+            lblErrorCitas.setVisible(false);
+            lblErrorCitas.setManaged(false);
+            tableViewCitas.setVisible(true);
+            tableViewCitas.setManaged(true);
+        } catch (Exception e) {
+            errorConexionCitas = true;
+            lblErrorCitas.setVisible(true);
+            lblErrorCitas.setManaged(true);
+            tableViewCitas.setVisible(false);
+            tableViewCitas.setManaged(false);
+            System.out.println("Error al cargar citas: " + e.getMessage());
+        }
     }
 
     public void refrescarTablas() {
@@ -990,6 +1090,8 @@ public class miControlador implements Initializable{
                     alert.setTitle("Información");
                     alert.setHeaderText("Sin resultados");
                     alert.setContentText("No se encontraron citas para el estado seleccionado: " + comboEstadoInforme.getValue());
+                    Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    StageUtils.setAppIcon(alertStage);
                     alert.showAndWait();
                 }
 
@@ -1000,6 +1102,8 @@ public class miControlador implements Initializable{
                 alert.setTitle("Error");
                 alert.setHeaderText("Error al generar el informe");
                 alert.setContentText(e.getMessage());
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                StageUtils.setAppIcon(alertStage);
                 alert.showAndWait();
             }
         } catch (JRException ex) {

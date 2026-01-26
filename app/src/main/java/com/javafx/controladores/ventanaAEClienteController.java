@@ -12,6 +12,7 @@ import org.controlsfx.validation.Validator;
 import com.javafx.dao.ClienteDAO;
 import com.javafx.modelos.Cliente;
 import com.javafx.utils.AnimationUtils;
+import com.javafx.utils.StageUtils;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -210,6 +211,9 @@ public class ventanaAEClienteController implements Initializable {
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
+        // Añadir icono de la aplicacion al Alert
+        Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        StageUtils.setAppIcon(alertStage);
         alerta.showAndWait();
     }
 

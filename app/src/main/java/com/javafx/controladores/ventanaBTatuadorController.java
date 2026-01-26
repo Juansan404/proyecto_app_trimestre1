@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.javafx.dao.TatuadorDAO;
 import com.javafx.modelos.Tatuador;
+import com.javafx.utils.StageUtils;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -79,6 +80,8 @@ public class ventanaBTatuadorController implements Initializable {
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
+        Stage alertStage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        StageUtils.setAppIcon(alertStage);
         alerta.showAndWait();
     }
 
