@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Get-Content ''c:\\\\Users\\\\User\\\\Desktop\\\\FPDAM\\\\SEGUNDO CURSO\\\\INTERFACES\\\\Tema2\\\\proyecto_app_primerTrimestre\\\\tattooage.sql'' -TotalCount 100\")"
+    ]
+  }
+}
