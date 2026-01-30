@@ -579,3 +579,34 @@
 .scroll-bar .thumb:hover {
     -fx-background-color: -accent-hover;
 }
+
+/* ========================================
+   PROGRESS INDICATOR / OVERLAY DE CARGA
+   ======================================== */
+.progress-indicator {
+    -fx-progress-color: -accent-color;
+}
+
+.progress-indicator .indicator {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+}
+
+/* Estilo para el overlay de progreso */
+.progress-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.progress-overlay-container {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+    -fx-padding: 30px 40px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5);
+}
+
+.progress-overlay-label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-dark;
+}

@@ -47,6 +47,7 @@ import com.javafx.utils.ImageUtils;
 import com.javafx.utils.StageUtils;
 import com.javafx.utils.CSSUtils;
 import com.javafx.utils.AnimationUtils;
+import com.javafx.utils.ProgressUtils;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -895,66 +896,198 @@ public class miControlador implements Initializable{
     }
 
     private void cargarClientes() {
-        listaClientes.clear();
-        try {
-            listaClientes.addAll(clienteDAO.cargarClientes());
-            errorConexionClientes = false;
-            lblErrorClientes.setVisible(false);
-            lblErrorClientes.setManaged(false);
-            tableViewClientes.setVisible(true);
-            tableViewClientes.setManaged(true);
-        } catch (Exception e) {
-            errorConexionClientes = true;
-            lblErrorClientes.setVisible(true);
-            lblErrorClientes.setManaged(true);
-            tableViewClientes.setVisible(false);
-            tableViewClientes.setManaged(false);
-            System.out.println("Error al cargar clientes: " + e.getMessage());
+        cargarClientesConProgreso(false);
+    }
+
+    private void cargarClientesConProgreso(boolean mostrarProgreso) {
+        if (mostrarProgreso) {
+            ProgressUtils.ejecutarConProgreso(
+                stackPanePrincipal,
+                "Cargando clientes...",
+                () -> clienteDAO.cargarClientes(),
+                clientes -> {
+                    listaClientes.clear();
+                    listaClientes.addAll(clientes);
+                    errorConexionClientes = false;
+                    lblErrorClientes.setVisible(false);
+                    lblErrorClientes.setManaged(false);
+                    tableViewClientes.setVisible(true);
+                    tableViewClientes.setManaged(true);
+                },
+                error -> {
+                    errorConexionClientes = true;
+                    lblErrorClientes.setVisible(true);
+                    lblErrorClientes.setManaged(true);
+                    tableViewClientes.setVisible(false);
+                    tableViewClientes.setManaged(false);
+                    System.out.println("Error al cargar clientes: " + error.getMessage());
+                }
+            );
+        } else {
+            // Carga síncrona para initialize()
+            listaClientes.clear();
+            try {
+                listaClientes.addAll(clienteDAO.cargarClientes());
+                errorConexionClientes = false;
+                lblErrorClientes.setVisible(false);
+                lblErrorClientes.setManaged(false);
+                tableViewClientes.setVisible(true);
+                tableViewClientes.setManaged(true);
+            } catch (Exception e) {
+                errorConexionClientes = true;
+                lblErrorClientes.setVisible(true);
+                lblErrorClientes.setManaged(true);
+                tableViewClientes.setVisible(false);
+                tableViewClientes.setManaged(false);
+                System.out.println("Error al cargar clientes: " + e.getMessage());
+            }
         }
     }
 
     private void cargarTatuadores() {
-        listaTatuadores.clear();
-        try {
-            listaTatuadores.addAll(tatuadorDAO.cargarTatuadores());
-            errorConexionTatuadores = false;
-            lblErrorTatuadores.setVisible(false);
-            lblErrorTatuadores.setManaged(false);
-            tableViewTatuadores.setVisible(true);
-            tableViewTatuadores.setManaged(true);
-        } catch (Exception e) {
-            errorConexionTatuadores = true;
-            lblErrorTatuadores.setVisible(true);
-            lblErrorTatuadores.setManaged(true);
-            tableViewTatuadores.setVisible(false);
-            tableViewTatuadores.setManaged(false);
-            System.out.println("Error al cargar tatuadores: " + e.getMessage());
+        cargarTatuadoresConProgreso(false);
+    }
+
+    private void cargarTatuadoresConProgreso(boolean mostrarProgreso) {
+        if (mostrarProgreso) {
+            ProgressUtils.ejecutarConProgreso(
+                stackPanePrincipal,
+                "Cargando tatuadores...",
+                () -> tatuadorDAO.cargarTatuadores(),
+                tatuadores -> {
+                    listaTatuadores.clear();
+                    listaTatuadores.addAll(tatuadores);
+                    errorConexionTatuadores = false;
+                    lblErrorTatuadores.setVisible(false);
+                    lblErrorTatuadores.setManaged(false);
+                    tableViewTatuadores.setVisible(true);
+                    tableViewTatuadores.setManaged(true);
+                },
+                error -> {
+                    errorConexionTatuadores = true;
+                    lblErrorTatuadores.setVisible(true);
+                    lblErrorTatuadores.setManaged(true);
+                    tableViewTatuadores.setVisible(false);
+                    tableViewTatuadores.setManaged(false);
+                    System.out.println("Error al cargar tatuadores: " + error.getMessage());
+                }
+            );
+        } else {
+            // Carga síncrona para initialize()
+            listaTatuadores.clear();
+            try {
+                listaTatuadores.addAll(tatuadorDAO.cargarTatuadores());
+                errorConexionTatuadores = false;
+                lblErrorTatuadores.setVisible(false);
+                lblErrorTatuadores.setManaged(false);
+                tableViewTatuadores.setVisible(true);
+                tableViewTatuadores.setManaged(true);
+            } catch (Exception e) {
+                errorConexionTatuadores = true;
+                lblErrorTatuadores.setVisible(true);
+                lblErrorTatuadores.setManaged(true);
+                tableViewTatuadores.setVisible(false);
+                tableViewTatuadores.setManaged(false);
+                System.out.println("Error al cargar tatuadores: " + e.getMessage());
+            }
         }
     }
 
     private void cargarCitas() {
-        listaCitas.clear();
-        try {
-            listaCitas.addAll(citaDAO.cargarCitas());
-            errorConexionCitas = false;
-            lblErrorCitas.setVisible(false);
-            lblErrorCitas.setManaged(false);
-            tableViewCitas.setVisible(true);
-            tableViewCitas.setManaged(true);
-        } catch (Exception e) {
-            errorConexionCitas = true;
-            lblErrorCitas.setVisible(true);
-            lblErrorCitas.setManaged(true);
-            tableViewCitas.setVisible(false);
-            tableViewCitas.setManaged(false);
-            System.out.println("Error al cargar citas: " + e.getMessage());
+        cargarCitasConProgreso(false);
+    }
+
+    private void cargarCitasConProgreso(boolean mostrarProgreso) {
+        if (mostrarProgreso) {
+            ProgressUtils.ejecutarConProgreso(
+                stackPanePrincipal,
+                "Cargando citas...",
+                () -> citaDAO.cargarCitas(),
+                citas -> {
+                    listaCitas.clear();
+                    listaCitas.addAll(citas);
+                    errorConexionCitas = false;
+                    lblErrorCitas.setVisible(false);
+                    lblErrorCitas.setManaged(false);
+                    tableViewCitas.setVisible(true);
+                    tableViewCitas.setManaged(true);
+                },
+                error -> {
+                    errorConexionCitas = true;
+                    lblErrorCitas.setVisible(true);
+                    lblErrorCitas.setManaged(true);
+                    tableViewCitas.setVisible(false);
+                    tableViewCitas.setManaged(false);
+                    System.out.println("Error al cargar citas: " + error.getMessage());
+                }
+            );
+        } else {
+            // Carga síncrona para initialize()
+            listaCitas.clear();
+            try {
+                listaCitas.addAll(citaDAO.cargarCitas());
+                errorConexionCitas = false;
+                lblErrorCitas.setVisible(false);
+                lblErrorCitas.setManaged(false);
+                tableViewCitas.setVisible(true);
+                tableViewCitas.setManaged(true);
+            } catch (Exception e) {
+                errorConexionCitas = true;
+                lblErrorCitas.setVisible(true);
+                lblErrorCitas.setManaged(true);
+                tableViewCitas.setVisible(false);
+                tableViewCitas.setManaged(false);
+                System.out.println("Error al cargar citas: " + e.getMessage());
+            }
         }
     }
 
     public void refrescarTablas() {
-        cargarClientes();
-        cargarTatuadores();
-        cargarCitas();
+        refrescarTablasConProgreso(true);
+    }
+
+    private void refrescarTablasConProgreso(boolean mostrarProgreso) {
+        if (mostrarProgreso) {
+            ProgressUtils.ejecutarConProgreso(
+                stackPanePrincipal,
+                "Actualizando datos...",
+                () -> {
+                    // Cargar todos los datos en segundo plano
+                    List<Cliente> clientes = clienteDAO.cargarClientes();
+                    List<Tatuador> tatuadores = tatuadorDAO.cargarTatuadores();
+                    List<Cita> citas = citaDAO.cargarCitas();
+                    return new Object[]{clientes, tatuadores, citas};
+                },
+                result -> {
+                    Object[] datos = (Object[]) result;
+                    @SuppressWarnings("unchecked")
+                    List<Cliente> clientes = (List<Cliente>) datos[0];
+                    @SuppressWarnings("unchecked")
+                    List<Tatuador> tatuadores = (List<Tatuador>) datos[1];
+                    @SuppressWarnings("unchecked")
+                    List<Cita> citas = (List<Cita>) datos[2];
+
+                    listaClientes.clear();
+                    listaClientes.addAll(clientes);
+                    errorConexionClientes = false;
+
+                    listaTatuadores.clear();
+                    listaTatuadores.addAll(tatuadores);
+                    errorConexionTatuadores = false;
+
+                    listaCitas.clear();
+                    listaCitas.addAll(citas);
+                    errorConexionCitas = false;
+                },
+                error -> {
+                    System.out.println("Error al refrescar tablas: " + error.getMessage());
+                }
+            );
+        } else {
+            cargarClientes();
+            cargarTatuadores();
+            cargarCitas();
+        }
     }
 
     public void actualizarTablaCitasConResultados(List<Cita> resultados) {
@@ -1035,35 +1168,52 @@ public class miControlador implements Initializable{
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void lanzaInforme(String rutaInf, Map param, int tipo) {
-        try {
-            // Crear carpeta informes si no existe
-            File carpetaInformes = new File("informes");
-            if (!carpetaInformes.exists()) {
-                carpetaInformes.mkdirs();
-            }
+        // Obtener el recurso antes de iniciar el hilo en segundo plano
+        java.io.InputStream inputStream = getClass().getResourceAsStream(rutaInf);
+        String estadoSeleccionado = comboEstadoInforme.getValue();
 
-            // Compilar el informe .jrxml
-            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream(rutaInf));
+        ProgressUtils.ejecutarConProgreso(
+            stackPanePrincipal,
+            "Generando informe...",
+            () -> {
+                // Crear carpeta informes si no existe
+                File carpetaInformes = new File("informes");
+                if (!carpetaInformes.exists()) {
+                    carpetaInformes.mkdirs();
+                }
 
-            try {
+                // Compilar el informe .jrxml
+                JasperReport report = JasperCompileManager.compileReport(inputStream);
+
                 // Obtener conexión
                 Connection conexion = DatabaseConnection.getConnection();
 
                 // Llenar el informe con los datos de la conexión
                 JasperPrint jasperPrint = JasperFillManager.fillReport(report, param, conexion);
 
-                if (!jasperPrint.getPages().isEmpty()) {
-                    // Nombre base del archivo
-                    String nombreBase = rutaInf.substring(rutaInf.lastIndexOf('/') + 1, rutaInf.lastIndexOf('.'));
+                // Nombre base del archivo
+                String nombreBase = rutaInf.substring(rutaInf.lastIndexOf('/') + 1, rutaInf.lastIndexOf('.'));
+                String outputHtmlFile = "informes/" + nombreBase + "_informe.html";
 
+                if (!jasperPrint.getPages().isEmpty()) {
                     // Exportar a PDF
                     String pdfOutputPath = "informes/" + nombreBase + "_informe.pdf";
                     JasperExportManager.exportReportToPdfFile(jasperPrint, pdfOutputPath);
 
                     // Exportar a HTML
-                    String outputHtmlFile = "informes/" + nombreBase + "_informe.html";
                     JasperExportManager.exportReportToHtmlFile(jasperPrint, outputHtmlFile);
+                }
 
+                // Retornar los datos necesarios para la UI
+                return new Object[]{jasperPrint, outputHtmlFile, param.get("ESTADO_FILTRO")};
+            },
+            result -> {
+                Object[] datos = (Object[]) result;
+                JasperPrint jasperPrint = (JasperPrint) datos[0];
+                String outputHtmlFile = (String) datos[1];
+                String estadoFiltro = (String) datos[2];
+
+                if (!jasperPrint.getPages().isEmpty()) {
                     // Mostrar en WebView
                     if (tipo == 0) {
                         wv.getEngine().load(new File(outputHtmlFile).toURI().toString());
@@ -1081,34 +1231,29 @@ public class miControlador implements Initializable{
                     }
 
                     // Mostrar mensaje de éxito
-                    String estadoFiltro = (String) param.get("ESTADO_FILTRO");
                     String mensajeFiltro = (estadoFiltro == null || estadoFiltro.equals("Todos")) ? "todos los estados" : estadoFiltro;
                     System.out.println("Informe generado correctamente para: " + mensajeFiltro);
-
                 } else {
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Información");
                     alert.setHeaderText("Sin resultados");
-                    alert.setContentText("No se encontraron citas para el estado seleccionado: " + comboEstadoInforme.getValue());
+                    alert.setContentText("No se encontraron citas para el estado seleccionado: " + estadoSeleccionado);
                     Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
                     StageUtils.setAppIcon(alertStage);
                     alert.showAndWait();
                 }
-
-            } catch (JRException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+            },
+            error -> {
+                System.out.println("Error al generar informe: " + error.getMessage());
+                error.printStackTrace();
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error al generar el informe");
-                alert.setContentText(e.getMessage());
+                alert.setContentText(error.getMessage());
                 Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
                 StageUtils.setAppIcon(alertStage);
                 alert.showAndWait();
             }
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
+        );
     }
 }
