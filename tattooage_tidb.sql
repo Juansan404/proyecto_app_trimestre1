@@ -104,7 +104,7 @@ INSERT INTO `TATUADORES` (`nombre`, `apellidos`, `telefono`, `email`, `activo`) 
 -- PASO 9: Insertar datos de ejemplo - CITAS 
 -- ============================================================
 
---ESTE ULTIMO PASO PUEDE DAR ERRORES. ACONSEJABLE INSERTAR CITAS A MANO
+--!!!!ESTE ULTIMO PASO PUEDE DAR ERRORES. ACONSEJABLE INSERTAR CITAS A MANO!!!!!
 INSERT INTO `CITAS` (`id_cliente`, `id_artista`, `fecha_cita`, `duracion_aproximada`, `precio`, `estado`, `sala`, `notas`) VALUES
 (1, 1, '2026-02-10', 120, 180.00, 'Confirmada', 'A', 'Tatuaje realista de león en el brazo'),
 (2, 2, '2026-02-12', 60, 80.00, 'Pendiente', 'B', 'Mariposa pequeña en el tobillo'),
