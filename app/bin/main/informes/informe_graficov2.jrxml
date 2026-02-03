@@ -15,6 +15,7 @@
 		</conditionalStyle>
 	</style>
 	<dataset name="PieChartDataset" uuid="21b70311-b650-4678-a39c-887917366bf0"/>
+	<parameter name="LOGO_IMAGE" class="java.io.InputStream"/>
 	<query language="SQL"><![CDATA[SELECT fecha_cita, precio FROM CITAS WHERE estado != 'Cancelada' ORDER BY fecha_cita
 ]]></query>
 	<field name="fecha_cita" class="java.sql.Date">
@@ -43,7 +44,7 @@
 	</background>
 	<title height="100" splitType="Stretch">
 		<element kind="image" uuid="1c003177-754c-448f-8ce1-16868856f545" x="0" y="0" width="164" height="100" hImageAlign="Center" vImageAlign="Middle">
-			<expression><![CDATA["C:\\Users\\User\\Desktop\\FPDAM\\SEGUNDO CURSO\\INTERFACES\\Tema2\\proyecto_app_primerTrimestre\\app\\src\\main\\resources\\images\\logo.png"]]></expression>
+			<expression><![CDATA[$P{LOGO_IMAGE}]]></expression>
 			<box>
 				<pen lineWidth="1.0" lineStyle="Solid"/>
 			</box>

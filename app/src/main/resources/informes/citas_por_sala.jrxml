@@ -11,6 +11,7 @@
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
 		</conditionalStyle>
 	</style>
+	<parameter name="LOGO_IMAGE" class="java.io.InputStream"/>
 	<parameter name="ESTADO_FILTRO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
@@ -63,7 +64,7 @@
 	<background splitType="Stretch"/>
 	<title height="136" splitType="Stretch">
 		<element kind="image" uuid="1c003177-754c-448f-8ce1-16868856f545" x="0" y="0" width="164" height="126" hImageAlign="Center" vImageAlign="Middle">
-			<expression><![CDATA["C:\\Users\\User\\Desktop\\FPDAM\\SEGUNDO CURSO\\INTERFACES\\Tema2\\proyecto_app_primerTrimestre\\app\\src\\main\\resources\\images\\logo.png"]]></expression>
+			<expression><![CDATA[$P{LOGO_IMAGE}]]></expression>
 			<box>
 				<pen lineWidth="1.0" lineStyle="Solid"/>
 			</box>

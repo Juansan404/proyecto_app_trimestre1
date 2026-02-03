@@ -1170,6 +1170,9 @@ public class miControlador implements Initializable{
     private void lanzaInforme(String rutaInf, Map param, int tipo) {
         // Obtener el recurso antes de iniciar el hilo en segundo plano
         java.io.InputStream inputStream = getClass().getResourceAsStream(rutaInf);
+        // Cargar el logo para pasarlo como parámetro al informe
+        java.io.InputStream logoStream = getClass().getResourceAsStream("/images/logo.png");
+        param.put("LOGO_IMAGE", logoStream);
         String estadoSeleccionado = comboEstadoInforme.getValue();
 
         ProgressUtils.ejecutarConProgreso(
