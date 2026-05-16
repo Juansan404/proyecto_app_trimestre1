@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox
+    maxWidth="Infinity"
+    maxHeight="Infinity"
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.javafx.controladores.InformesController">
+
+    <!-- ── Barra de herramientas principal ── -->
+    <HBox spacing="8.0" alignment="CENTER_LEFT" styleClass="content-toolbar">
+
+        <ProgressIndicator fx:id="loadingSpinner" visible="false" managed="false"
+            prefWidth="22.0" prefHeight="22.0" progress="-1.0" styleClass="toolbar-spinner"/>
+
+        <Label text="Informe:" style="-fx-text-fill: #6b7094; -fx-font-size: 11px;" />
+        <ComboBox fx:id="cbTipo" prefWidth="170.0" />
+
+        <Separator orientation="VERTICAL" style="-fx-padding: 0 4 0 4;" />
+
+        <Button fx:id="btnGenerar" onAction="#generar" styleClass="button-success"
+                graphicTextGap="7.0" text="Generar">
+            <graphic><FontIcon iconLiteral="fas-file-pdf" iconSize="12"/></graphic>
+        </Button>
+        <Button fx:id="btnGuardar" onAction="#guardar" styleClass="button-secondary"
+                graphicTextGap="7.0" text="Guardar PDF" disable="true">
+            <graphic><FontIcon iconLiteral="fas-download" iconSize="12"/></graphic>
+        </Button>
+        <Button fx:id="btnAbrirExterno" onAction="#abrirExterno" styleClass="button-secondary"
+                graphicTextGap="7.0" text="Abrir" disable="true">
+            <graphic><FontIcon iconLiteral="fas-external-link-alt" iconSize="12"/></graphic>
+        </Button>
+
+        <HBox HBox.hgrow="ALWAYS" />
+
+        <!-- Filtro estado (Citas / Solicitudes) -->
+        <Label fx:id="lblEstado" text="Estado:" style="-fx-text-fill: #6b7094; -fx-font-size: 11px;"
+               visible="false" managed="false"/>
+        <ComboBox fx:id="cbFiltroEstado" prefWidth="140.0" visible="false" managed="false"/>
+
+        <!-- Filtro rol (Usuarios) -->
+        <Label fx:id="lblRol" text="Rol:" style="-fx-text-fill: #6b7094; -fx-font-size: 11px;"
+               visible="false" managed="false"/>
+        <ComboBox fx:id="cbFiltroRol" prefWidth="120.0" visible="false" managed="false"/>
+
+        <!-- Búsqueda de texto -->
+        <TextField fx:id="txtBuscar" promptText="Buscar..." prefWidth="170.0"
+                   visible="false" managed="false"/>
+    </HBox>
+
+    <!-- ── Barra de fechas (sólo Citas) ── -->
+    <HBox fx:id="barFechas" spacing="8.0" alignment="CENTER_LEFT" styleClass="content-toolbar"
+          visible="false" managed="false">
+        <Label text="Desde:" style="-fx-text-fill: #6b7094; -fx-font-size: 11px;" />
+        <DatePicker fx:id="dpDesde" prefWidth="140.0" />
+        <Label text="Hasta:" style="-fx-text-fill: #6b7094; -fx-font-size: 11px;" />
+        <DatePicker fx:id="dpHasta" prefWidth="140.0" />
+        <Button onAction="#limpiarFechas" styleClass="button-secondary"
+                graphicTextGap="6.0" text="Limpiar">
+            <graphic><FontIcon iconLiteral="fas-times" iconSize="11"/></graphic>
+        </Button>
+    </HBox>
+
+    <!-- ── Área principal ── -->
+    <StackPane fx:id="pdfContainer" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: #12152a;">
+
+        <!-- Estado inicial: sin informe generado -->
+        <Label fx:id="lblPlaceholder"
+               text="Selecciona un tipo de informe y pulsa  Generar"
+               style="-fx-text-fill: #3a3e5a; -fx-font-size: 15px;" />
+
+    </StackPane>
+
+    <!-- ── Barra de estado ── -->
+    <HBox styleClass="status-bar">
+        <Label fx:id="lblStatus" text="" style="-fx-font-size: 11px; -fx-text-fill: #6b7094;" />
+    </HBox>
+
+</VBox>

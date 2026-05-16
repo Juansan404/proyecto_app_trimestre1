@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox
+    maxWidth="Infinity"
+    maxHeight="Infinity"
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.javafx.controladores.NotificacionesController">
+
+    <!-- ── Toolbar ── -->
+    <HBox spacing="8.0" alignment="CENTER_LEFT" styleClass="content-toolbar">
+
+        <Label text="Usuario:" style="-fx-text-fill: #6b7094; -fx-font-size: 11px;" />
+        <ComboBox fx:id="cbUsuario" prefWidth="220.0" />
+
+        <Button fx:id="btnCargar" onAction="#cargar" styleClass="button-success"
+                graphicTextGap="7.0" text="Cargar">
+            <graphic><FontIcon iconLiteral="fas-bell" iconSize="12"/></graphic>
+        </Button>
+
+        <Separator orientation="VERTICAL" style="-fx-padding: 0 4 0 4;" />
+
+        <Button fx:id="btnMarcarTodas" onAction="#marcarTodasLeidas" styleClass="button-secondary"
+                graphicTextGap="7.0" text="Marcar todo leído">
+            <graphic><FontIcon iconLiteral="fas-check-double" iconSize="12"/></graphic>
+        </Button>
+
+        <HBox HBox.hgrow="ALWAYS" />
+
+        <Label fx:id="lblContador"
+               style="-fx-text-fill: #e94560; -fx-font-weight: bold; -fx-font-size: 12px;" />
+    </HBox>
+
+    <!-- ── Tabla ── -->
+    <TableView fx:id="tblNotificaciones" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colTipo"        text="Tipo"        prefWidth="110.0" />
+            <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="420.0" />
+            <TableColumn fx:id="colLeido"       text="Leído"       prefWidth="65.0"  style="-fx-alignment: CENTER;" />
+            <TableColumn fx:id="colFecha"       text="Fecha"       prefWidth="110.0" />
+        </columns>
+        <placeholder>
+            <Label text="Selecciona un usuario y pulsa Cargar"
+                   style="-fx-text-fill: #3a3e5a; -fx-font-size: 13px;" />
+        </placeholder>
+    </TableView>
+
+    <!-- ── Status bar ── -->
+    <HBox styleClass="status-bar">
+        <Label fx:id="lblStatus" text="" style="-fx-font-size: 11px; -fx-text-fill: #6b7094;" />
+        <HBox HBox.hgrow="ALWAYS" />
+        <Label style="-fx-font-size: 10px; -fx-text-fill: #3a3e5a;"
+               text="Doble clic sobre una fila para marcarla como leída" />
+    </HBox>
+
+</VBox>

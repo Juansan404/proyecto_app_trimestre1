@@ -2,6 +2,7 @@ package com.javafx.controladores;
 
 import com.javafx.service.AuthService;
 import com.javafx.utils.CSSUtils;
+import com.javafx.util.SessionManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -41,22 +42,72 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        aplicarVisibilidadPorRol();
         navCitas();
     }
 
-    @FXML private void navUsuarios()      { cargar("/fxml/Usuarios.fxml",      "Usuarios",      btnNavUsuarios); }
-    @FXML private void navEstudios()      { cargar("/fxml/Estudios.fxml",      "Estudios",      btnNavEstudios); }
-    @FXML private void navArtistas()      { cargar("/fxml/Artistas.fxml",      "Artistas",      btnNavArtistas); }
-    @FXML private void navPublicaciones() { cargar("/fxml/Publicaciones.fxml", "Publicaciones", btnNavPublicaciones); }
-    @FXML private void navCitas()         { cargar("/fxml/Citas.fxml",         "Citas",         btnNavCitas); }
-    @FXML private void navSolicitudes()   { cargar("/fxml/Solicitudes.fxml",   "Solicitudes",   btnNavSolicitudes); }
-    @FXML private void navComentarios()   { cargar("/fxml/Comentarios.fxml",   "Comentarios",   btnNavComentarios); }
-    @FXML private void navMensajes()           { cargar("/fxml/Mensajes.fxml",        "Mensajes",          btnNavMensajes); }
-    @FXML private void navMensajesDirectos()  { cargar("/fxml/MensajesDirectos.fxml",  "Mensajes directos", btnNavMensajesDirectos); }
-    @FXML private void navNotificaciones()    { cargar("/fxml/Notificaciones.fxml",    "Notificaciones",    btnNavNotificaciones); }
-    @FXML private void navRevision()          { cargar("/fxml/RevisionImagenes.fxml",  "Revisión de imágenes", btnNavRevision); }
-    @FXML private void navInformes()          { cargar("/fxml/Informes.fxml",          "Informes",          btnNavInformes); }
-    @FXML private void navConfiguracion() { cargar("/fxml/Configuracion.fxml", "Configuración",  btnNavConfiguracion); }
+    private void aplicarVisibilidadPorRol() {
+        String rol = SessionManager.getInstance().getRole();
+        if (rol == null) rol = "ADMIN";
+
+        switch (rol) {
+            case "ARTISTA" -> {
+                // ARTISTA: ve sus citas, solicitudes, mensajes, mensajes directos,
+                //          notificaciones y configuración. También artistas (su perfil).
+                setVisible(btnNavUsuarios,       false);
+                setVisible(btnNavEstudios,       false);
+                setVisible(btnNavArtistas,       true);
+                setVisible(btnNavPublicaciones,   true);
+                setVisible(btnNavCitas,           true);
+                setVisible(btnNavSolicitudes,     true);
+                setVisible(btnNavComentarios,     false);
+                setVisible(btnNavMensajes,        true);
+                setVisible(btnNavMensajesDirectos, true);
+                setVisible(btnNavNotificaciones,  true);
+                setVisible(btnNavRevision,        false);
+                setVisible(btnNavInformes,        false);
+            }
+            case "CLIENTE" -> {
+                // CLIENTE: ve publicaciones, citas, solicitudes, mensajes directos,
+                //          notificaciones y configuración.
+                setVisible(btnNavUsuarios,        false);
+                setVisible(btnNavEstudios,        false);
+                setVisible(btnNavArtistas,        false);
+                setVisible(btnNavPublicaciones,    true);
+                setVisible(btnNavCitas,            true);
+                setVisible(btnNavSolicitudes,      true);
+                setVisible(btnNavComentarios,      false);
+                setVisible(btnNavMensajes,         false);
+                setVisible(btnNavMensajesDirectos, true);
+                setVisible(btnNavNotificaciones,   true);
+                setVisible(btnNavRevision,         false);
+                setVisible(btnNavInformes,         false);
+            }
+            default -> {
+                // ADMIN: acceso completo, todos visibles (comportamiento por defecto)
+            }
+        }
+    }
+
+    private void setVisible(Button btn, boolean visible) {
+        if (btn == null) return;
+        btn.setVisible(visible);
+        btn.setManaged(visible);
+    }
+
+    @FXML private void navUsuarios()      { cargar("/fxml/Usuarios.fxml",      "Usuarios",         btnNavUsuarios); }
+    @FXML private void navEstudios()      { cargar("/fxml/Estudios.fxml",      "Estudios",         btnNavEstudios); }
+    @FXML private void navArtistas()      { cargar("/fxml/Artistas.fxml",      "Artistas",         btnNavArtistas); }
+    @FXML private void navPublicaciones() { cargar("/fxml/Publicaciones.fxml", "Publicaciones",    btnNavPublicaciones); }
+    @FXML private void navCitas()         { cargar("/fxml/Citas.fxml",         "Citas",            btnNavCitas); }
+    @FXML private void navSolicitudes()   { cargar("/fxml/Solicitudes.fxml",   "Solicitudes",      btnNavSolicitudes); }
+    @FXML private void navComentarios()   { cargar("/fxml/Comentarios.fxml",   "Comentarios",      btnNavComentarios); }
+    @FXML private void navMensajes()           { cargar("/fxml/Mensajes.fxml",           "Mensajes",          btnNavMensajes); }
+    @FXML private void navMensajesDirectos()   { cargar("/fxml/MensajesDirectos.fxml",   "Mensajes directos", btnNavMensajesDirectos); }
+    @FXML private void navNotificaciones()     { cargar("/fxml/Notificaciones.fxml",     "Notificaciones",    btnNavNotificaciones); }
+    @FXML private void navRevision()           { cargar("/fxml/RevisionImagenes.fxml",   "Revisión de imágenes", btnNavRevision); }
+    @FXML private void navInformes()           { cargar("/fxml/Informes.fxml",           "Informes",          btnNavInformes); }
+    @FXML private void navConfiguracion() { cargar("/fxml/Configuracion.fxml", "Configuración",    btnNavConfiguracion); }
 
     private void cargar(String ruta, String titulo, Button btn) {
         try {
@@ -74,8 +125,10 @@ public class MainController {
             new ParallelTransition(ft, tt).play();
 
             if (activeBtn != null) activeBtn.getStyleClass().remove("sidebar-btn-active");
-            btn.getStyleClass().add("sidebar-btn-active");
-            activeBtn = btn;
+            if (btn != null) {
+                btn.getStyleClass().add("sidebar-btn-active");
+                activeBtn = btn;
+            }
         } catch (Exception e) {
             System.err.println("Error al cargar " + ruta + ": " + e.getMessage());
             e.printStackTrace();

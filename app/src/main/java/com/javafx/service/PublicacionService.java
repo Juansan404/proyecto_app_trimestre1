@@ -20,6 +20,16 @@ public class PublicacionService {
         return JsonUtil.fromJsonList(r.body(), Publicacion.class);
     }
 
+    /** Returns a page of publications. Result[0] = List<Publicacion>, Result[1] = Integer totalPages */
+    public Object[] listarPaginado(int page, int size) throws Exception {
+        HttpResponse<String> r = api.get("/api/publicaciones?page=" + page + "&size=" + size);
+        if (r.statusCode() != 200) return new Object[]{List.of(), 0};
+        var tree = JsonUtil.getMapper().readTree(r.body());
+        List<Publicacion> content = JsonUtil.fromJsonList(tree.get("content").toString(), Publicacion.class);
+        int totalPages = tree.get("totalPages").asInt(1);
+        return new Object[]{content, totalPages};
+    }
+
     public Publicacion crearPublicacion(Publicacion p) throws Exception {
         HttpResponse<String> r = api.post("/api/publicaciones", JsonUtil.toJson(p));
         if (r.statusCode() != 200 && r.statusCode() != 201)
