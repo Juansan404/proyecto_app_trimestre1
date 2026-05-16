@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane
+    fx:id="mainPane"
+    prefWidth="1200.0"
+    prefHeight="720.0"
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.javafx.controladores.MainController">
+
+    <!-- ══════ SIDEBAR IZQUIERDO ══════ -->
+    <left>
+        <StackPane prefWidth="220.0">
+
+            <!-- Imagen de fondo del sidebar a baja opacidad -->
+            <ImageView fitWidth="220" fitHeight="800" preserveRatio="false" opacity="0.10">
+                <image><Image url="@../images/background_image.png" /></image>
+            </ImageView>
+
+            <!-- Capa oscura superpuesta -->
+            <VBox style="-fx-background-color: rgba(22,33,62,0.93);">
+
+                <!-- ── Logo + Título ── -->
+                <HBox alignment="CENTER_LEFT" spacing="10"
+                    style="-fx-background-color: rgba(26,26,46,0.97);
+                           -fx-padding: 14 16 14 16;
+                           -fx-border-color: #e94560;
+                           -fx-border-width: 0 0 2 0;">
+
+                    <!-- Badge circular pequeño -->
+                    <StackPane
+                        prefWidth="36.0" minWidth="36.0" maxWidth="36.0"
+                        prefHeight="36.0" minHeight="36.0" maxHeight="36.0"
+                        style="-fx-background-color: white;
+                               -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.65), 10, 0.2, 0, 0);">
+                        <clip><Circle centerX="18.0" centerY="18.0" radius="18.0"/></clip>
+                        <ImageView fitWidth="24" fitHeight="24" preserveRatio="true" smooth="true">
+                            <image><Image url="@../images/logo.png" requestedWidth="48" requestedHeight="48" preserveRatio="true" smooth="true" /></image>
+                        </ImageView>
+                    </StackPane>
+
+                    <VBox spacing="1">
+                        <Label text="TATTOOAGE"
+                            style="-fx-font-size: 16px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #e94560;
+                                   -fx-font-family: 'Segoe UI';
+                                   -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.4), 8, 0, 0, 0);" />
+                        <Label text="Admin Panel"
+                            style="-fx-font-size: 9px;
+                                   -fx-text-fill: #7777aa;
+                                   -fx-font-family: 'Segoe UI';
+                                   -fx-letter-spacing: 1;" />
+                    </VBox>
+                </HBox>
+
+                <!-- ── Navegación (scrollable) ── -->
+                <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    style="-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-border-width: 0;">
+                    <VBox spacing="2.0" style="-fx-padding: 16 8 10 8; -fx-background-color: transparent;">
+
+                        <Button fx:id="btnNavUsuarios"     text="Usuarios"      maxWidth="Infinity" onAction="#navUsuarios"      styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-users"         iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavEstudios"     text="Estudios"      maxWidth="Infinity" onAction="#navEstudios"      styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-building"      iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavArtistas"     text="Artistas"      maxWidth="Infinity" onAction="#navArtistas"      styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-palette"       iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavPublicaciones" text="Publicaciones" maxWidth="Infinity" onAction="#navPublicaciones" styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-images"        iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavCitas"        text="Citas"          maxWidth="Infinity" onAction="#navCitas"         styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-calendar-alt"  iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavSolicitudes"  text="Solicitudes"   maxWidth="Infinity" onAction="#navSolicitudes"   styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-clipboard-list" iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavComentarios"  text="Comentarios"   maxWidth="Infinity" onAction="#navComentarios"   styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-comments"      iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavMensajes"     text="Mensajes"       maxWidth="Infinity" onAction="#navMensajes"      styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-envelope"      iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavMensajesDirectos" text="Mensajes directos" maxWidth="Infinity" onAction="#navMensajesDirectos" styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-paper-plane"   iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavNotificaciones" text="Notificaciones" maxWidth="Infinity" onAction="#navNotificaciones" styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-bell"          iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                        <Button fx:id="btnNavRevision" text="Revisión" maxWidth="Infinity" onAction="#navRevision" styleClass="sidebar-btn" graphicTextGap="10.0">
+                            <graphic><FontIcon iconLiteral="fas-exclamation-triangle" iconSize="14" styleClass="sidebar-icon"/></graphic>
+                        </Button>
+                    </VBox>
+                </ScrollPane>
+
+                <!-- ── Informes + Configuración + Cerrar sesión ── -->
+                <VBox style="-fx-padding: 4 8 16 8;" spacing="6">
+                    <Button fx:id="btnNavInformes"      text="Informes"      maxWidth="Infinity" onAction="#navInformes"      styleClass="sidebar-btn" graphicTextGap="10.0">
+                        <graphic><FontIcon iconLiteral="fas-file-pdf"     iconSize="14" styleClass="sidebar-icon"/></graphic>
+                    </Button>
+                    <Button fx:id="btnNavConfiguracion" text="Configuración" maxWidth="Infinity" onAction="#navConfiguracion" styleClass="sidebar-btn" graphicTextGap="10.0">
+                        <graphic><FontIcon iconLiteral="fas-cog"          iconSize="14" styleClass="sidebar-icon"/></graphic>
+                    </Button>
+                    <Button text="Cerrar sesión" maxWidth="Infinity" onAction="#btnLogout" styleClass="logout-btn" graphicTextGap="10.0">
+                        <graphic><FontIcon iconLiteral="fas-sign-out-alt" iconSize="14" styleClass="logout-icon"/></graphic>
+                    </Button>
+                </VBox>
+            </VBox>
+        </StackPane>
+    </left>
+
+    <!-- ══════ ÁREA PRINCIPAL ══════ -->
+    <center>
+        <VBox styleClass="content-area">
+
+            <!-- Topbar con título de sección -->
+            <HBox alignment="CENTER_LEFT" styleClass="topbar">
+                <Label fx:id="lblSectionTitle" text="Citas" styleClass="section-title" />
+            </HBox>
+
+            <!-- Contenido dinámico -->
+            <StackPane fx:id="contentPane" VBox.vgrow="ALWAYS"
+                style="-fx-background-color: transparent;" />
+        </VBox>
+    </center>
+</BorderPane>

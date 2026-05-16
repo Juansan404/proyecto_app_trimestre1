@@ -18,16 +18,19 @@ public class Main extends Application {
         launch(args);
     }
 
+    //gradlew.bat run -p app
     @Override
     public void start(Stage primeraEscena) throws Exception { //puede lanzar excep'
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaPrincipal.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         loader.setCharset(java.nio.charset.StandardCharsets.UTF_8);
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
         CSSUtils.aplicarEstilos(scene);
         primeraEscena.setScene(scene);
-        primeraEscena.setTitle("--TATTOOAGE--");
+        primeraEscena.setTitle("TattooAge — Login");
+        primeraEscena.setWidth(700);
+        primeraEscena.setHeight(720);
 
         // Establecer el icono de la aplicación
         StageUtils.setAppIcon(primeraEscena);

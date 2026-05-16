@@ -78,6 +78,32 @@ public class ImageUtils {
     }
 
     /**
+     * Abre selector, convierte a base64 y devuelve el data URL completo
+     * (data:image/jpeg;base64,...) listo para enviar al backend.
+     * Devuelve null si el usuario cancela o hay error.
+     */
+    public static String seleccionarComoDataUrl(Stage stage) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Seleccionar imagen");
+        fc.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.webp"),
+            new FileChooser.ExtensionFilter("Todos los archivos", "*.*")
+        );
+        File archivo = fc.showOpenDialog(stage);
+        if (archivo == null) return null;
+        try {
+            byte[] bytes = convertirArchivoABytes(archivo);
+            String nombre = archivo.getName().toLowerCase();
+            String mime = nombre.endsWith(".png") ? "image/png"
+                        : nombre.endsWith(".webp") ? "image/webp"
+                        : "image/jpeg";
+            return "data:" + mime + ";base64," + Base64.getEncoder().encodeToString(bytes);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    /**
      * Convierte String Base64 a byte[]
      */
     public static byte[] convertirBase64ABytes(String base64) {

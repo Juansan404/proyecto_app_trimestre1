@@ -1,14 +1,15 @@
 package com.javafx.utils;
 
+import com.javafx.util.ThemeManager;
 import javafx.scene.Scene;
 
 public class CSSUtils {
 
-    /*
-        Aplica el archivo de estilos principal a una escena
-    */
+    /**
+     * Aplica el tema activo (oscuro o claro) a la escena
+     * y la registra en ThemeManager para cambios futuros.
+     */
     public static void aplicarEstilos(Scene scene) {
-        String css = CSSUtils.class.getResource("/styles.css").toExternalForm();
-        scene.getStylesheets().add(css);
+        ThemeManager.getInstance().setScene(scene);
     }
 }

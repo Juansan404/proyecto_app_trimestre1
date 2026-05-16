@@ -26,6 +26,13 @@ dependencies {
     implementation 'net.sf.jasperreports:jasperreports:7.0.1'
     implementation 'net.sf.jasperreports:jasperreports-pdf:7.0.1'
     implementation 'net.sf.jasperreports:jasperreports-charts:7.0.1'
+
+    // Jackson para comunicación con la API REST
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+
+    // Ikonli — iconos vectoriales (FontAwesome 5) para JavaFX
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
+    implementation 'org.kordamp.ikonli:ikonli-fontawesome5-pack:12.3.1'
 }
 
 java { //Se indica la versión de JDK que ha de utilizar

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox
+    maxWidth="Infinity"
+    maxHeight="Infinity"
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.javafx.controladores.MensajesDirectosController">
+
+    <HBox spacing="8.0" alignment="CENTER_LEFT" styleClass="content-toolbar">
+
+        <ProgressIndicator fx:id="loadingSpinner" visible="false" managed="false"
+            prefWidth="22.0" prefHeight="22.0" progress="-1.0" styleClass="toolbar-spinner" />
+
+        <Button onAction="#btnRecargar" styleClass="button-secondary" graphicTextGap="7.0" text="Recargar">
+            <graphic><FontIcon iconLiteral="fas-sync-alt" iconSize="12"/></graphic>
+        </Button>
+        <Button onAction="#btnEliminar" styleClass="button-danger" graphicTextGap="7.0" text="Eliminar conv.">
+            <graphic><FontIcon iconLiteral="fas-trash-alt" iconSize="12"/></graphic>
+        </Button>
+
+        <HBox HBox.hgrow="ALWAYS" />
+
+        <TextField fx:id="txtBuscar" promptText="Buscar por participante..."
+            prefWidth="240.0" styleClass="toolbar-search" />
+    </HBox>
+
+    <SplitPane VBox.vgrow="ALWAYS" dividerPositions="0.38">
+
+        <!-- Panel izquierdo: lista de conversaciones -->
+        <VBox minWidth="200">
+            <Label text="Conversaciones"
+                style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #7c80a8; -fx-padding: 8 12 4 12;" />
+            <TableView fx:id="tableConversaciones" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colConvId"           text="ID"            prefWidth="48.0" />
+                    <TableColumn fx:id="colConvParticipantes" text="Participantes" prefWidth="260.0" />
+                    <TableColumn fx:id="colConvFecha"        text="Fecha"         prefWidth="130.0" />
+                </columns>
+                <placeholder>
+                    <Label text="Sin conversaciones" style="-fx-text-fill: #7c80a8;" />
+                </placeholder>
+            </TableView>
+        </VBox>
+
+        <!-- Panel derecho: mensajes de la conversación seleccionada -->
+        <VBox minWidth="200">
+            <Label fx:id="lblConvTitulo" text="Selecciona una conversación"
+                style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #7c80a8; -fx-padding: 8 12 4 12;" />
+            <TableView fx:id="tableMensajes" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colMsgId"        text="ID"        prefWidth="48.0" />
+                    <TableColumn fx:id="colMsgRemitente" text="Remitente" prefWidth="150.0" />
+                    <TableColumn fx:id="colMsgContenido" text="Contenido" prefWidth="320.0" />
+                    <TableColumn fx:id="colMsgLeido"     text="Leído"     prefWidth="60.0" />
+                    <TableColumn fx:id="colMsgFecha"     text="Fecha"     prefWidth="130.0" />
+                </columns>
+                <placeholder>
+                    <Label text="Sin mensajes" style="-fx-text-fill: #7c80a8;" />
+                </placeholder>
+            </TableView>
+        </VBox>
+    </SplitPane>
+
+    <HBox styleClass="status-bar">
+        <Label fx:id="lblStatus" text="" style="-fx-font-size: 11px; -fx-text-fill: #6b7094;" />
+    </HBox>
+</VBox>

@@ -1,0 +1,463 @@
+/* ========================================
+   TATTOOAGE — Tema Claro (overrides)
+   Se carga DESPUÉS de styles.css, solo
+   sobreescribe lo que cambia en modo claro.
+   ======================================== */
+
+/* ── Root background ── */
+.root {
+    -fx-background-color: #f0f2f8;
+}
+
+/* ── Área de contenido principal ── */
+.content-area {
+    -fx-background-color: #f0f2f8;
+}
+
+/* ── Topbar ── */
+.topbar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent rgba(233,69,96,0.28) transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
+}
+
+.section-title {
+    -fx-text-fill: #1a1c2e;
+}
+
+/* ── Toolbar de contenido ── */
+.content-toolbar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent rgba(233,69,96,0.22) transparent;
+}
+
+/* ── Barra de estado ── */
+.status-bar {
+    -fx-background-color: #e8eaf5;
+    -fx-border-color: #dde0ef transparent transparent transparent;
+}
+
+.status-bar .label {
+    -fx-text-fill: #8890aa;
+}
+
+/* ── Campo de búsqueda en toolbar ── */
+.toolbar-search {
+    -fx-background-color: #f0f2f8;
+    -fx-text-fill: #2c3054;
+    -fx-prompt-text-fill: #9096b8;
+    -fx-border-color: rgba(233,69,96,0.22);
+}
+
+.toolbar-search:focused {
+    -fx-border-color: rgba(233,69,96,0.55);
+    -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.15), 10, 0, 0, 0);
+}
+
+/* ── Tabla ── */
+.table-view {
+    -fx-background-color: #f0f2f8;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #ffffff;
+}
+
+.table-view .filler {
+    -fx-background-color: #ffffff;
+}
+
+.table-view .column-header {
+    -fx-border-color: transparent transparent rgba(233,69,96,0.35) transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #3a3e58;
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #eef0f8 transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f7f8fd;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(233,69,96,0.14);
+}
+
+/* JavaFX aplica blanco por defecto en .table-cell:selected;
+   hay que sobreescribir con selectores más específicos */
+.table-row-cell:selected .text,
+.table-row-cell:selected .table-cell .text,
+.table-row-cell:selected .table-cell:selected .text,
+.table-cell:selected .text {
+    -fx-fill: #1a1c2e !important;
+}
+
+.table-cell:selected {
+    -fx-text-fill: #1a1c2e !important;
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(233,69,96,0.07);
+}
+
+.table-row-cell:hover .text,
+.table-row-cell:hover .table-cell .text {
+    -fx-fill: #1a1c2e !important;
+}
+
+.table-cell .text {
+    -fx-fill: #3a3e58;
+}
+
+/* Scroll de tablas */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: #eef0f8;
+}
+
+/* ── ListView (panel mensajes Solicitudes) ── */
+.list-view {
+    -fx-background-color: #f0f2f8;
+}
+
+.list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #3a3e58;
+    -fx-border-color: #eef0f8 transparent;
+}
+
+.list-cell:odd {
+    -fx-background-color: #f7f8fd;
+}
+
+.list-cell:selected {
+    -fx-background-color: rgba(233,69,96,0.14);
+    -fx-text-fill: #1a1c2e;
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(233,69,96,0.07);
+    -fx-text-fill: #1a1c2e;
+}
+
+/* ── Panel de mensajes — modo claro: fondo blanco, texto negro, hover rosado ── */
+.msg-list {
+    -fx-background-color: #ffffff;
+}
+.msg-list .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a1c2e;
+    -fx-border-color: #eef0f8 transparent;
+}
+.msg-list .list-cell:odd {
+    -fx-background-color: #fafbff;
+}
+.msg-list .list-cell:hover {
+    -fx-background-color: rgba(233,69,96,0.10);
+    /* texto sin cambiar */
+}
+.msg-list .list-cell:selected {
+    -fx-background-color: rgba(233,69,96,0.16);
+}
+
+/* ── SplitPane ── */
+.split-pane {
+    -fx-background-color: #f0f2f8;
+}
+
+/* ── ComboBox / ChoiceBox en toolbar (modo claro) ── */
+.combo-box, .choice-box {
+    -fx-background-color: #f0f2f8;
+    -fx-border-color: rgba(233,69,96,0.22);
+}
+
+.combo-box > .list-cell, .choice-box > .label {
+    -fx-text-fill: #3a3e58;
+}
+
+.combo-box:read-only > .list-cell {
+    -fx-text-fill: #3a3e58;
+}
+
+.combo-box .arrow, .choice-box .open-button .arrow {
+    -fx-background-color: #5a5f80;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #ffffff;
+}
+
+.combo-box-popup .list-view .list-cell,
+.combo-box-popup .list-view .list-cell > *,
+.combo-box-popup .list-view .list-cell .text {
+    -fx-text-fill: #3a3e58 !important;
+    -fx-fill: #3a3e58 !important;
+}
+
+.combo-box-popup .list-view .list-cell:hover,
+.combo-box-popup .list-view .list-cell:hover > *,
+.combo-box-popup .list-view .list-cell:hover .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+.combo-box-popup .list-view .list-cell:selected,
+.combo-box-popup .list-view .list-cell:selected > *,
+.combo-box-popup .list-view .list-cell:selected .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgba(233,69,96,0.3);
+}
+
+/* ── Scrollbar general ── */
+.scroll-bar {
+    -fx-background-color: #e8eaf5;
+}
+
+/* ── Menú contextual ── */
+.context-menu {
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgba(233,69,96,0.25);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 16, 0, 0, 4);
+}
+
+.context-menu .menu-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2c3054;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: #2c3054;
+}
+
+/* ── Panel de configuración (modo claro) ── */
+.settings-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgba(233,69,96,0.15);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 10, 0, 0, 2);
+}
+
+.settings-section-header {
+    -fx-text-fill: #e94560;
+}
+
+.settings-row-label {
+    -fx-text-fill: #5a5f80;
+}
+
+.settings-value {
+    -fx-text-fill: #1a1c2e;
+}
+
+.settings-muted {
+    -fx-text-fill: #9096b8;
+}
+
+/* ── Botones secundarios en modo claro ── */
+.button-secondary {
+    -fx-background-color: #eceef8;
+    -fx-text-fill: #3a3e58;
+    -fx-border-color: rgba(233,69,96,0.22);
+}
+.button-secondary:hover {
+    -fx-background-color: #dde0ef;
+    -fx-text-fill: #1a1c2e;
+    -fx-border-color: rgba(233,69,96,0.4);
+}
+
+/* Iconos en botones en modo claro */
+.button-secondary .ikonli-font-icon {
+    -fx-icon-color: #5a5f80;
+}
+.button-secondary:hover .ikonli-font-icon {
+    -fx-icon-color: #e94560;
+}
+/* Los botones con fondo de color (success, danger, primary) mantienen icono blanco */
+.button-success .ikonli-font-icon,
+.button-danger .ikonli-font-icon,
+.button-primary .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+/* ── TextField de directorio PDF en configuración ── */
+.settings-card .text-field {
+    -fx-background-color: #f0f2f8;
+    -fx-text-fill: #3a3e58;
+    -fx-prompt-text-fill: #9699be;
+    -fx-border-color: rgba(233,69,96,0.2);
+}
+.settings-card .text-field:focused {
+    -fx-border-color: #e94560;
+    -fx-background-color: #ffffff;
+}
+
+/* Botones de tema en modo claro */
+.theme-btn {
+    -fx-background-color: #f0f2f8;
+    -fx-border-color: rgba(233,69,96,0.2);
+    -fx-text-fill: #8890aa;
+}
+.theme-btn .ikonli-font-icon {
+    -fx-icon-color: #8890aa;
+}
+
+.theme-btn:hover {
+    -fx-background-color: #e8eaf5;
+    -fx-text-fill: #3a3e58;
+}
+.theme-btn:hover .ikonli-font-icon {
+    -fx-icon-color: #3a3e58;
+}
+
+/* El botón activo siempre tiene icono blanco (fondo rojo) */
+.theme-btn-active .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+/* ── Diálogos en modo claro ── */
+.app-dialog {
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgba(233,69,96,0.35);
+}
+
+.app-dialog .header-panel {
+    -fx-background-color: #f0f2f8;
+    -fx-border-color: rgba(233,69,96,0.2);
+}
+
+.app-dialog .header-panel .label {
+    -fx-text-fill: #1a1c2e;
+}
+
+.app-dialog .content.label {
+    -fx-text-fill: #3a3e58;
+}
+
+.app-dialog .label {
+    -fx-text-fill: #5a5f80;
+}
+
+.app-dialog .text-field,
+.app-dialog .password-field {
+    -fx-background-color: #f0f2f8;
+    -fx-text-fill: #1a1c2e;
+    -fx-border-color: rgba(233,69,96,0.22);
+    -fx-prompt-text-fill: #9096b8;
+}
+
+.app-dialog .text-area {
+    -fx-control-inner-background: #f0f2f8;
+    -fx-text-fill: #1a1c2e;
+    -fx-border-color: rgba(233,69,96,0.22);
+}
+
+.app-dialog .text-area .content {
+    -fx-background-color: #f0f2f8;
+}
+
+.app-dialog .combo-box {
+    -fx-background-color: #f0f2f8;
+    -fx-border-color: rgba(233,69,96,0.22);
+}
+
+.app-dialog .combo-box > .list-cell {
+    -fx-text-fill: #2c3054;
+    -fx-background-color: transparent;
+}
+
+.app-dialog .combo-box .arrow {
+    -fx-background-color: #5a5f80;
+}
+
+.app-dialog .button-bar {
+    -fx-background-color: #f0f2f8;
+    -fx-border-color: rgba(233,69,96,0.15);
+}
+
+.app-dialog .button-bar .cancel-button {
+    -fx-background-color: #e8eaf5;
+    -fx-text-fill: #5a5f80;
+    -fx-border-color: rgba(233,69,96,0.2);
+}
+
+.app-dialog .button-bar .cancel-button:hover {
+    -fx-background-color: #dde0ef;
+    -fx-text-fill: #1a1c2e;
+}
+
+/* Alertas de error en modo claro */
+.app-dialog.error .header-panel {
+    -fx-background-color: #fff0f0;
+    -fx-border-color: rgba(231,76,60,0.4);
+}
+
+/* Alertas de warning en modo claro */
+.app-dialog.warning .header-panel {
+    -fx-background-color: #fffbf0;
+    -fx-border-color: rgba(241,196,15,0.4);
+}
+
+/* ========================================
+   DATEPICKER — Tema claro
+   ======================================== */
+.date-picker .text-field {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a1c2e;
+    -fx-prompt-text-fill: #9699be;
+}
+.date-picker .arrow-button {
+    -fx-background-color: #ffffff;
+}
+.date-picker .arrow-button:hover {
+    -fx-background-color: #e94560;
+}
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #6b7094;
+}
+
+.date-picker-popup {
+    -fx-background-color: #ffffff;
+    -fx-border-color: rgba(233,69,96,0.35);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 4);
+}
+.date-picker-popup > * > .month-year-pane {
+    -fx-background-color: #f0f2f8;
+}
+.date-picker-popup .spinner .label {
+    -fx-text-fill: #1a1c2e;
+}
+.date-picker-popup .spinner > .button > .left-arrow,
+.date-picker-popup .spinner > .button > .right-arrow {
+    -fx-background-color: #6b7094;
+}
+.date-picker-popup .calendar-grid .day-cell {
+    -fx-text-fill: #2c3050;
+}
+.date-picker-popup .calendar-grid .day-cell:hover {
+    -fx-background-color: rgba(233,69,96,0.1);
+    -fx-text-fill: #1a1c2e;
+}
+.date-picker-popup .calendar-grid .day-cell.outside-month,
+.date-picker-popup .calendar-grid .day-cell.previous-month,
+.date-picker-popup .calendar-grid .day-cell.next-month {
+    -fx-text-fill: #c0c4d8;
+}
+.date-picker-popup .today-button {
+    -fx-background-color: rgba(233,69,96,0.08);
+    -fx-text-fill: #e94560;
+}
+.date-picker-popup .today-button:hover {
+    -fx-background-color: #e94560;
+    -fx-text-fill: #ffffff;
+}
+
