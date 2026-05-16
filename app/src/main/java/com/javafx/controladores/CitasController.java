@@ -234,6 +234,7 @@ public class CitasController {
         TextField fPrecio    = new TextField(original != null && original.getPrecio() != null
                 ? String.valueOf(original.getPrecio()) : "");
         TextField fSala      = new TextField(original != null ? s(original.getSala()) : "");
+        TextField fFotoDiseno = new TextField(original != null ? s(original.getFotoDiseno()) : "");
         TextArea  fNotas     = new TextArea(original != null ? s(original.getNotas()) : "");
         fNotas.setPrefRowCount(2);
 
@@ -248,9 +249,10 @@ public class CitasController {
         grid.add(new Label("Hora inicio:"),0, row); grid.add(fHora,     1, row++);
         grid.add(new Label("Duración (min):"), 0, row); grid.add(fDuracion, 1, row++);
         grid.add(new Label("Precio (€):"), 0, row); grid.add(fPrecio,   1, row++);
-        grid.add(new Label("Estado:"),     0, row); grid.add(cbEstado,  1, row++);
-        grid.add(new Label("Sala:"),       0, row); grid.add(fSala,     1, row++);
-        grid.add(new Label("Notas:"),      0, row); grid.add(fNotas,    1, row);
+        grid.add(new Label("Estado:"),        0, row); grid.add(cbEstado,    1, row++);
+        grid.add(new Label("Sala:"),          0, row); grid.add(fSala,       1, row++);
+        grid.add(new Label("Foto diseño:"),   0, row); grid.add(fFotoDiseno, 1, row++);
+        grid.add(new Label("Notas:"),         0, row); grid.add(fNotas,      1, row);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -301,6 +303,8 @@ public class CitasController {
             try { c.setPrecio(Double.parseDouble(fPrecio.getText().trim())); } catch (Exception ignored) {}
             c.setEstado(cbEstado.getValue());
             c.setSala(fSala.getText().trim());
+            String fd = fFotoDiseno.getText().trim();
+            c.setFotoDiseno(fd.isBlank() ? null : fd);
             c.setNotas(fNotas.getText().trim());
             return c;
         });
