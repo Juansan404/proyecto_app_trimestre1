@@ -3,13 +3,13 @@ package com.javafx.controladores;
 import com.javafx.model.Cita;
 import com.javafx.model.Usuario;
 import com.javafx.service.CitaService;
+import com.javafx.service.UsuarioService;
 import com.javafx.utils.AnimationUtils;
 import com.javafx.utils.DetalleUtils;
 import com.javafx.utils.DialogUtils;
 import javafx.event.ActionEvent;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
-import com.javafx.service.UsuarioService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -18,29 +18,53 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CitasController {
 
-    @FXML private TableView<Cita>            tableView;
+    // Panel izquierdo: relaciones únicas
+    @FXML private TableView<ParticipantePar>           tableRelaciones;
+    @FXML private TableColumn<ParticipantePar, String> colCliente;
+    @FXML private TableColumn<ParticipantePar, String> colArtista;
+    @FXML private TableColumn<ParticipantePar, Number> colNumCitas;
+
+    // Panel derecho: citas del par seleccionado
+    @FXML private TableView<Cita>            tableCitas;
     @FXML private TableColumn<Cita, Long>    colId;
-    @FXML private TableColumn<Cita, String>  colCliente;
-    @FXML private TableColumn<Cita, String>  colArtista;
+    @FXML private TableColumn<Cita, String>  colEstado;
     @FXML private TableColumn<Cita, String>  colFecha;
     @FXML private TableColumn<Cita, String>  colHora;
-    @FXML private TableColumn<Cita, String>  colEstado;
     @FXML private TableColumn<Cita, Double>  colPrecio;
-    @FXML private ComboBox<String> comboFiltroEstado;
-    @FXML private Label lblStatus;
+    @FXML private TableColumn<Cita, String>  colSolicitud;
+
+    @FXML private Label             lblParTitulo;
+    @FXML private TextField         txtBuscar;
+    @FXML private Label             lblStatus;
     @FXML private ProgressIndicator loadingSpinner;
 
     private final CitaService    citaService    = new CitaService();
     private final UsuarioService usuarioService = new UsuarioService();
 
-    private final ObservableList<Cita> todos     = FXCollections.observableArrayList();
-    private final ObservableList<Cita> mostrados  = FXCollections.observableArrayList();
-    private List<Usuario> usuarios = List.of();
+    private final ObservableList<ParticipantePar> todasRelaciones = FXCollections.observableArrayList();
+    private final ObservableList<ParticipantePar> mostradas       = FXCollections.observableArrayList();
+    private final ObservableList<Cita>            citasPar        = FXCollections.observableArrayList();
+    private List<Cita>    todasCitas = List.of();
+    private List<Usuario> usuarios   = List.of();
+
+    private static class ParticipantePar {
+        final String key;
+        final String nombreCliente;
+        final String nombreArtista;
+        final List<Cita> citas;
+
+        ParticipantePar(String key, String nombreCliente, String nombreArtista, List<Cita> citas) {
+            this.key           = key;
+            this.nombreCliente = nombreCliente;
+            this.nombreArtista = nombreArtista;
+            this.citas         = new ArrayList<>(citas);
+        }
+    }
 
     @FXML
     private void initialize() {
@@ -51,20 +75,27 @@ public class CitasController {
     }
 
     private void configurarColumnas() {
+        colCliente.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().nombreCliente));
+        colArtista.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().nombreArtista));
+        colNumCitas.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleIntegerProperty(data.getValue().citas.size()));
+
         colId.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getIdCita()));
-        colCliente.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreCliente()));
-        colArtista.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreArtista()));
+        colEstado.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().getEstado()));
         colFecha.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getFechaCita()));
         colHora.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getHoraInicio()));
         colPrecio.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPrecio()));
-        colEstado.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getEstado()));
+        colSolicitud.setCellValueFactory(data -> {
+            Long idSol = data.getValue().getIdSolicitud();
+            return new javafx.beans.property.SimpleStringProperty(idSol != null ? "#" + idSol : "—");
+        });
 
         colPrecio.setCellFactory(col -> new TableCell<>() {
             @Override protected void updateItem(Double item, boolean empty) {
@@ -87,28 +118,56 @@ public class CitasController {
             }
         });
 
-        tableView.setItems(mostrados);
-        tableView.setOnMouseClicked(e -> {
+        tableRelaciones.setItems(mostradas);
+        tableCitas.setItems(citasPar);
+
+        tableRelaciones.getSelectionModel().selectedItemProperty().addListener((o, prev, par) -> {
+            if (par != null) {
+                lblParTitulo.setText(par.nombreCliente + " → " + par.nombreArtista);
+                citasPar.setAll(par.citas);
+            } else {
+                lblParTitulo.setText("Selecciona una relación");
+                citasPar.clear();
+            }
+        });
+
+        tableCitas.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Cita sel = tableView.getSelectionModel().getSelectedItem();
+                Cita sel = tableCitas.getSelectionModel().getSelectedItem();
                 if (sel != null) DetalleUtils.mostrar(sel);
             }
         });
     }
 
     private void configurarFiltro() {
-        comboFiltroEstado.setItems(FXCollections.observableArrayList(
-                "Todos", "Pendiente", "Confirmada", "Cancelada", "Completada"));
-        comboFiltroEstado.setValue("Todos");
-        comboFiltroEstado.valueProperty().addListener((o, v, n) -> filtrar());
+        txtBuscar.textProperty().addListener((o, v, n) -> filtrar());
+    }
+
+    private void agruparYMostrar() {
+        Map<String, List<Cita>> grupos = todasCitas.stream()
+            .filter(c -> c.getCliente() != null && c.getArtista() != null)
+            .collect(Collectors.groupingBy(c ->
+                c.getCliente().getIdUsuario() + "_" + c.getArtista().getIdUsuario()));
+
+        todasRelaciones.setAll(grupos.entrySet().stream()
+            .map(e -> {
+                Cita primera = e.getValue().get(0);
+                return new ParticipantePar(e.getKey(),
+                        primera.getNombreCliente(), primera.getNombreArtista(), e.getValue());
+            })
+            .sorted(Comparator.comparing(p -> p.nombreCliente))
+            .toList());
+        filtrar();
     }
 
     private void filtrar() {
-        String estado = comboFiltroEstado.getValue();
-        mostrados.setAll(todos.stream().filter(c ->
-                "Todos".equals(estado) || estado.equals(c.getEstado())
+        String q = txtBuscar.getText().trim().toLowerCase();
+        mostradas.setAll(todasRelaciones.stream().filter(p ->
+            q.isBlank()
+                || p.nombreCliente.toLowerCase().contains(q)
+                || p.nombreArtista.toLowerCase().contains(q)
         ).toList());
-        lblStatus.setText(mostrados.size() + " citas");
+        lblStatus.setText(mostradas.size() + " relaciones · " + todasCitas.size() + " citas");
     }
 
     private void cargar() {
@@ -121,8 +180,8 @@ public class CitasController {
         task.setOnSucceeded(e -> {
             loadingSpinner.setVisible(false);
             loadingSpinner.setManaged(false);
-            todos.setAll(task.getValue());
-            filtrar();
+            todasCitas = task.getValue();
+            agruparYMostrar();
         });
         task.setOnFailed(e -> {
             loadingSpinner.setVisible(false);
@@ -150,44 +209,42 @@ public class CitasController {
                 @Override protected Cita call() throws Exception { return citaService.crearCita(cita); }
             };
             task.setOnSucceeded(e -> cargar());
-            task.setOnFailed(e    -> mostrarError("Error al crear cita", task.getException().getMessage()));
+            task.setOnFailed(e -> mostrarError("Error al crear cita", task.getException().getMessage()));
             new Thread(task).start();
         });
     }
 
     @FXML
     private void btnEditar() {
-        Cita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una cita."); return; }
+        Cita sel = tableCitas.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una cita en el panel derecho."); return; }
         mostrarFormulario(sel).ifPresent(editada -> {
             Task<Boolean> task = new Task<>() {
                 @Override protected Boolean call() throws Exception { return citaService.actualizarCita(editada.getIdCita(), editada); }
             };
             task.setOnSucceeded(e -> cargar());
-            task.setOnFailed(e    -> mostrarError("Error al editar", task.getException().getMessage()));
+            task.setOnFailed(e -> mostrarError("Error al editar", task.getException().getMessage()));
             new Thread(task).start();
         });
     }
 
     @FXML
     private void btnEliminar() {
-        Cita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una cita."); return; }
-
+        Cita sel = tableCitas.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una cita en el panel derecho."); return; }
         if (!DialogUtils.confirmar("Confirmar eliminación", "¿Eliminar la cita #" + sel.getIdCita() + "?")) return;
         Task<Boolean> taskElim = new Task<>() {
             @Override protected Boolean call() throws Exception { return citaService.eliminarCita(sel.getIdCita()); }
         };
         taskElim.setOnSucceeded(e -> { if (taskElim.getValue()) cargar(); else mostrarError("Error", "No se pudo eliminar."); });
-        taskElim.setOnFailed(e    -> mostrarError("Error", taskElim.getException().getMessage()));
+        taskElim.setOnFailed(e -> mostrarError("Error", taskElim.getException().getMessage()));
         new Thread(taskElim).start();
     }
 
     @FXML
     private void btnCambiarEstado() {
-        Cita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una cita."); return; }
-
+        Cita sel = tableCitas.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una cita en el panel derecho."); return; }
         ChoiceDialog<String> dlg = new ChoiceDialog<>(sel.getEstado(),
                 "Pendiente", "Confirmada", "Cancelada", "Completada");
         dlg.setTitle("Cambiar Estado");
@@ -198,7 +255,7 @@ public class CitasController {
                 @Override protected Boolean call() throws Exception { return citaService.cambiarEstado(sel.getIdCita(), nuevoEstado); }
             };
             task.setOnSucceeded(e -> cargar());
-            task.setOnFailed(e    -> mostrarError("Error", task.getException().getMessage()));
+            task.setOnFailed(e -> mostrarError("Error", task.getException().getMessage()));
             new Thread(task).start();
         });
     }
@@ -213,7 +270,6 @@ public class CitasController {
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(20));
 
-        // Cliente picker
         ComboBox<Usuario> cbCliente = new ComboBox<>(FXCollections.observableArrayList(usuarios));
         cbCliente.setPrefWidth(250);
         if (original != null) cbCliente.setValue(original.getCliente());
@@ -243,16 +299,16 @@ public class CitasController {
         cbEstado.setValue(original != null && original.getEstado() != null ? original.getEstado() : "Pendiente");
 
         int row = 0;
-        grid.add(new Label("Cliente:"),    0, row); grid.add(cbCliente, 1, row++);
-        grid.add(new Label("Artista:"),    0, row); grid.add(cbArtista, 1, row++);
-        grid.add(new Label("Fecha:"),      0, row); grid.add(dpFecha,   1, row++);
-        grid.add(new Label("Hora inicio:"),0, row); grid.add(fHora,     1, row++);
-        grid.add(new Label("Duración (min):"), 0, row); grid.add(fDuracion, 1, row++);
-        grid.add(new Label("Precio (€):"), 0, row); grid.add(fPrecio,   1, row++);
-        grid.add(new Label("Estado:"),        0, row); grid.add(cbEstado,    1, row++);
-        grid.add(new Label("Sala:"),          0, row); grid.add(fSala,       1, row++);
-        grid.add(new Label("Foto diseño:"),   0, row); grid.add(fFotoDiseno, 1, row++);
-        grid.add(new Label("Notas:"),         0, row); grid.add(fNotas,      1, row);
+        grid.add(new Label("Cliente:"),        0, row); grid.add(cbCliente,   1, row++);
+        grid.add(new Label("Artista:"),        0, row); grid.add(cbArtista,   1, row++);
+        grid.add(new Label("Fecha:"),          0, row); grid.add(dpFecha,     1, row++);
+        grid.add(new Label("Hora inicio:"),    0, row); grid.add(fHora,       1, row++);
+        grid.add(new Label("Duración (min):"), 0, row); grid.add(fDuracion,   1, row++);
+        grid.add(new Label("Precio (€):"),     0, row); grid.add(fPrecio,     1, row++);
+        grid.add(new Label("Estado:"),         0, row); grid.add(cbEstado,    1, row++);
+        grid.add(new Label("Sala:"),           0, row); grid.add(fSala,       1, row++);
+        grid.add(new Label("Foto diseño:"),    0, row); grid.add(fFotoDiseno, 1, row++);
+        grid.add(new Label("Notas:"),          0, row); grid.add(fNotas,      1, row);
 
         dialog.getDialogPane().setContent(grid);
 

@@ -1,6 +1,5 @@
 package com.javafx.controladores;
 
-import com.javafx.model.Mensaje;
 import com.javafx.model.SolicitudCita;
 import com.javafx.model.Usuario;
 import com.javafx.service.SolicitudService;
@@ -19,68 +18,82 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import java.util.List;
-import java.util.Optional;
-import javafx.scene.control.ChoiceDialog;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SolicitudesController {
 
-    @FXML private TableView<SolicitudCita>               tableView;
+    // Panel izquierdo: relaciones únicas
+    @FXML private TableView<ParticipantePar>              tableRelaciones;
+    @FXML private TableColumn<ParticipantePar, String>    colCliente;
+    @FXML private TableColumn<ParticipantePar, String>    colArtista;
+    @FXML private TableColumn<ParticipantePar, Number>    colNumSolicitudes;
+
+    // Panel derecho: solicitudes del par seleccionado
+    @FXML private TableView<SolicitudCita>               tableSolicitudes;
     @FXML private TableColumn<SolicitudCita, Long>       colId;
-    @FXML private TableColumn<SolicitudCita, String>     colCliente;
-    @FXML private TableColumn<SolicitudCita, String>     colArtista;
-    @FXML private TableColumn<SolicitudCita, String>     colZona;
-    @FXML private TableColumn<SolicitudCita, String>     colTamano;
     @FXML private TableColumn<SolicitudCita, String>     colEstado;
-    @FXML private TableColumn<SolicitudCita, String>     colFecha;
-    @FXML private ListView<Mensaje>  listViewMensajes;
-    @FXML private Label              lblMensajesHeader;
-    @FXML private Label              lblStatus;
-    @FXML private ProgressIndicator  loadingSpinner;
-    @FXML private ComboBox<String>   comboFiltroEstado;
+    @FXML private TableColumn<SolicitudCita, String>     colDescripcion;
+    @FXML private TableColumn<SolicitudCita, String>     colFechaPreferida;
+    @FXML private TableColumn<SolicitudCita, String>     colPresupuesto;
+
+    @FXML private Label             lblParTitulo;
+    @FXML private TextField         txtBuscar;
+    @FXML private Label             lblStatus;
+    @FXML private ProgressIndicator loadingSpinner;
 
     private final SolicitudService service        = new SolicitudService();
     private final UsuarioService   usuarioService = new UsuarioService();
-    private final ObservableList<SolicitudCita> todos     = FXCollections.observableArrayList();
-    private final ObservableList<SolicitudCita> mostrados = FXCollections.observableArrayList();
-    private final ObservableList<Mensaje>       mensajes  = FXCollections.observableArrayList();
-    private List<Usuario> usuarios = List.of();
+
+    private final ObservableList<ParticipantePar> todasRelaciones  = FXCollections.observableArrayList();
+    private final ObservableList<ParticipantePar> mostradas        = FXCollections.observableArrayList();
+    private final ObservableList<SolicitudCita>   solicitudesPar   = FXCollections.observableArrayList();
+    private List<SolicitudCita> todasSolicitudes = List.of();
+    private List<Usuario>       usuarios         = List.of();
+
+    private static class ParticipantePar {
+        final String key;
+        final String nombreCliente;
+        final String nombreArtista;
+        final List<SolicitudCita> solicitudes;
+
+        ParticipantePar(String key, String nombreCliente, String nombreArtista, List<SolicitudCita> solicitudes) {
+            this.key           = key;
+            this.nombreCliente = nombreCliente;
+            this.nombreArtista = nombreArtista;
+            this.solicitudes   = new ArrayList<>(solicitudes);
+        }
+    }
 
     @FXML
     private void initialize() {
         configurarColumnas();
         configurarFiltro();
-        configurarListaMensajes();
         cargarUsuarios();
         cargar();
-
-        tableView.getSelectionModel().selectedItemProperty().addListener((obs, old, nueva) -> {
-            if (nueva != null) cargarMensajes(nueva);
-        });
-        tableView.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                SolicitudCita sel = tableView.getSelectionModel().getSelectedItem();
-                if (sel != null) DetalleUtils.mostrar(sel);
-            }
-        });
     }
 
     private void configurarColumnas() {
+        colCliente.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().nombreCliente));
+        colArtista.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().nombreArtista));
+        colNumSolicitudes.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleIntegerProperty(data.getValue().solicitudes.size()));
+
         colId.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getIdSolicitud()));
-        colCliente.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreCliente()));
-        colArtista.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreArtista()));
-        colZona.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getZonaCuerpo()));
-        colTamano.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getTamano()));
         colEstado.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getEstado()));
-        colFecha.setCellValueFactory(data -> {
+        colDescripcion.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().getDescripcion()));
+        colFechaPreferida.setCellValueFactory(data -> {
             String f = data.getValue().getFechaPreferida();
             return new javafx.beans.property.SimpleStringProperty(f != null && !f.isBlank() ? f : "—");
+        });
+        colPresupuesto.setCellValueFactory(data -> {
+            Double p = data.getValue().getPresupuestoAprox();
+            return new javafx.beans.property.SimpleStringProperty(p != null ? String.format("%.2f €", p) : "—");
         });
 
         colEstado.setCellFactory(col -> new TableCell<>() {
@@ -97,35 +110,56 @@ public class SolicitudesController {
             }
         });
 
-        tableView.setItems(mostrados);
+        tableRelaciones.setItems(mostradas);
+        tableSolicitudes.setItems(solicitudesPar);
+
+        tableRelaciones.getSelectionModel().selectedItemProperty().addListener((o, prev, par) -> {
+            if (par != null) {
+                lblParTitulo.setText(par.nombreCliente + " → " + par.nombreArtista);
+                solicitudesPar.setAll(par.solicitudes);
+            } else {
+                lblParTitulo.setText("Selecciona una relación");
+                solicitudesPar.clear();
+            }
+        });
+
+        tableSolicitudes.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                SolicitudCita sel = tableSolicitudes.getSelectionModel().getSelectedItem();
+                if (sel != null) DetalleUtils.mostrar(sel);
+            }
+        });
     }
 
     private void configurarFiltro() {
-        comboFiltroEstado.setItems(FXCollections.observableArrayList(
-                "Todos", "Pendiente", "Aceptada", "Rechazada", "Completada"));
-        comboFiltroEstado.setValue("Todos");
-        comboFiltroEstado.valueProperty().addListener((o, v, n) -> filtrar());
+        txtBuscar.textProperty().addListener((o, v, n) -> filtrar());
+    }
+
+    private void agruparYMostrar() {
+        Map<String, List<SolicitudCita>> grupos = todasSolicitudes.stream()
+            .filter(s -> s.getCliente() != null && s.getArtista() != null)
+            .collect(Collectors.groupingBy(s ->
+                s.getCliente().getIdUsuario() + "_" + s.getArtista().getIdUsuario()));
+
+        todasRelaciones.setAll(grupos.entrySet().stream()
+            .map(e -> {
+                SolicitudCita primera = e.getValue().get(0);
+                return new ParticipantePar(e.getKey(),
+                        primera.getNombreCliente(), primera.getNombreArtista(), e.getValue());
+            })
+            .sorted(Comparator.comparing(p -> p.nombreCliente))
+            .toList());
+        filtrar();
     }
 
     private void filtrar() {
-        String estado = comboFiltroEstado.getValue();
-        mostrados.setAll(todos.stream().filter(s ->
-                "Todos".equals(estado) || estado.equals(s.getEstado())
+        String q = txtBuscar.getText().trim().toLowerCase();
+        mostradas.setAll(todasRelaciones.stream().filter(p ->
+            q.isBlank()
+                || p.nombreCliente.toLowerCase().contains(q)
+                || p.nombreArtista.toLowerCase().contains(q)
         ).toList());
-        lblStatus.setText(mostrados.size() + " solicitudes");
-    }
-
-    private void configurarListaMensajes() {
-        listViewMensajes.setItems(mensajes);
-        listViewMensajes.setCellFactory(lv -> new ListCell<>() {
-            @Override protected void updateItem(Mensaje m, boolean empty) {
-                super.updateItem(m, empty);
-                if (empty || m == null) { setText(null); setStyle(""); return; }
-                setText(m.toString());
-                setWrapText(true);
-                setStyle("");
-            }
-        });
+        lblStatus.setText(mostradas.size() + " relaciones · " + todasSolicitudes.size() + " solicitudes");
     }
 
     private void cargar() {
@@ -138,8 +172,8 @@ public class SolicitudesController {
         task.setOnSucceeded(e -> {
             loadingSpinner.setVisible(false);
             loadingSpinner.setManaged(false);
-            todos.setAll(task.getValue());
-            filtrar();
+            todasSolicitudes = task.getValue();
+            agruparYMostrar();
         });
         task.setOnFailed(e -> {
             loadingSpinner.setVisible(false);
@@ -158,22 +192,12 @@ public class SolicitudesController {
         new Thread(t).start();
     }
 
-    private void cargarMensajes(SolicitudCita sol) {
-        lblMensajesHeader.setText("Mensajes — Solicitud #" + sol.getIdSolicitud());
-        mensajes.clear();
-        Task<List<Mensaje>> task = new Task<>() {
-            @Override protected List<Mensaje> call() throws Exception { return service.obtenerMensajes(sol.getIdSolicitud()); }
-        };
-        task.setOnSucceeded(e -> mensajes.setAll(task.getValue()));
-        task.setOnFailed(e    -> mensajes.setAll());
-        new Thread(task).start();
-    }
-
     @FXML private void btnRecargar() { cargar(); }
 
     @FXML
     private void btnCrear() {
-        mostrarFormulario(null).ifPresent(s -> {
+        ParticipantePar parSel = tableRelaciones.getSelectionModel().getSelectedItem();
+        mostrarFormulario(null, parSel).ifPresent(s -> {
             Task<SolicitudCita> task = new Task<>() {
                 @Override protected SolicitudCita call() throws Exception { return service.crearSolicitud(s); }
             };
@@ -185,9 +209,9 @@ public class SolicitudesController {
 
     @FXML
     private void btnEditar() {
-        SolicitudCita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una solicitud."); return; }
-        mostrarFormulario(sel).ifPresent(editada -> {
+        SolicitudCita sel = tableSolicitudes.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una solicitud en el panel derecho."); return; }
+        mostrarFormulario(sel, null).ifPresent(editada -> {
             Task<Boolean> task = new Task<>() {
                 @Override protected Boolean call() throws Exception { return service.actualizarSolicitud(editada.getIdSolicitud(), editada); }
             };
@@ -199,9 +223,8 @@ public class SolicitudesController {
 
     @FXML
     private void btnEliminar() {
-        SolicitudCita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una solicitud."); return; }
-
+        SolicitudCita sel = tableSolicitudes.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una solicitud en el panel derecho."); return; }
         if (!DialogUtils.confirmar("Confirmar eliminación", "¿Eliminar la solicitud #" + sel.getIdSolicitud() + "?")) return;
         Task<Boolean> task = new Task<>() {
             @Override protected Boolean call() throws Exception { return service.eliminarSolicitud(sel.getIdSolicitud()); }
@@ -216,20 +239,18 @@ public class SolicitudesController {
 
     @FXML
     private void btnCambiarEstado() {
-        SolicitudCita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una solicitud."); return; }
-
-        ChoiceDialog<String> dlg = new ChoiceDialog<>(sel.getEstado(),
-                "Pendiente", "Aceptada", "Rechazada", "Completada");
+        SolicitudCita sel = tableSolicitudes.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una solicitud en el panel derecho."); return; }
+        ChoiceDialog<String> dlg = new ChoiceDialog<>(sel.getEstado(), "Pendiente", "Aceptada", "Rechazada", "Completada");
         dlg.setTitle("Cambiar Estado");
         dlg.setHeaderText("Nuevo estado para la solicitud #" + sel.getIdSolicitud());
         DialogUtils.estilizar(dlg);
-        dlg.showAndWait().ifPresent(nuevoEstado -> cambiarEstado(nuevoEstado));
+        dlg.showAndWait().ifPresent(this::cambiarEstado);
     }
 
     private void cambiarEstado(String nuevoEstado) {
-        SolicitudCita sel = tableView.getSelectionModel().getSelectedItem();
-        if (sel == null) { mostrarAviso("Selecciona una solicitud."); return; }
+        SolicitudCita sel = tableSolicitudes.getSelectionModel().getSelectedItem();
+        if (sel == null) { mostrarAviso("Selecciona una solicitud en el panel derecho."); return; }
         Task<Boolean> task = new Task<>() {
             @Override protected Boolean call() throws Exception { return service.cambiarEstado(sel.getIdSolicitud(), nuevoEstado); }
         };
@@ -238,7 +259,7 @@ public class SolicitudesController {
         new Thread(task).start();
     }
 
-    private Optional<SolicitudCita> mostrarFormulario(SolicitudCita original) {
+    private Optional<SolicitudCita> mostrarFormulario(SolicitudCita original, ParticipantePar parPrefill) {
         Dialog<SolicitudCita> dialog = new Dialog<>();
         dialog.setTitle(original == null ? "Nueva Solicitud" : "Editar Solicitud #" + original.getIdSolicitud());
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -336,5 +357,6 @@ public class SolicitudesController {
 
     private void mostrarError(String t, String m) { DialogUtils.mostrarError(t, m); }
     private void mostrarAviso(String m)            { DialogUtils.mostrarAviso(m); }
-    private String s(String v) { return v != null ? v : ""; }
+    private String safe(String s) { return s != null ? s.toLowerCase() : ""; }
+    private String s(String v)    { return v != null ? v : ""; }
 }

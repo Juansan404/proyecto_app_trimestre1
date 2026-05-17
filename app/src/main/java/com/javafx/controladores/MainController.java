@@ -30,7 +30,6 @@ public class MainController {
     @FXML private Button     btnNavCitas;
     @FXML private Button     btnNavSolicitudes;
     @FXML private Button     btnNavComentarios;
-    @FXML private Button     btnNavMensajes;
     @FXML private Button     btnNavMensajesDirectos;
     @FXML private Button     btnNavNotificaciones;
     @FXML private Button     btnNavRevision;
@@ -43,7 +42,7 @@ public class MainController {
     @FXML
     private void initialize() {
         aplicarVisibilidadPorRol();
-        navCitas();
+        navUsuarios();
     }
 
     private void aplicarVisibilidadPorRol() {
@@ -61,7 +60,6 @@ public class MainController {
                 setVisible(btnNavCitas,           true);
                 setVisible(btnNavSolicitudes,     true);
                 setVisible(btnNavComentarios,     false);
-                setVisible(btnNavMensajes,        true);
                 setVisible(btnNavMensajesDirectos, true);
                 setVisible(btnNavNotificaciones,  true);
                 setVisible(btnNavRevision,        false);
@@ -77,7 +75,6 @@ public class MainController {
                 setVisible(btnNavCitas,            true);
                 setVisible(btnNavSolicitudes,      true);
                 setVisible(btnNavComentarios,      false);
-                setVisible(btnNavMensajes,         false);
                 setVisible(btnNavMensajesDirectos, true);
                 setVisible(btnNavNotificaciones,   true);
                 setVisible(btnNavRevision,         false);
@@ -102,7 +99,6 @@ public class MainController {
     @FXML private void navCitas()         { cargar("/fxml/Citas.fxml",         "Citas",            btnNavCitas); }
     @FXML private void navSolicitudes()   { cargar("/fxml/Solicitudes.fxml",   "Solicitudes",      btnNavSolicitudes); }
     @FXML private void navComentarios()   { cargar("/fxml/Comentarios.fxml",   "Comentarios",      btnNavComentarios); }
-    @FXML private void navMensajes()           { cargar("/fxml/Mensajes.fxml",           "Mensajes",          btnNavMensajes); }
     @FXML private void navMensajesDirectos()   { cargar("/fxml/MensajesDirectos.fxml",   "Mensajes directos", btnNavMensajesDirectos); }
     @FXML private void navNotificaciones()     { cargar("/fxml/Notificaciones.fxml",     "Notificaciones",    btnNavNotificaciones); }
     @FXML private void navRevision()           { cargar("/fxml/RevisionImagenes.fxml",   "Revisión de imágenes", btnNavRevision); }

@@ -65,7 +65,7 @@ public class PublicacionesController {
         colUsuario.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreUsuario()));
         colEstilo.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getEstilo()));
+                new javafx.beans.property.SimpleStringProperty(data.getValue().getEstilosStr()));
         colDescripcion.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getDescripcionCorta()));
         colLikes.setCellValueFactory(data ->
@@ -91,7 +91,7 @@ public class PublicacionesController {
             } else {
                 List<Publicacion> filtradas = todasEnPagina.stream()
                     .filter(p -> safe(p.getNombreUsuario()).contains(q)
-                              || safe(p.getEstilo()).contains(q)
+                              || safe(p.getEstilosStr()).contains(q)
                               || safe(p.getDescripcion()).contains(q)
                               || safe(p.getZonaCuerpo()).contains(q))
                     .toList();
@@ -139,7 +139,7 @@ public class PublicacionesController {
             } else {
                 List<Publicacion> filtradas = lista.stream()
                     .filter(p -> safe(p.getNombreUsuario()).contains(q)
-                              || safe(p.getEstilo()).contains(q)
+                              || safe(p.getEstilosStr()).contains(q)
                               || safe(p.getDescripcion()).contains(q)
                               || safe(p.getZonaCuerpo()).contains(q))
                     .toList();
@@ -292,7 +292,7 @@ public class PublicacionesController {
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(16));
 
-        TextField fEstilo = new TextField(s(p.getEstilo()));
+        TextField fEstilo = new TextField(s(p.getEstilosStr()));
         TextField fZona   = new TextField(s(p.getZonaCuerpo()));
         TextArea  fDesc   = new TextArea(s(p.getDescripcion())); fDesc.setPrefRowCount(3); fDesc.setPrefWidth(250);
 

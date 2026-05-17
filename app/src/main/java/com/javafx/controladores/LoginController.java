@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -19,13 +20,15 @@ import org.kordamp.ikonli.javafx.FontIcon;
 public class LoginController {
 
     // ── Login panel ──
-    @FXML private VBox          panelLogin;
-    @FXML private TextField     txtLoginEmail;
-    @FXML private PasswordField txtLoginPassword;
-    @FXML private TextField     txtLoginPasswordVisible;
-    @FXML private Button        btnLoginShowPass;
-    @FXML private FontIcon      icoLoginShowPass;
-    @FXML private Label         lblLoginError;
+    @FXML private VBox              panelLogin;
+    @FXML private TextField         txtLoginEmail;
+    @FXML private PasswordField     txtLoginPassword;
+    @FXML private TextField         txtLoginPasswordVisible;
+    @FXML private Button            btnLoginShowPass;
+    @FXML private Button  btnAcceder;
+    @FXML private HBox    loginSpinnerBox;
+    @FXML private FontIcon icoLoginShowPass;
+    @FXML private Label             lblLoginError;
 
     private boolean loginPassVisible = false;
 
@@ -140,10 +143,12 @@ public class LoginController {
             return;
         }
 
+        setLoginCargando(true);
         new Thread(() -> {
             try {
                 boolean ok = authService.login(email, password);
                 Platform.runLater(() -> {
+                    setLoginCargando(false);
                     if (ok) {
                         abrirPanelPrincipal();
                     } else {
@@ -151,8 +156,10 @@ public class LoginController {
                     }
                 });
             } catch (Exception ex) {
-                Platform.runLater(() ->
-                    mostrarError(lblLoginError, "Error de conexion: " + ex.getMessage()));
+                Platform.runLater(() -> {
+                    setLoginCargando(false);
+                    mostrarError(lblLoginError, "Error de conexion: " + ex.getMessage());
+                });
             }
         }).start();
     }
@@ -215,6 +222,17 @@ public class LoginController {
                     mostrarError(lblRegError, "Error de conexion: " + ex.getMessage()));
             }
         }).start();
+    }
+
+    private void setLoginCargando(boolean cargando) {
+        btnAcceder.setDisable(cargando);
+        btnAcceder.setText(cargando ? "Conectando..." : "ACCEDER");
+        loginSpinnerBox.setVisible(cargando);
+        loginSpinnerBox.setManaged(cargando);
+        txtLoginEmail.setDisable(cargando);
+        txtLoginPassword.setDisable(cargando);
+        txtLoginPasswordVisible.setDisable(cargando);
+        btnLoginShowPass.setDisable(cargando);
     }
 
     // ──────────────────────── HELPERS ────────────────────────

@@ -92,9 +92,6 @@
                         <Button fx:id="btnNavComentarios"  text="Comentarios"   maxWidth="Infinity" onAction="#navComentarios"   styleClass="sidebar-btn" graphicTextGap="10.0">
                             <graphic><FontIcon iconLiteral="fas-comments"      iconSize="14" styleClass="sidebar-icon"/></graphic>
                         </Button>
-                        <Button fx:id="btnNavMensajes"     text="Mensajes"       maxWidth="Infinity" onAction="#navMensajes"      styleClass="sidebar-btn" graphicTextGap="10.0">
-                            <graphic><FontIcon iconLiteral="fas-envelope"      iconSize="14" styleClass="sidebar-icon"/></graphic>
-                        </Button>
                         <Button fx:id="btnNavMensajesDirectos" text="Mensajes directos" maxWidth="Infinity" onAction="#navMensajesDirectos" styleClass="sidebar-btn" graphicTextGap="10.0">
                             <graphic><FontIcon iconLiteral="fas-paper-plane"   iconSize="14" styleClass="sidebar-icon"/></graphic>
                         </Button>
