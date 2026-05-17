@@ -55,6 +55,7 @@ public class PublicacionesController {
     private final PublicacionService service        = new PublicacionService();
     private final UsuarioService     usuarioService = new UsuarioService();
     private final ObservableList<Publicacion> mostrados = FXCollections.observableArrayList();
+    private List<Publicacion> todasEnPagina = List.of();
     private List<Usuario> usuarios = List.of();
 
     @FXML
@@ -83,12 +84,19 @@ public class PublicacionesController {
         });
 
         txtBuscar.textProperty().addListener((o, v, n) -> {
-            // Filtro local solo dentro de la página cargada
-            String q = n.toLowerCase();
+            String q = n.trim().toLowerCase();
             if (q.isBlank()) {
-                // Recargar desde API cuando se borra el filtro
-                cargar();
-                return;
+                mostrados.setAll(todasEnPagina);
+                lblStatus.setText(todasEnPagina.size() + " publicaciones  (pág. " + (currentPage + 1) + "/" + totalPages + ")");
+            } else {
+                List<Publicacion> filtradas = todasEnPagina.stream()
+                    .filter(p -> safe(p.getNombreUsuario()).contains(q)
+                              || safe(p.getEstilo()).contains(q)
+                              || safe(p.getDescripcion()).contains(q)
+                              || safe(p.getZonaCuerpo()).contains(q))
+                    .toList();
+                mostrados.setAll(filtradas);
+                lblStatus.setText(filtradas.size() + " resultado(s) para \"" + n.trim() + "\"");
             }
         });
 
@@ -123,8 +131,21 @@ public class PublicacionesController {
             @SuppressWarnings("unchecked")
             List<Publicacion> lista = (List<Publicacion>) resultado[0];
             totalPages = (int) resultado[1];
-            mostrados.setAll(lista);
-            lblStatus.setText(lista.size() + " publicaciones  (pág. " + (currentPage + 1) + "/" + totalPages + ")");
+            todasEnPagina = lista;
+            String q = txtBuscar.getText().trim().toLowerCase();
+            if (q.isBlank()) {
+                mostrados.setAll(lista);
+                lblStatus.setText(lista.size() + " publicaciones  (pág. " + (currentPage + 1) + "/" + totalPages + ")");
+            } else {
+                List<Publicacion> filtradas = lista.stream()
+                    .filter(p -> safe(p.getNombreUsuario()).contains(q)
+                              || safe(p.getEstilo()).contains(q)
+                              || safe(p.getDescripcion()).contains(q)
+                              || safe(p.getZonaCuerpo()).contains(q))
+                    .toList();
+                mostrados.setAll(filtradas);
+                lblStatus.setText(filtradas.size() + " resultado(s) para \"" + txtBuscar.getText().trim() + "\"");
+            }
             actualizarBotonesPaginacion();
         });
         task.setOnFailed(e -> {
