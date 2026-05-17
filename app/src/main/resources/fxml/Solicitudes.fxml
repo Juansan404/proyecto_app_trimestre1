@@ -49,7 +49,7 @@
         <!-- Panel izquierdo: relaciones únicas cliente-artista -->
         <VBox minWidth="180">
             <Label text="Relaciones"
-                style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #7c80a8; -fx-padding: 8 12 4 12;" />
+                style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #888888; -fx-padding: 8 12 4 12;" />
             <TableView fx:id="tableRelaciones" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colCliente"       text="Cliente"  prefWidth="160.0" />
@@ -57,7 +57,7 @@
                     <TableColumn fx:id="colNumSolicitudes" text="Total" prefWidth="50.0" />
                 </columns>
                 <placeholder>
-                    <Label text="Sin relaciones" style="-fx-text-fill: #7c80a8;" />
+                    <Label text="Sin relaciones" style="-fx-text-fill: #888888;" />
                 </placeholder>
             </TableView>
         </VBox>
@@ -65,9 +65,9 @@
         <!-- Panel derecho: solicitudes del par seleccionado -->
         <VBox minWidth="200">
             <Label fx:id="lblParTitulo" text="Selecciona una relación"
-                style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #7c80a8;
+                style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #888888;
                        -fx-padding: 8 12 4 12;
-                       -fx-border-color: rgba(233,69,96,0.25); -fx-border-width: 0 0 1 0;" />
+                       -fx-border-color: rgba(192,57,43,0.25); -fx-border-width: 0 0 1 0;" />
             <TableView fx:id="tableSolicitudes" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="colId"            text="ID"          prefWidth="52.0" />
@@ -77,13 +77,13 @@
                     <TableColumn fx:id="colPresupuesto"   text="Presupuesto" prefWidth="100.0" />
                 </columns>
                 <placeholder>
-                    <Label text="Selecciona una relación" style="-fx-text-fill: #7c80a8;" />
+                    <Label text="Selecciona una relación" style="-fx-text-fill: #888888;" />
                 </placeholder>
             </TableView>
         </VBox>
     </SplitPane>
 
     <HBox styleClass="status-bar">
-        <Label fx:id="lblStatus" text="" style="-fx-font-size: 11px; -fx-text-fill: #6b7094;" />
+        <Label fx:id="lblStatus" text="" style="-fx-font-size: 11px; -fx-text-fill: #666666;" />
     </HBox>
 </VBox>

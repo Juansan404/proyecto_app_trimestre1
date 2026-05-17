@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -314,6 +315,9 @@ public class ArtistasController {
 
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(16));
+        ColumnConstraints cc0 = new ColumnConstraints(); cc0.setHgrow(Priority.NEVER);
+        ColumnConstraints cc1 = new ColumnConstraints(); cc1.setHgrow(Priority.NEVER); cc1.setMaxWidth(280);
+        grid.getColumnConstraints().addAll(cc0, cc1);
 
         ComboBox<Usuario> cbArtista = new ComboBox<>(FXCollections.observableArrayList(artistas));
         cbArtista.setPrefWidth(250);
@@ -403,6 +407,9 @@ public class ArtistasController {
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10);
         grid.setPadding(new Insets(16));
+        ColumnConstraints cc0 = new ColumnConstraints(); cc0.setHgrow(Priority.NEVER);
+        ColumnConstraints cc1 = new ColumnConstraints(); cc1.setHgrow(Priority.NEVER); cc1.setMaxWidth(280);
+        grid.getColumnConstraints().addAll(cc0, cc1);
 
         TextField txtEspecialidades = new TextField(p.getEspecialidades() != null ? p.getEspecialidades() : "");
         TextField txtAnios          = new TextField(p.getAnosExperiencia() != null ? p.getAnosExperiencia().toString() : "");

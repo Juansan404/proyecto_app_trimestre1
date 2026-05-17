@@ -17,7 +17,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 import java.awt.Desktop;
 import java.net.URI;
@@ -212,6 +214,9 @@ public class EstudiosController {
 
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(20));
+        ColumnConstraints cc0 = new ColumnConstraints(); cc0.setHgrow(Priority.NEVER);
+        ColumnConstraints cc1 = new ColumnConstraints(); cc1.setHgrow(Priority.NEVER); cc1.setMaxWidth(280);
+        grid.getColumnConstraints().addAll(cc0, cc1);
 
         TextField fNombre       = new TextField(original != null ? s(original.getNombre())       : "");
         TextField fDireccion    = new TextField(original != null ? s(original.getDireccion())    : "");

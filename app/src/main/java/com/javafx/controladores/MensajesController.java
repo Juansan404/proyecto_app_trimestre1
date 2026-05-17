@@ -18,7 +18,9 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 import java.util.List;
 
@@ -129,6 +131,9 @@ public class MensajesController {
 
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(16));
+        ColumnConstraints cc0 = new ColumnConstraints(); cc0.setHgrow(Priority.NEVER);
+        ColumnConstraints cc1 = new ColumnConstraints(); cc1.setHgrow(Priority.NEVER); cc1.setMaxWidth(280);
+        grid.getColumnConstraints().addAll(cc0, cc1);
 
         ComboBox<SolicitudCita> cbSolicitud = new ComboBox<>(FXCollections.observableArrayList(solicitudes));
         ComboBox<Usuario>       cbRemitente = new ComboBox<>(FXCollections.observableArrayList(usuarios));

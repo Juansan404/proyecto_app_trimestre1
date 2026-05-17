@@ -6,57 +6,57 @@
 
 /* ── Root background ── */
 .root {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
 }
 
 /* ── Área de contenido principal ── */
 .content-area {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
 }
 
 /* ── Topbar ── */
 .topbar {
     -fx-background-color: #ffffff;
-    -fx-border-color: transparent transparent rgba(233,69,96,0.28) transparent;
+    -fx-border-color: transparent transparent rgba(192,57,43,0.28) transparent;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);
 }
 
 .section-title {
-    -fx-text-fill: #1a1c2e;
+    -fx-text-fill: #1A1A1A;
 }
 
 /* ── Toolbar de contenido ── */
 .content-toolbar {
     -fx-background-color: #ffffff;
-    -fx-border-color: transparent transparent rgba(233,69,96,0.22) transparent;
+    -fx-border-color: transparent transparent rgba(192,57,43,0.22) transparent;
 }
 
 /* ── Barra de estado ── */
 .status-bar {
-    -fx-background-color: #e8eaf5;
-    -fx-border-color: #dde0ef transparent transparent transparent;
+    -fx-background-color: #EFEFEF;
+    -fx-border-color: #E0E0E0 transparent transparent transparent;
 }
 
 .status-bar .label {
-    -fx-text-fill: #8890aa;
+    -fx-text-fill: #999999;
 }
 
 /* ── Campo de búsqueda en toolbar ── */
 .toolbar-search {
-    -fx-background-color: #f0f2f8;
-    -fx-text-fill: #2c3054;
-    -fx-prompt-text-fill: #9096b8;
-    -fx-border-color: rgba(233,69,96,0.22);
+    -fx-background-color: #F7F7F7;
+    -fx-text-fill: #333333;
+    -fx-prompt-text-fill: #999999;
+    -fx-border-color: rgba(192,57,43,0.22);
 }
 
 .toolbar-search:focused {
-    -fx-border-color: rgba(233,69,96,0.55);
-    -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.15), 10, 0, 0, 0);
+    -fx-border-color: rgba(192,57,43,0.55);
+    -fx-effect: dropshadow(gaussian, rgba(192,57,43,0.15), 10, 0, 0, 0);
 }
 
 /* ── Tabla ── */
 .table-view {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
     -fx-border-color: transparent;
 }
 
@@ -69,24 +69,24 @@
 }
 
 .table-view .column-header {
-    -fx-border-color: transparent transparent rgba(233,69,96,0.35) transparent;
+    -fx-border-color: transparent transparent rgba(192,57,43,0.35) transparent;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #3a3e58;
+    -fx-text-fill: #555555;
 }
 
 .table-row-cell {
     -fx-background-color: #ffffff;
-    -fx-border-color: #eef0f8 transparent;
+    -fx-border-color: #F0F0F0 transparent;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #f7f8fd;
+    -fx-background-color: #FAFAFA;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(233,69,96,0.14);
+    -fx-background-color: rgba(192,57,43,0.14);
 }
 
 /* JavaFX aplica blanco por defecto en .table-cell:selected;
@@ -95,55 +95,55 @@
 .table-row-cell:selected .table-cell .text,
 .table-row-cell:selected .table-cell:selected .text,
 .table-cell:selected .text {
-    -fx-fill: #1a1c2e !important;
+    -fx-fill: #1A1A1A !important;
 }
 
 .table-cell:selected {
-    -fx-text-fill: #1a1c2e !important;
+    -fx-text-fill: #1A1A1A !important;
     -fx-background-color: transparent;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: rgba(233,69,96,0.07);
+    -fx-background-color: rgba(192,57,43,0.07);
 }
 
 .table-row-cell:hover .text,
 .table-row-cell:hover .table-cell .text {
-    -fx-fill: #1a1c2e !important;
+    -fx-fill: #1A1A1A !important;
 }
 
 .table-cell .text {
-    -fx-fill: #3a3e58;
+    -fx-fill: #555555;
 }
 
 /* Scroll de tablas */
 .table-view .scroll-bar:vertical {
-    -fx-background-color: #eef0f8;
+    -fx-background-color: #F0F0F0;
 }
 
 /* ── ListView (panel mensajes Solicitudes) ── */
 .list-view {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
 }
 
 .list-cell {
     -fx-background-color: #ffffff;
-    -fx-text-fill: #3a3e58;
-    -fx-border-color: #eef0f8 transparent;
+    -fx-text-fill: #555555;
+    -fx-border-color: #F0F0F0 transparent;
 }
 
 .list-cell:odd {
-    -fx-background-color: #f7f8fd;
+    -fx-background-color: #FAFAFA;
 }
 
 .list-cell:selected {
-    -fx-background-color: rgba(233,69,96,0.14);
-    -fx-text-fill: #1a1c2e;
+    -fx-background-color: rgba(192,57,43,0.14);
+    -fx-text-fill: #1A1A1A;
 }
 
 .list-cell:hover {
-    -fx-background-color: rgba(233,69,96,0.07);
-    -fx-text-fill: #1a1c2e;
+    -fx-background-color: rgba(192,57,43,0.07);
+    -fx-text-fill: #1A1A1A;
 }
 
 /* ── Panel de mensajes — modo claro: fondo blanco, texto negro, hover rosado ── */
@@ -152,41 +152,41 @@
 }
 .msg-list .list-cell {
     -fx-background-color: #ffffff;
-    -fx-text-fill: #1a1c2e;
-    -fx-border-color: #eef0f8 transparent;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: #F0F0F0 transparent;
 }
 .msg-list .list-cell:odd {
     -fx-background-color: #fafbff;
 }
 .msg-list .list-cell:hover {
-    -fx-background-color: rgba(233,69,96,0.10);
+    -fx-background-color: rgba(192,57,43,0.10);
     /* texto sin cambiar */
 }
 .msg-list .list-cell:selected {
-    -fx-background-color: rgba(233,69,96,0.16);
+    -fx-background-color: rgba(192,57,43,0.16);
 }
 
 /* ── SplitPane ── */
 .split-pane {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
 }
 
 /* ── ComboBox / ChoiceBox en toolbar (modo claro) ── */
 .combo-box, .choice-box {
-    -fx-background-color: #f0f2f8;
-    -fx-border-color: rgba(233,69,96,0.22);
+    -fx-background-color: #F7F7F7;
+    -fx-border-color: rgba(192,57,43,0.22);
 }
 
 .combo-box > .list-cell, .choice-box > .label {
-    -fx-text-fill: #3a3e58;
+    -fx-text-fill: #555555;
 }
 
 .combo-box:read-only > .list-cell {
-    -fx-text-fill: #3a3e58;
+    -fx-text-fill: #555555;
 }
 
 .combo-box .arrow, .choice-box .open-button .arrow {
-    -fx-background-color: #5a5f80;
+    -fx-background-color: #666666;
 }
 
 .combo-box-popup .list-view .list-cell {
@@ -196,8 +196,8 @@
 .combo-box-popup .list-view .list-cell,
 .combo-box-popup .list-view .list-cell > *,
 .combo-box-popup .list-view .list-cell .text {
-    -fx-text-fill: #3a3e58 !important;
-    -fx-fill: #3a3e58 !important;
+    -fx-text-fill: #555555 !important;
+    -fx-fill: #555555 !important;
 }
 
 .combo-box-popup .list-view .list-cell:hover,
@@ -216,71 +216,71 @@
 
 .combo-box-popup .list-view {
     -fx-background-color: #ffffff;
-    -fx-border-color: rgba(233,69,96,0.3);
+    -fx-border-color: rgba(192,57,43,0.3);
 }
 
 /* ── Scrollbar general ── */
 .scroll-bar {
-    -fx-background-color: #e8eaf5;
+    -fx-background-color: #EFEFEF;
 }
 
 /* ── Menú contextual ── */
 .context-menu {
     -fx-background-color: #ffffff;
-    -fx-border-color: rgba(233,69,96,0.25);
+    -fx-border-color: rgba(192,57,43,0.25);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 16, 0, 0, 4);
 }
 
 .context-menu .menu-item {
     -fx-background-color: transparent;
-    -fx-text-fill: #2c3054;
+    -fx-text-fill: #333333;
 }
 
 .context-menu .menu-item .label {
-    -fx-text-fill: #2c3054;
+    -fx-text-fill: #333333;
 }
 
 /* ── Panel de configuración (modo claro) ── */
 .settings-card {
     -fx-background-color: #ffffff;
-    -fx-border-color: rgba(233,69,96,0.15);
+    -fx-border-color: rgba(192,57,43,0.15);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 10, 0, 0, 2);
 }
 
 .settings-section-header {
-    -fx-text-fill: #e94560;
+    -fx-text-fill: #C0392B;
 }
 
 .settings-row-label {
-    -fx-text-fill: #5a5f80;
+    -fx-text-fill: #666666;
 }
 
 .settings-value {
-    -fx-text-fill: #1a1c2e;
+    -fx-text-fill: #1A1A1A;
 }
 
 .settings-muted {
-    -fx-text-fill: #9096b8;
+    -fx-text-fill: #999999;
 }
 
 /* ── Botones secundarios en modo claro ── */
 .button-secondary {
     -fx-background-color: #eceef8;
-    -fx-text-fill: #3a3e58;
-    -fx-border-color: rgba(233,69,96,0.22);
+    -fx-text-fill: #555555;
+    -fx-border-color: rgba(192,57,43,0.22);
 }
 .button-secondary:hover {
-    -fx-background-color: #dde0ef;
-    -fx-text-fill: #1a1c2e;
-    -fx-border-color: rgba(233,69,96,0.4);
+    -fx-background-color: #E0E0E0;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(192,57,43,0.4);
 }
 
 /* Iconos en botones en modo claro */
 .button-secondary .ikonli-font-icon {
-    -fx-icon-color: #5a5f80;
+    -fx-icon-color: #666666;
 }
 .button-secondary:hover .ikonli-font-icon {
-    -fx-icon-color: #e94560;
+    -fx-icon-color: #C0392B;
 }
 /* Los botones con fondo de color (success, danger, primary) mantienen icono blanco */
 .button-success .ikonli-font-icon,
@@ -291,32 +291,32 @@
 
 /* ── TextField de directorio PDF en configuración ── */
 .settings-card .text-field {
-    -fx-background-color: #f0f2f8;
-    -fx-text-fill: #3a3e58;
-    -fx-prompt-text-fill: #9699be;
-    -fx-border-color: rgba(233,69,96,0.2);
+    -fx-background-color: #F7F7F7;
+    -fx-text-fill: #555555;
+    -fx-prompt-text-fill: #999999;
+    -fx-border-color: rgba(192,57,43,0.2);
 }
 .settings-card .text-field:focused {
-    -fx-border-color: #e94560;
+    -fx-border-color: #C0392B;
     -fx-background-color: #ffffff;
 }
 
 /* Botones de tema en modo claro */
 .theme-btn {
-    -fx-background-color: #f0f2f8;
-    -fx-border-color: rgba(233,69,96,0.2);
-    -fx-text-fill: #8890aa;
+    -fx-background-color: #F7F7F7;
+    -fx-border-color: rgba(192,57,43,0.2);
+    -fx-text-fill: #999999;
 }
 .theme-btn .ikonli-font-icon {
-    -fx-icon-color: #8890aa;
+    -fx-icon-color: #999999;
 }
 
 .theme-btn:hover {
-    -fx-background-color: #e8eaf5;
-    -fx-text-fill: #3a3e58;
+    -fx-background-color: #EFEFEF;
+    -fx-text-fill: #555555;
 }
 .theme-btn:hover .ikonli-font-icon {
-    -fx-icon-color: #3a3e58;
+    -fx-icon-color: #555555;
 }
 
 /* El botón activo siempre tiene icono blanco (fondo rojo) */
@@ -327,72 +327,72 @@
 /* ── Diálogos en modo claro ── */
 .app-dialog {
     -fx-background-color: #ffffff;
-    -fx-border-color: rgba(233,69,96,0.35);
+    -fx-border-color: rgba(192,57,43,0.35);
 }
 
 .app-dialog .header-panel {
-    -fx-background-color: #f0f2f8;
-    -fx-border-color: rgba(233,69,96,0.2);
+    -fx-background-color: #F7F7F7;
+    -fx-border-color: rgba(192,57,43,0.2);
 }
 
 .app-dialog .header-panel .label {
-    -fx-text-fill: #1a1c2e;
+    -fx-text-fill: #1A1A1A;
 }
 
 .app-dialog .content.label {
-    -fx-text-fill: #3a3e58;
+    -fx-text-fill: #555555;
 }
 
 .app-dialog .label {
-    -fx-text-fill: #5a5f80;
+    -fx-text-fill: #666666;
 }
 
 .app-dialog .text-field,
 .app-dialog .password-field {
-    -fx-background-color: #f0f2f8;
-    -fx-text-fill: #1a1c2e;
-    -fx-border-color: rgba(233,69,96,0.22);
-    -fx-prompt-text-fill: #9096b8;
+    -fx-background-color: #F7F7F7;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(192,57,43,0.22);
+    -fx-prompt-text-fill: #999999;
 }
 
 .app-dialog .text-area {
-    -fx-control-inner-background: #f0f2f8;
-    -fx-text-fill: #1a1c2e;
-    -fx-border-color: rgba(233,69,96,0.22);
+    -fx-control-inner-background: #F7F7F7;
+    -fx-text-fill: #1A1A1A;
+    -fx-border-color: rgba(192,57,43,0.22);
 }
 
 .app-dialog .text-area .content {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
 }
 
 .app-dialog .combo-box {
-    -fx-background-color: #f0f2f8;
-    -fx-border-color: rgba(233,69,96,0.22);
+    -fx-background-color: #F7F7F7;
+    -fx-border-color: rgba(192,57,43,0.22);
 }
 
 .app-dialog .combo-box > .list-cell {
-    -fx-text-fill: #2c3054;
+    -fx-text-fill: #333333;
     -fx-background-color: transparent;
 }
 
 .app-dialog .combo-box .arrow {
-    -fx-background-color: #5a5f80;
+    -fx-background-color: #666666;
 }
 
 .app-dialog .button-bar {
-    -fx-background-color: #f0f2f8;
-    -fx-border-color: rgba(233,69,96,0.15);
+    -fx-background-color: #F7F7F7;
+    -fx-border-color: rgba(192,57,43,0.15);
 }
 
 .app-dialog .button-bar .cancel-button {
-    -fx-background-color: #e8eaf5;
-    -fx-text-fill: #5a5f80;
-    -fx-border-color: rgba(233,69,96,0.2);
+    -fx-background-color: #EFEFEF;
+    -fx-text-fill: #666666;
+    -fx-border-color: rgba(192,57,43,0.2);
 }
 
 .app-dialog .button-bar .cancel-button:hover {
-    -fx-background-color: #dde0ef;
-    -fx-text-fill: #1a1c2e;
+    -fx-background-color: #E0E0E0;
+    -fx-text-fill: #1A1A1A;
 }
 
 /* Alertas de error en modo claro */
@@ -412,14 +412,14 @@
    ======================================== */
 .date-picker .text-field {
     -fx-background-color: #ffffff;
-    -fx-text-fill: #1a1c2e;
-    -fx-prompt-text-fill: #9699be;
+    -fx-text-fill: #1A1A1A;
+    -fx-prompt-text-fill: #999999;
 }
 .date-picker .arrow-button {
     -fx-background-color: #ffffff;
 }
 .date-picker .arrow-button:hover {
-    -fx-background-color: #e94560;
+    -fx-background-color: #C0392B;
 }
 .date-picker .arrow-button .arrow {
     -fx-background-color: #6b7094;
@@ -427,14 +427,14 @@
 
 .date-picker-popup {
     -fx-background-color: #ffffff;
-    -fx-border-color: rgba(233,69,96,0.35);
+    -fx-border-color: rgba(192,57,43,0.35);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 4);
 }
 .date-picker-popup > * > .month-year-pane {
-    -fx-background-color: #f0f2f8;
+    -fx-background-color: #F7F7F7;
 }
 .date-picker-popup .spinner .label {
-    -fx-text-fill: #1a1c2e;
+    -fx-text-fill: #1A1A1A;
 }
 .date-picker-popup .spinner > .button > .left-arrow,
 .date-picker-popup .spinner > .button > .right-arrow {
@@ -444,8 +444,8 @@
     -fx-text-fill: #2c3050;
 }
 .date-picker-popup .calendar-grid .day-cell:hover {
-    -fx-background-color: rgba(233,69,96,0.1);
-    -fx-text-fill: #1a1c2e;
+    -fx-background-color: rgba(192,57,43,0.1);
+    -fx-text-fill: #1A1A1A;
 }
 .date-picker-popup .calendar-grid .day-cell.outside-month,
 .date-picker-popup .calendar-grid .day-cell.previous-month,
@@ -453,11 +453,11 @@
     -fx-text-fill: #c0c4d8;
 }
 .date-picker-popup .today-button {
-    -fx-background-color: rgba(233,69,96,0.08);
-    -fx-text-fill: #e94560;
+    -fx-background-color: rgba(192,57,43,0.08);
+    -fx-text-fill: #C0392B;
 }
 .date-picker-popup .today-button:hover {
-    -fx-background-color: #e94560;
+    -fx-background-color: #C0392B;
     -fx-text-fill: #ffffff;
 }
 

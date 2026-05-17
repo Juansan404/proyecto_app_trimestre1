@@ -16,7 +16,9 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -269,6 +271,9 @@ public class CitasController {
 
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10); grid.setPadding(new Insets(20));
+        ColumnConstraints cc0 = new ColumnConstraints(); cc0.setHgrow(Priority.NEVER);
+        ColumnConstraints cc1 = new ColumnConstraints(); cc1.setHgrow(Priority.NEVER); cc1.setMaxWidth(280);
+        grid.getColumnConstraints().addAll(cc0, cc1);
 
         ComboBox<Usuario> cbCliente = new ComboBox<>(FXCollections.observableArrayList(usuarios));
         cbCliente.setPrefWidth(250);

@@ -30,13 +30,13 @@
             </ImageView>
 
             <!-- Capa oscura superpuesta -->
-            <VBox style="-fx-background-color: rgba(22,33,62,0.93);">
+            <VBox style="-fx-background-color: rgba(15,15,15,0.97);">
 
                 <!-- ── Logo + Título ── -->
                 <HBox alignment="CENTER_LEFT" spacing="10"
-                    style="-fx-background-color: rgba(26,26,46,0.97);
+                    style="-fx-background-color: rgba(8,8,8,0.99);
                            -fx-padding: 14 16 14 16;
-                           -fx-border-color: #e94560;
+                           -fx-border-color: #C0392B;
                            -fx-border-width: 0 0 2 0;">
 
                     <!-- Badge circular pequeño -->
@@ -44,7 +44,7 @@
                         prefWidth="36.0" minWidth="36.0" maxWidth="36.0"
                         prefHeight="36.0" minHeight="36.0" maxHeight="36.0"
                         style="-fx-background-color: white;
-                               -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.65), 10, 0.2, 0, 0);">
+                               -fx-effect: dropshadow(gaussian, rgba(192,57,43,0.65), 10, 0.2, 0, 0);">
                         <clip><Circle centerX="18.0" centerY="18.0" radius="18.0"/></clip>
                         <ImageView fitWidth="24" fitHeight="24" preserveRatio="true" smooth="true">
                             <image><Image url="@../images/logo.png" requestedWidth="48" requestedHeight="48" preserveRatio="true" smooth="true" /></image>
@@ -55,12 +55,12 @@
                         <Label text="TATTOOAGE"
                             style="-fx-font-size: 16px;
                                    -fx-font-weight: bold;
-                                   -fx-text-fill: #e94560;
+                                   -fx-text-fill: #C0392B;
                                    -fx-font-family: 'Segoe UI';
-                                   -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.4), 8, 0, 0, 0);" />
+                                   -fx-effect: dropshadow(gaussian, rgba(192,57,43,0.4), 8, 0, 0, 0);" />
                         <Label text="Admin Panel"
                             style="-fx-font-size: 9px;
-                                   -fx-text-fill: #7777aa;
+                                   -fx-text-fill: #888888;
                                    -fx-font-family: 'Segoe UI';
                                    -fx-letter-spacing: 1;" />
                     </VBox>
