@@ -83,8 +83,7 @@ tasks.jar {
 
     manifest {
         attributes(
-            'Main-Class': application.mainClass.get(),
-            //Esto crea el "Class-Path" dentro del manifiesto del JAR
+            'Main-Class': 'com.javafx.Launcher',
             'Class-Path': configurations.runtimeClasspath.files.collect { "lib/" + it.name }.join(' ')
         )
     }

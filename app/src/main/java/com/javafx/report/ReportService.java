@@ -4,6 +4,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.design.*;
 import net.sf.jasperreports.engine.type.*;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.pdf.JRPdfExporter;
 import net.sf.jasperreports.export.*;
 
@@ -11,6 +12,7 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -80,8 +82,16 @@ public class ReportService {
         ((JRDesignSection) d.getDetailSection()).addBand(buildDetail(campos, ws, USABLE));
         d.setPageFooter(buildPageFooter(USABLE));
 
+        // ── Directorio temporal para JasperReports (evita escribir en Program Files) ──
+        String appData = System.getenv("APPDATA");
+        String tempBase = appData != null ? appData : System.getProperty("java.io.tmpdir");
+        File tempDir = new File(tempBase, "TattooAge" + File.separator + "temp");
+        tempDir.mkdirs();
+        DefaultJasperReportsContext jrCtx = DefaultJasperReportsContext.getInstance();
+        jrCtx.setProperty(JRCompiler.COMPILER_TEMP_DIR, tempDir.getAbsolutePath());
+
         // ── Compilar ─────────────────────────────────────────────────────────
-        JasperReport report = JasperCompileManager.compileReport(d);
+        JasperReport report = JasperCompileManager.getInstance(jrCtx).compile(d);
 
         // ── Parámetros de relleno ─────────────────────────────────────────────
         Map<String, Object> params = new HashMap<>();
